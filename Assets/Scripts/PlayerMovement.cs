@@ -19,6 +19,12 @@ public class PlayerMovement : MonoBehaviour
 	public float jumpPower = 1.0f;
 
 	/// <summary>
+	/// The bottom collider for detecting collision with the ground.
+	/// </summary>
+	[Tooltip("Collider use for detecting collision with the ground")]
+	public BoxCollider2D bottomCollider;
+
+	/// <summary>
 	/// Flag indicating whether the character is on the ground or not.
 	/// </summary>
 	private bool m_isGrounded;
@@ -30,9 +36,61 @@ public class PlayerMovement : MonoBehaviour
 	private bool m_facingRight;
 
 	/// <summary>
+	/// The fall multiplier for higher jump.
+	/// </summary>
+	private const float HighFallMultiplier = 2.5f;
+
+	/// <summary>
+	/// The fall multiplier for lower jump.
+	/// </summary>
+	private const float LowFallMultiplier = 1f;
+
+	/// <summary>
 	/// The 2D rigid body componentof the character.
 	/// </summary>
 	private Rigidbody2D m_rigidbody2D;
+
+	#endregion
+
+	#region Public Methods
+
+	/// <summary>
+	/// Move the character.
+	/// </summary>
+	/// 
+	/// <param name="velocityX">
+	/// Velocity of the character in the x direction.
+	/// </param>
+	public void Move(float velocityX)
+	{
+		m_rigidbody2D.velocity = new Vector2 (velocityX * speed, m_rigidbody2D.velocity.y);
+
+		// Flip the character depending on which direction it is facing
+		if (velocityX > 0 && !m_facingRight)
+		{
+			Flip ();
+		}
+		else if (velocityX < 0 && m_facingRight)
+		{
+			Flip ();
+		}
+	}
+
+	/// <summary>
+	/// Make the character jump.
+	/// </summary>
+	/// 
+	/// <param name="pressedJump">
+	/// Flag indicating if the player presses the jump button.
+	/// </param>
+	public void Jump(bool pressedJump)
+	{
+		if (pressedJump && m_isGrounded)
+		{
+			m_rigidbody2D.velocity = Vector2.up * jumpPower;
+			m_isGrounded = false;
+		}
+	}
 
 	#endregion
 
@@ -53,48 +111,24 @@ public class PlayerMovement : MonoBehaviour
 	/// </summary>
 	private void FixedUpdate () 
 	{
-		float velocityX = Input.GetAxis("Horizontal") * speed;
-		bool pressedJump = Input.GetButton ("Jump");
-
-		Move (velocityX);
-		Jump (pressedJump);
+		FallFaster ();
 	}
 
 	/// <summary>
-	/// Move the specified velocityX.
+	/// Make the character jump higher when the jump button is held down.
+	/// Otherwises make the character jump lower.
 	/// </summary>
-	/// 
-	/// <param name="velocityX">
-	/// Velocity of the character in the x direction.
-	/// </param>
-	private void Move(float velocityX)
+	private void FallFaster()
 	{
-		m_rigidbody2D.velocity = new Vector2 (velocityX, m_rigidbody2D.velocity.y);
-
-		// Flip the character depending on which direction it is facing
-		if (velocityX > 0 && !m_facingRight)
+		if (m_rigidbody2D.velocity.y < 0f)
 		{
-			Flip ();
+			// Low jump
+			m_rigidbody2D.velocity += Vector2.up * HighFallMultiplier * Physics2D.gravity.y * Time.deltaTime;
 		}
-		else if (velocityX < 0 && m_facingRight)
+		else if (m_rigidbody2D.velocity.y > 0f && !Input.GetButton ("Jump"))
 		{
-			Flip ();
-		}
-	}
-
-	/// <summary>
-	/// Make the character jump.
-	/// </summary>
-	/// 
-	/// <param name="pressedJump">
-	/// Flag indicating if the player presses the jump button.
-	/// </param>
-	private void Jump(bool pressedJump)
-	{
-		if (pressedJump && m_isGrounded)
-		{
-			m_rigidbody2D.velocity = Vector2.up * jumpPower;
-			m_isGrounded = false;
+			// High jump
+			m_rigidbody2D.velocity += Vector2.up * LowFallMultiplier * Physics2D.gravity.y * Time.deltaTime;
 		}
 	}
 
@@ -119,7 +153,8 @@ public class PlayerMovement : MonoBehaviour
 	/// </summary>
 	/// 
 	/// <remarks>
-	/// Set the m_isGrounded flag to true.
+	/// Set the m_isGrounded flag to true when the bottom collider
+	/// hits an object.
 	/// </remarks>
 	/// 
 	/// <param name="other">
@@ -127,7 +162,10 @@ public class PlayerMovement : MonoBehaviour
 	/// </param>
 	private void OnCollisionEnter2D(Collision2D colliedObject)
 	{
-		m_isGrounded = true;
+		if (colliedObject.otherCollider == bottomCollider)
+		{
+			m_isGrounded = true;
+		}
 	}
 
 	#endregion
