@@ -532,7 +532,6 @@ GameObject:
   - component: {fileID: 1903405146}
   - component: {fileID: 1903405150}
   - component: {fileID: 1903405149}
-  - component: {fileID: 1903405151}
   m_Layer: 0
   m_Name: Slime_0
   m_TagString: Untagged
@@ -656,28 +655,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11ec391da82c0554fb52ff38c7520528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 457919267}
---- !u!195 &1903405151
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1903405145}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.1
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 0.12
-  m_BaseOffset: 0.06
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  speed: 2
+  targetTransform: {fileID: 457919267}
 --- !u!61 &2056388431 stripped
 BoxCollider2D:
   m_PrefabParentObject: {fileID: 61757647888879582, guid: 2855e3fae6d7f1d489ee2b5bdd910bd1,

@@ -61,7 +61,11 @@ public class PlayerMovement : MonoBehaviour, IMovement
 	/// <param name="velocityX">
 	/// Velocity of the character in the x direction.
 	/// </param>
-	public void Move(float velocityX)
+	/// 
+	/// <param name="velocityY">
+	/// Unused velocity in the y direction.
+	/// </param>
+	public void Move(float velocityX, float velocityY)
 	{
 		m_rigidbody2D.velocity = new Vector2 (velocityX * speed, m_rigidbody2D.velocity.y);
 
