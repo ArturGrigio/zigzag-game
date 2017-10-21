@@ -318,9 +318,19 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114519541503589456, guid: 2855e3fae6d7f1d489ee2b5bdd910bd1,
+        type: 2}
+      propertyPath: bottomCollider
+      value: 
+      objectReference: {fileID: 958617406}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2855e3fae6d7f1d489ee2b5bdd910bd1, type: 2}
   m_IsPrefabParent: 0
+--- !u!61 &958617406 stripped
+BoxCollider2D:
+  m_PrefabParentObject: {fileID: 61757647888879582, guid: 2855e3fae6d7f1d489ee2b5bdd910bd1,
+    type: 2}
+  m_PrefabInternal: {fileID: 958617405}
 --- !u!1 &967099256
 GameObject:
   m_ObjectHideFlags: 0
