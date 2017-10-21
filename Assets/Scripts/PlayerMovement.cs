@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour 
+public class PlayerMovement : MonoBehaviour, IMovement
 {
 	#region Member Variables
 
@@ -80,12 +80,12 @@ public class PlayerMovement : MonoBehaviour
 	/// Make the character jump.
 	/// </summary>
 	/// 
-	/// <param name="pressedJump">
+	/// <param name="jumpFlag">
 	/// Flag indicating if the player presses the jump button.
 	/// </param>
-	public void Jump(bool pressedJump)
+	public void Jump(bool jumpFlag)
 	{
-		if (pressedJump && m_isGrounded)
+		if (jumpFlag && m_isGrounded)
 		{
 			m_rigidbody2D.velocity = Vector2.up * jumpPower;
 			m_isGrounded = false;
