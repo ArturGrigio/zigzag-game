@@ -532,6 +532,8 @@ GameObject:
   - component: {fileID: 1903405146}
   - component: {fileID: 1903405150}
   - component: {fileID: 1903405149}
+  - component: {fileID: 1903405151}
+  - component: {fileID: 1903405152}
   m_Layer: 0
   m_Name: Slime_0
   m_TagString: Untagged
@@ -657,6 +659,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   targetTransform: {fileID: 457919267}
+--- !u!50 &1903405151
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1903405145}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &1903405152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1903405145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59423247a4487d743910dbfb6dbca84d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullHealth: 1
 --- !u!61 &2056388431 stripped
 BoxCollider2D:
   m_PrefabParentObject: {fileID: 61757647888879582, guid: 2855e3fae6d7f1d489ee2b5bdd910bd1,

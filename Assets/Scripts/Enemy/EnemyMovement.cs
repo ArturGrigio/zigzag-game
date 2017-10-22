@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,7 +49,7 @@ public class EnemyMovement : MonoBehaviour, IMovement
 	}
 
 	/// <summary>
-	/// Make the enemy jump.
+	/// Make the enemy jump. NOT IMPELEMENTED.
 	/// </summary>
 	/// 
 	/// <param name="jumpFlag">
@@ -56,9 +57,7 @@ public class EnemyMovement : MonoBehaviour, IMovement
 	/// </param>
 	public void Jump(bool jumpFlag)
 	{
-		if (jumpFlag)
-		{
-		}
+		throw new NotImplementedException ();
 	}
 
 	#endregion

@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: 50704706125604868}
   - component: {fileID: 114600539527803288}
   - component: {fileID: 114519541503589456}
+  - component: {fileID: 114944337022437550}
   m_Layer: 0
   m_Name: PlayerCube
   m_TagString: Player
@@ -389,7 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   jumpPower: 10
-  m_bottomCollider: {fileID: 61757647888879582}
+  bottomCollider: {fileID: 61757647888879582}
 --- !u!114 &114600539527803288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -401,6 +402,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e0f987aca7e804198d6c1aa0b0afc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114944337022437550
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1988900400125262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24d46f5beb2a0ca4abeee5571f3b6e0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottomCollider: {fileID: 61757647888879582}
 --- !u!135 &135201646701484460
 SphereCollider:
   m_ObjectHideFlags: 1
