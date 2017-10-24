@@ -77,7 +77,6 @@ GameObject:
   - component: {fileID: 50704706125604868}
   - component: {fileID: 114058413332760036}
   - component: {fileID: 114187031907039016}
-  - component: {fileID: 114908277605988358}
   m_Layer: 2
   m_Name: PlayerCube
   m_TagString: Player
@@ -336,7 +335,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.004352927, y: -0.00079739094}
+  m_Offset: {x: -0.0030433536, y: 0.0014404058}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -347,7 +346,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.0459192, y: 1.0015948}
+  m_Size: {x: 2.0852041, y: 0.9971192}
   m_EdgeRadius: 0
 --- !u!68 &68345905518223520
 EdgeCollider2D:
@@ -364,8 +363,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.97632563, y: -0.49354792}
-  - {x: 0.99168265, y: -0.49060702}
+  - {x: -0.9550781, y: -0.5010071}
+  - {x: 0.94838965, y: -0.4980662}
 --- !u!114 &114058413332760036
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -390,14 +389,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   jumpPower: 10
---- !u!114 &114908277605988358
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1988900400125262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c3207b1b68048348b201b23835e53bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

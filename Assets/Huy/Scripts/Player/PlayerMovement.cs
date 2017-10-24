@@ -203,6 +203,13 @@ namespace ZigZag
 					Flip ();
 				}
 
+				// Deal jump damage here
+				Health health = collision.gameObject.GetComponent<Health> ();
+				if (health != null)
+				{
+					health.ReceiveDamage (1f);
+				}
+
 				m_isGrounded = true;
 				StandOnSlope ();
 			}
