@@ -3,10 +3,19 @@ using System.Collections;
 
 namespace ZigZag
 {
+	/// <summary>
+	/// This class handles user inputs and performs the correct
+	/// actions based on the inputs.
+	/// </summary>
 	[RequireComponent(typeof(ZigZag.PlayerMovement))]
 	public class InputController : MonoBehaviour
 	{
 	 	#region Member Variables
+
+		/// <summary>
+		/// The skill manager.
+		/// </summary>
+		public SkillManager skillManager;
 
 		/// <summary>
 		/// Flag indicating whether the jump button has been pressed.
@@ -35,7 +44,7 @@ namespace ZigZag
 			m_pressedJump = false;
 			m_playerMovement = GetComponent<PlayerMovement> ();
 		}
-		
+			
 		/// <summary>
 		/// Update is called once per frame.
 		/// </summary>
@@ -45,8 +54,25 @@ namespace ZigZag
 		/// </remarks>
 		private void Update ()
 		{
-			m_pressedJump = Input.GetButtonDown ("Jump");
-			m_velocityX = Input.GetAxis("Horizontal");
+			// Only accept input when a skill is not being executed
+			if (!skillManager.IsSkillActive)
+			{
+				m_pressedJump = Input.GetButtonDown ("Jump");
+				m_velocityX = Input.GetAxis ("Horizontal");
+
+				if (Input.GetKeyDown (KeyCode.Alpha1))
+				{
+					skillManager.Attack ();
+				}
+				else if (Input.GetKeyDown (KeyCode.Alpha2))
+				{
+					skillManager.Ground ();
+				}
+				else if (Input.GetKeyDown (KeyCode.Alpha3))
+				{
+					skillManager.Air ();
+				}
+			}
 		}
 
 		/// <summary>

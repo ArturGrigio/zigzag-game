@@ -211,7 +211,7 @@ namespace ZigZag
 				}
 
 				m_isGrounded = true;
-				StandOnSlope ();
+//				StandOnSlope ();
 			}
 		}
 

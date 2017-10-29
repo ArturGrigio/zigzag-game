@@ -77,6 +77,9 @@ GameObject:
   - component: {fileID: 50704706125604868}
   - component: {fileID: 114058413332760036}
   - component: {fileID: 114187031907039016}
+  - component: {fileID: 114908985421077678}
+  - component: {fileID: 114151044353742020}
+  - component: {fileID: 114976028543675950}
   m_Layer: 2
   m_Name: PlayerCube
   m_TagString: Player
@@ -316,7 +319,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 10
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 1
@@ -376,6 +379,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71dec81bbad37794cadf881898219244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillManager: {fileID: 0}
+--- !u!114 &114151044353742020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1988900400125262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 032609399adb7ad43aadbf5c5fc2e905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: CubeGround
 --- !u!114 &114187031907039016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -389,3 +405,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   jumpPower: 10
+--- !u!114 &114908985421077678
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1988900400125262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36848b67b304c546ad3b2a1f50de326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: CubeAttack
+--- !u!114 &114976028543675950
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1988900400125262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 163bd87ec66e0574db36d194d1a6d20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: CubeAir
