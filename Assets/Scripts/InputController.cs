@@ -52,7 +52,7 @@ public class InputController : MonoBehaviour
 	/// </summary>
 	private void FixedUpdate()
 	{
-		m_playerMovement.Move (m_velocityX);
+		m_playerMovement.Move (m_velocityX, 0f);
 		m_playerMovement.Jump (m_pressedJump);
 	}
 
