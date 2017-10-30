@@ -13,7 +13,7 @@ namespace ZigZag
 	{
 		#region Member Variables
 
-		public GameObject currentShape;
+		public Player currentShape;
 
 		private List<Skill> m_skills;
 		private Skill m_attack;
@@ -31,6 +31,7 @@ namespace ZigZag
 		{
 			get
 			{
+				return false; //Add skills to player objects and remove
 				return (m_attack.IsActive || m_ground.IsActive || m_air.IsActive);
 			}
 		}
@@ -77,9 +78,19 @@ namespace ZigZag
 		#region Private Methods
 
 		/// <summary>
+		/// Sets the current shape and updates internal parameters to handle it.
+		/// </summary>
+		/// <param name="p">P.</param>
+		public void SetCurrentShape(Player p)
+		{
+			currentShape = p;
+			updateSkills ();
+		}
+
+		/// <summary>
 		/// Initialize member variables.
 		/// </summary>
-		private void Awake ()
+		private void updateSkills ()
 		{
 			m_skills = new List<Skill> (currentShape.GetComponents<Skill> ());
 
@@ -88,11 +99,6 @@ namespace ZigZag
 			m_air = m_skills.Find (skill => skill.SkillType == SkillTypeEnum.Air);
 		}
 
-		// TODO
-		private void ChangeShapeHandler(object sender, Event args)
-		{
-			throw new NotImplementedException ();
-		}
 
 		#endregion
 	}

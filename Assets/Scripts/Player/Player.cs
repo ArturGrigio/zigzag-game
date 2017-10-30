@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ZigZag
 {
-	public class PlayerMovement : MonoBehaviour, IMovement
+	public class Player : MonoBehaviour, IMovement
 	{
 		#region Member Variables
 
@@ -160,27 +160,6 @@ namespace ZigZag
 		}
 
 		/// <summary>
-		/// Make the character to stand on a slope naturally (titled).
-		/// </summary>
-		private void StandOnSlope()
-		{
-			RaycastHit2D hit = Physics2D.Raycast (transform.position, Vector2.down, 1f);
-			if (hit.collider != null)
-			{
-				// If the normal vector is NOT (0, 1) then it means the
-				// character is standing on a slope
-				if (hit.normal.x != Vector2.up.x || hit.normal.y != Vector2.up.y)
-				{
-					m_rigidbody2D.constraints = RigidbodyConstraints2D.None;
-				}
-				else
-				{
-					m_rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
-				}
-			}
-		}
-
-		/// <summary>
 		/// Raises the collision enter event.
 		/// </summary>
 		/// 
@@ -194,6 +173,10 @@ namespace ZigZag
 		/// </param>
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
+			if (collision.gameObject.tag == "Platform") 
+			{
+				m_isGrounded = true;
+			}
 			if (collision.otherCollider == m_edgeCollider2D)
 			{
 				// Fix the z rotation if it is not 0 when the edge collider
@@ -209,9 +192,15 @@ namespace ZigZag
 				{
 					health.ReceiveDamage (1f);
 				}
+			}
+		}
 
-				m_isGrounded = true;
-//				StandOnSlope ();
+		void OnCollisionExit2D(Collision2D collision)
+		{
+			if (collision.gameObject.tag == "Platform") 
+			{
+				m_isGrounded = false;
+				Debug.Log ("Left ground");
 			}
 		}
 
