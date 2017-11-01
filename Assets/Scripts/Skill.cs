@@ -8,7 +8,7 @@ namespace ZigZag
 	/// </summary>
 	public abstract class Skill : MonoBehaviour
 	{
-		#region Member Variables
+		#region Public Variables
 
 		/// <summary>
 		/// The name of the air skill.
@@ -16,6 +16,9 @@ namespace ZigZag
 		[Tooltip("Name of the skill")]
 		public string skillName = "skill";
 
+		#endregion
+
+		#region Private/Protected Variables
 		/// <summary>
 		/// Flag indicating if the character is on the ground or not.
 		/// </summary>
@@ -81,6 +84,7 @@ namespace ZigZag
 
 		#endregion
 
+		#region Public Methods
 		/// <summary>
 		/// Activate the skill and begin any sort of animations or movements.
 		/// </summary>
@@ -92,6 +96,10 @@ namespace ZigZag
 		/// </summary>
 		public abstract void Deactivate();
 
+		#endregion
+
+		#region Unity Methods
+
 		/// <summary>
 		/// Initialize member variables.
 		/// </summary>
@@ -102,5 +110,7 @@ namespace ZigZag
 			m_isGrounded = true;
 			m_rigidbody2D = GetComponent<Rigidbody2D> ();
 		}
+
+		#endregion
 	}
 }

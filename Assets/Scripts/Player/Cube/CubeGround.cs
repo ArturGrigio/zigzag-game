@@ -26,7 +26,7 @@ namespace ZigZag
 
 		#endregion
 
-		#region Private/Protected Methods
+		#region Unity Methods
 
 		/// <summary>
 		/// Initialize member variables.
@@ -47,7 +47,9 @@ namespace ZigZag
 				transform.Translate (new Vector2 (0f, 0.1f));
 			}
 		}
+		#endregion
 
+		#region Private/Protected Methods
 		/// <summary>
 		/// Moves up coroutine.
 		/// </summary>

@@ -5,26 +5,34 @@ namespace ZigZag
 {
 	public class PlayerHealth : Health
 	{
+		#region Unity Methods
+
 		private void Awake()
 		{
-			currentHealth = fullHealth;
+			currentHealth = FullHealth;
 		}
 
-		protected override void SetHealth(float scaledDamage)
+		#endregion
+
+		#region Private/Protected Methods
+
+		protected override void setHealth(float scaledDamage)
 		{
 		}
 
 		public override void ReceiveDamage(float damage)
 		{
 			currentHealth -= damage;
-			float scaledDamage = currentHealth / fullHealth;
+			float scaledDamage = currentHealth / FullHealth;
 
-			SetHealth (scaledDamage);
+			setHealth (scaledDamage);
 		}
 
-		protected override void Die()
+		protected override void die()
 		{
 			// Load the Game Over UI or scene
 		}
+
+		#endregion
 	}
 }

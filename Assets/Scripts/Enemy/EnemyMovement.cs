@@ -7,7 +7,7 @@ namespace ZigZag
 {
 	public class EnemyMovement : MonoBehaviour, IMovement
 	{
-		#region Member Variables
+		#region Public Variables
 
 		/// <summary>
 		/// Enemy movement speed.
@@ -20,6 +20,10 @@ namespace ZigZag
 		/// </summary>
 		[Tooltip("Reference to a target transform")]
 		public Transform targetTransform;
+
+		#endregion
+
+		#region Private/Protected Variables
 
 		/// <summary>
 		/// Flag indicating if the enemy is touching the player.
@@ -64,7 +68,7 @@ namespace ZigZag
 
 		#endregion
 
-		#region Private Methods
+		#region Unity Methods
 
 		/// <summary>
 		/// Initialize member variables.

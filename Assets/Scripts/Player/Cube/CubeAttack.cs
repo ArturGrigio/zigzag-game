@@ -26,7 +26,7 @@ namespace ZigZag
 
 		#endregion
 
-		#region Private/Protected Methods
+		#region Unity Methods
 
 		/// <summary>
 		/// Initialize member variables.
@@ -47,6 +47,10 @@ namespace ZigZag
 				transform.Rotate (new Vector3 (0.0f, 0.0f, 10.0f));
 			}
 		}
+
+		#endregion
+
+		#region Private/Protected Methods
 
 		/// <summary>
 		/// The rotation coroutine.

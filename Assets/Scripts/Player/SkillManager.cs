@@ -11,9 +11,13 @@ namespace ZigZag
 	/// </summary>
 	public sealed class SkillManager : MonoBehaviour
 	{
-		#region Member Variables
+		#region Public Variables
 
-		public Player currentShape;
+		public Player CurrentShape;
+
+		#endregion
+
+		#region Private/Protected Variables
 
 		private List<Skill> m_skills;
 		private Skill m_attack;
@@ -31,7 +35,7 @@ namespace ZigZag
 		{
 			get
 			{
-				return false; //Add skills to player objects and remove
+				return false; //TODO: Add skills to player objects and remove this line.
 				return (m_attack.IsActive || m_ground.IsActive || m_air.IsActive);
 			}
 		}
@@ -73,26 +77,26 @@ namespace ZigZag
 			}
 		}
 
-		#endregion
-
-		#region Private Methods
-
 		/// <summary>
 		/// Sets the current shape and updates internal parameters to handle it.
 		/// </summary>
 		/// <param name="p">P.</param>
 		public void SetCurrentShape(Player p)
 		{
-			currentShape = p;
+			CurrentShape = p;
 			updateSkills ();
 		}
+
+		#endregion
+
+		#region Private/Protected Methods
 
 		/// <summary>
 		/// Initialize member variables.
 		/// </summary>
 		private void updateSkills ()
 		{
-			m_skills = new List<Skill> (currentShape.GetComponents<Skill> ());
+			m_skills = new List<Skill> (CurrentShape.GetComponents<Skill> ());
 
 			m_attack = m_skills.Find (skill => skill.SkillType == SkillTypeEnum.Attack);
 			m_ground = m_skills.Find (skill => skill.SkillType == SkillTypeEnum.Ground);

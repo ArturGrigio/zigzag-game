@@ -9,17 +9,21 @@ namespace ZigZag
 	/// </summary>
 	public class InputController : MonoBehaviour
 	{
-	 	#region Member Variables
+	 	#region Public Variables
 
 		/// <summary>
 		/// The skill manager.
 		/// </summary>
-		public SkillManager skillManager;
+		public SkillManager SkillManager;
 
 		/// <summary>
 		/// The player manager.
 		/// </summary>
 		public PlayerManager PlayerManager;
+
+		#endregion
+
+		#region Private/Protected Variables
 
 		/// <summary>
 		/// Flag indicating whether the jump button has been pressed.
@@ -33,7 +37,7 @@ namespace ZigZag
 
 		#endregion
 
-		#region Private Methods
+		#region Unity Methods
 
 		/// <summary>
 		/// Initialize member variables.
@@ -45,7 +49,7 @@ namespace ZigZag
 			
 		private void Start()
 		{
-			skillManager.SetCurrentShape (PlayerManager.CurrentShape);
+			SkillManager.SetCurrentShape (PlayerManager.CurrentShape);
 		}
 
 		/// <summary>
@@ -58,12 +62,12 @@ namespace ZigZag
 		private void Update ()
 		{
 			// Only accept input when a skill is not being executed
-			if (!skillManager.IsSkillActive)
+			if (!SkillManager.IsSkillActive)
 			{
 				if (Input.GetButtonDown ("Swap Character")) 
 				{
 					PlayerManager.NextPlayer ();
-					skillManager.SetCurrentShape (PlayerManager.CurrentShape);
+					SkillManager.SetCurrentShape (PlayerManager.CurrentShape);
 				}
 
 				m_pressedJump = Input.GetButtonDown ("Jump");
@@ -71,15 +75,15 @@ namespace ZigZag
 
 				if (Input.GetButtonDown ("Attack"))
 				{
-					skillManager.Attack ();
+					SkillManager.Attack ();
 				}
 				else if (Input.GetButtonDown ("Ground Skill"))
 				{
-					skillManager.Ground ();
+					SkillManager.Ground ();
 				}
 				else if (Input.GetButtonDown ("Air Skill"))
 				{
-					skillManager.Air ();
+					SkillManager.Air ();
 				}
 
 			}

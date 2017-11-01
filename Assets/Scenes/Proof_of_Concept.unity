@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 221160243}
   - component: {fileID: 221160245}
   m_Layer: 0
-  m_Name: InputManager
+  m_Name: InputController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71dec81bbad37794cadf881898219244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillManager: {fileID: 1592915825}
+  SkillManager: {fileID: 1592915825}
   PlayerManager: {fileID: 1925822455}
 --- !u!1 &360909528
 GameObject:
@@ -830,7 +830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8922e2fc63ff6245bdd397c21d901b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentShape: {fileID: 0}
+  CurrentShape: {fileID: 0}
 --- !u!4 &1592915826
 Transform:
   m_ObjectHideFlags: 0
@@ -1159,6 +1159,11 @@ Prefab:
     - target: {fileID: 114671532866158080, guid: afdf49e375bf9de4394739b9c62d8dea,
         type: 2}
       propertyPath: m_playerManager
+      value: 
+      objectReference: {fileID: 1925822455}
+    - target: {fileID: 114671532866158080, guid: afdf49e375bf9de4394739b9c62d8dea,
+        type: 2}
+      propertyPath: PlayerManager
       value: 
       objectReference: {fileID: 1925822455}
     m_RemovedComponents: []

@@ -6,7 +6,7 @@ namespace ZigZag
 {
 	public class Player : MonoBehaviour, IMovement
 	{
-		#region Member Variables
+		#region Public Variables
 
 		/// <summary>
 		/// Character movement speed.
@@ -19,6 +19,10 @@ namespace ZigZag
 		/// </summary>
 		[Tooltip("Value indicating how high the character should jump")]
 		public float jumpPower = 1.0f;
+
+		#endregion
+
+		#region Private Variables
 
 		/// <summary>
 		/// Flag indicating whether the character is on the ground or not.
@@ -74,12 +78,12 @@ namespace ZigZag
 			if (velocityX > 0 && !m_facingRight)
 			{
 				m_facingRight = !m_facingRight;
-				Flip ();
+				flip ();
 			}
 			else if (velocityX < 0 && m_facingRight)
 			{
 				m_facingRight = !m_facingRight;
-				Flip ();
+				flip ();
 			}
 		}
 
@@ -96,13 +100,13 @@ namespace ZigZag
 			{
 				m_rigidbody2D.velocity = Vector2.up * jumpPower;
 				m_isGrounded = false;
-				Flip ();
+				flip ();
 			}
 		}
 
 		#endregion
 
-		#region Private Methods
+		#region Unity Methods
 
 		/// <summary>
 		/// Initialize member variables.
@@ -120,14 +124,63 @@ namespace ZigZag
 		/// </summary>
 		private void FixedUpdate ()
 		{
-			FallFaster ();
+			fallFaster ();
 		}
+
+		/// <summary>
+		/// Raises the collision enter event.
+		/// </summary>
+		/// 
+		/// <remarks>
+		/// Set the m_isGrounded flag to true when the bottom collider
+		/// hits an object.
+		/// </remarks>
+		/// 
+		/// <param name="collision">
+		/// The collied object.
+		/// </param>
+		void OnCollisionEnter2D(Collision2D collision)
+		{
+			if (collision.gameObject.tag == "Platform") 
+			{
+				m_isGrounded = true;
+			}
+			if (collision.otherCollider == m_edgeCollider2D)
+			{
+				// Fix the z rotation if it is not 0 when the edge collider
+				// collides with something else
+				if (transform.eulerAngles.z != 0f)
+				{
+					flip ();
+				}
+
+				// Deal jump damage here
+				Health health = collision.gameObject.GetComponent<Health> ();
+				if (health != null)
+				{
+					health.ReceiveDamage (1f);
+				}
+			}
+		}
+
+		void OnCollisionExit2D(Collision2D collision)
+		{
+			if (collision.gameObject.tag == "Platform") 
+			{
+				m_isGrounded = false;
+				Debug.Log ("Left ground");
+			}
+		}
+
+		#endregion
+
+		#region Private/Protected Methods
 
 		/// <summary>
 		/// Make the character jump higher when the jump button is held down.
 		/// Otherwises make the character jump lower.
 		/// </summary>
-		private void FallFaster()
+		private void fallFaster()
 		{
 			if (m_rigidbody2D.velocity.y < 0f)
 			{
@@ -149,7 +202,7 @@ namespace ZigZag
 		/// The modified rotation in this method is in degree and it z and x
 		/// rotation will be set to 0 degree.
 		/// </remarks>
-		private void Flip()
+		private void flip()
 		{
 			// Rotate 45 degree when facing right
 			// Rotate 135 degree when facing left
@@ -158,52 +211,7 @@ namespace ZigZag
 			transform.rotation = Quaternion.Euler (0f, yRotation, 0f);
 			transform.Rotate (Vector3.left * Time.deltaTime);
 		}
-
-		/// <summary>
-		/// Raises the collision enter event.
-		/// </summary>
-		/// 
-		/// <remarks>
-		/// Set the m_isGrounded flag to true when the bottom collider
-		/// hits an object.
-		/// </remarks>
-		/// 
-		/// <param name="collision">
-		/// The collied object.
-		/// </param>
-		private void OnCollisionEnter2D(Collision2D collision)
-		{
-			if (collision.gameObject.tag == "Platform") 
-			{
-				m_isGrounded = true;
-			}
-			if (collision.otherCollider == m_edgeCollider2D)
-			{
-				// Fix the z rotation if it is not 0 when the edge collider
-				// collides with something else
-				if (transform.eulerAngles.z != 0f)
-				{
-					Flip ();
-				}
-
-				// Deal jump damage here
-				Health health = collision.gameObject.GetComponent<Health> ();
-				if (health != null)
-				{
-					health.ReceiveDamage (1f);
-				}
-			}
-		}
-
-		void OnCollisionExit2D(Collision2D collision)
-		{
-			if (collision.gameObject.tag == "Platform") 
-			{
-				m_isGrounded = false;
-				Debug.Log ("Left ground");
-			}
-		}
-
+			
 		#endregion
 	}
 }

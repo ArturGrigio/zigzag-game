@@ -5,12 +5,9 @@ namespace ZigZag
 {
 	public class EnemyHealth : Health
 	{
-		private void Awake()
-		{
-			currentHealth = fullHealth;
-		}
 
-		protected override void SetHealth(float scaledDamage)
+		#region Private/Protected Methods
+		protected override void setHealth(float scaledDamage)
 		{
 		}
 
@@ -20,18 +17,30 @@ namespace ZigZag
 
 			if (currentHealth <= 0f)
 			{
-				Die ();
+				die ();
 			}
 			else
 			{
-				float scaledDamage = currentHealth / fullHealth;
-				SetHealth (scaledDamage);
+				float scaledDamage = currentHealth / FullHealth;
+				setHealth (scaledDamage);
 			}
 		}
 
-		protected override void Die()
+		protected override void die()
 		{
 			Destroy (gameObject);
 		}
+
+		#endregion
+
+		#region Unity Methods
+
+		private void Awake()
+		{
+			currentHealth = FullHealth;
+		}
+
+		#endregion
+
 	}
 }
