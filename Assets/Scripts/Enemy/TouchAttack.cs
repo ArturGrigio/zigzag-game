@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 namespace ZigZag
@@ -14,7 +15,7 @@ namespace ZigZag
 		}
 		
 		// Update is called once per frame
-		void Update ()
+		private void Update ()
 		{
 			// Constantly deal damage to the player if enemy and player are touching each other
 			if (m_enemyMovement.TouchTarget)
@@ -33,6 +34,8 @@ namespace ZigZag
 				}
 			}
 		}
+
+
 	}
 }
 

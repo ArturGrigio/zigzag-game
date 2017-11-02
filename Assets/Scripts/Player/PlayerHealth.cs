@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 namespace ZigZag
@@ -6,20 +7,15 @@ namespace ZigZag
 	public class PlayerHealth : Health
 	{
 		public GameObject healthBar;
+		public Image redPanel;
+		private bool m_coroutineRunning;
 
 		#region Unity Methods
 
 		private void Awake()
 		{
 			currentHealth = FullHealth;
-		}
-
-		private void Update()
-		{
-			if (Input.GetKeyDown (KeyCode.A))
-			{
-				ReceiveDamage (10f);
-			}
+			m_coroutineRunning = false;
 		}
 
 		#endregion
@@ -45,6 +41,12 @@ namespace ZigZag
 				scaledDamage = currentHealth / FullHealth;
 			}
 
+			// Only run 1 coroutine at a time
+			if (!m_coroutineRunning)
+			{
+				StartCoroutine (flashScreenCoroutine ());
+			}
+
 			setHealth (scaledDamage);
 		}
 
@@ -52,6 +54,13 @@ namespace ZigZag
 
 		#region Private/Protected Methods
 
+		/// <summary>
+		/// Set the player health on the Canvas.
+		/// </summary>
+		/// 
+		/// <param name="scaledDamage">
+		/// The amount of health to set to.
+		/// </param>
 		protected override void setHealth(float scaledDamage)
 		{
 			float y = healthBar.transform.localScale.y;
@@ -61,7 +70,23 @@ namespace ZigZag
 
 		protected override void die()
 		{
-			// Load the Game Over UI or scene
+			// TODO: Load the Game Over UI or scene
+		}
+
+		/// <summary>
+		/// Flash the screen red when player is damaged
+		/// </summary>
+		/// 
+		/// <returns>The coroutine.</returns>
+		private IEnumerator flashScreenCoroutine()
+		{
+			m_coroutineRunning = true;
+			redPanel.enabled = true;
+
+			yield return new WaitForSeconds (0.09f);
+
+			redPanel.enabled = false;
+			m_coroutineRunning = false;
 		}
 
 		#endregion
