@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ZigZag
 {
-	public class EnemyMovement : MonoBehaviour, IMovement
+	public class EnemyMovement : MonoBehaviour
 	{
 		#region Public Variables
 
@@ -28,7 +28,16 @@ namespace ZigZag
 		/// <summary>
 		/// Flag indicating if the enemy is touching the player.
 		/// </summary>
-		private bool m_touchtarget;
+		private bool m_touchTarget;
+
+		#endregion
+
+		#region Public Properties
+
+		public bool TouchTarget 
+		{
+			get { return m_touchTarget; }
+		}
 
 		#endregion
 
@@ -47,7 +56,7 @@ namespace ZigZag
 		/// </param>
 		public void Move(float x, float y)
 		{
-			if (!m_touchtarget)
+			if (!m_touchTarget)
 			{
 				Vector2 targetPosition = new Vector2 (x, y);
 				transform.position = Vector2.MoveTowards (transform.position, targetPosition, speed * Time.deltaTime);
@@ -75,7 +84,7 @@ namespace ZigZag
 		/// </summary>
 		private void Awake()
 		{
-			m_touchtarget = false;
+			m_touchTarget = false;
 		}
 
 		/// <summary>
@@ -91,15 +100,15 @@ namespace ZigZag
 		/// Raises the collision enter2 d event.
 		/// </summary>
 		/// 
-		/// <param name="colliedObject">
-		/// Collied object.
+		/// <param name="collision">
+		/// Collision data.
 		/// </param>
-		private void OnCollisionEnter2D(Collision2D colliedObject)
+		private void OnCollisionEnter2D(Collision2D collision)
 		{
 			// Deal damage to target if the collied object is the target
-			if (colliedObject.gameObject.CompareTag ("Player"))
+			if (collision.gameObject.CompareTag ("Player"))
 			{
-				m_touchtarget = true;
+				m_touchTarget = true;
 			}
 		}
 
@@ -107,14 +116,14 @@ namespace ZigZag
 		/// Raises the collision exit2 d event.
 		/// </summary>
 		/// 
-		/// <param name="colliedObject">
+		/// <param name="collision">
 		/// Collied object.
 		/// </param>
-		private void OnCollisionExit2D(Collision2D colliedObject)
+		private void OnCollisionExit2D(Collision2D collision)
 		{
-			if (colliedObject.gameObject.CompareTag ("Player"))
+			if (collision.gameObject.CompareTag ("Player"))
 			{
-				m_touchtarget = false;	
+				m_touchTarget = false;	
 			}
 		}
 

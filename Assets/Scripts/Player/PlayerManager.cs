@@ -19,6 +19,8 @@ namespace ZigZag
 
 		private Rigidbody2D m_rb2D;
 
+		private PlayerHealth m_playerHealth;
+
 		private List<Player> m_players = new List<Player>();
 
 		#endregion
@@ -26,9 +28,10 @@ namespace ZigZag
 		#region Unity Methods
 
 		// Use this for initialization
-		// Update is called once per frame
 		void Start()
 		{
+			m_playerHealth = GetComponent<PlayerHealth> ();
+
 			//Disable collision between player objects and set active player
 			foreach (Transform t in transform) 
 			{
@@ -63,6 +66,11 @@ namespace ZigZag
 		public void NextPlayer()
 		{
 			changePlayer ((m_activeIndex + 1) % m_players.Count);
+		}
+
+		public void ReceiveDamage(float damage)
+		{
+			m_playerHealth.ReceiveDamage (damage);
 		}
 
 		#endregion
