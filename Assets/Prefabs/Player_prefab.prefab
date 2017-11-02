@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23030871523323586}
   - component: {fileID: 61562052424962942}
   - component: {fileID: 114248977926447596}
+  - component: {fileID: 33356899705345280}
   m_Layer: 0
   m_Name: Player_prefab
   m_TagString: Player
@@ -36,13 +37,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1838772706629994}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 1.654, y: 0.5, z: -0.955}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
 --- !u!23 &23030871523323586
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -77,6 +78,13 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!33 &33356899705345280
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1838772706629994}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!50 &50217420341612362
 Rigidbody2D:
   serializedVersion: 4
@@ -90,13 +98,13 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 5
   m_LinearDrag: 1
-  m_AngularDrag: 0.05
+  m_AngularDrag: 10
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 03c17e20befc79b4d8a47b9a0bf92fbc, type: 2}
-  m_Interpolate: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!61 &61562052424962942
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -105,11 +113,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 1838772706629994}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 03c17e20befc79b4d8a47b9a0bf92fbc, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0017100573, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -120,7 +128,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.0314236, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &114248977926447596
 MonoBehaviour:
@@ -133,5 +141,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd30d3393fe0a65408a5bea1d216a95a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  jumpPower: 1
+  speed: 10
+  jumpPower: 15

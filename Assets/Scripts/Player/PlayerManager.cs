@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace ZigZag 
 {		
-	public class PlayerManager : MonoBehaviour {
-
+	public class PlayerManager : MonoBehaviour 
+	{
 		#region Public Variables
 
 		[Tooltip("Sets the starting player object when set in a scene. Indicates the active player object at runtime.")]
@@ -30,7 +30,8 @@ namespace ZigZag
 		void Start()
 		{
 			//Disable collision between player objects and set active player
-			foreach (Transform t in transform) {
+			foreach (Transform t in transform) 
+			{
 				Player player = t.gameObject.GetComponent<Player> ();
 				if (player != null) 
 				{
@@ -38,13 +39,16 @@ namespace ZigZag
 					{
 						Physics2D.IgnoreCollision (m_players [i].GetComponent<Collider2D> (), player.GetComponent<Collider2D> ());
 					}
+
 					if (player == CurrentShape) 
 					{
 						m_activeIndex = m_players.Count;
 					}
+
 					m_players.Add (player);
 				}
 			}
+
 			changePlayer (m_activeIndex);
 		}
 
@@ -69,7 +73,8 @@ namespace ZigZag
 		/// Sets the active player object.
 		/// </summary>
 		/// <param name="index">Index of desired player object.</param>
-		private void changePlayer(int index) {
+		private void changePlayer(int index) 
+		{
 			m_activeIndex = index;
 			CurrentShape = m_players [m_activeIndex];
 			m_rb2D = CurrentShape.GetComponent<Rigidbody2D> ();

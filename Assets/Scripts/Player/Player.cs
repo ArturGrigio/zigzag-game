@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ZigZag
 {
-	public class Player : MonoBehaviour, IMovement
+	public class Player : MonoBehaviour
 	{
 		#region Public Variables
 
@@ -77,12 +77,10 @@ namespace ZigZag
 			// Flip the character depending on which direction it is facing
 			if (velocityX > 0 && !m_facingRight)
 			{
-				m_facingRight = !m_facingRight;
 				flip ();
 			}
 			else if (velocityX < 0 && m_facingRight)
 			{
-				m_facingRight = !m_facingRight;
 				flip ();
 			}
 		}
@@ -100,7 +98,6 @@ namespace ZigZag
 			{
 				m_rigidbody2D.velocity = Vector2.up * jumpPower;
 				m_isGrounded = false;
-				flip ();
 			}
 		}
 
@@ -137,7 +134,7 @@ namespace ZigZag
 		/// </remarks>
 		/// 
 		/// <param name="collision">
-		/// The collied object.
+		/// The collision data.
 		/// </param>
 		void OnCollisionEnter2D(Collision2D collision)
 		{
@@ -145,6 +142,7 @@ namespace ZigZag
 			{
 				m_isGrounded = true;
 			}
+
 			if (collision.otherCollider == m_edgeCollider2D)
 			{
 				// Fix the z rotation if it is not 0 when the edge collider
@@ -163,12 +161,18 @@ namespace ZigZag
 			}
 		}
 
+		/// <summary>
+		/// Raises the collision exit 2D event.
+		/// </summary>
+		///
+		/// <param name="collision">
+		/// The collision data.
+		/// </param>
 		void OnCollisionExit2D(Collision2D collision)
 		{
 			if (collision.gameObject.tag == "Platform") 
 			{
 				m_isGrounded = false;
-				Debug.Log ("Left ground");
 			}
 		}
 
@@ -201,11 +205,13 @@ namespace ZigZag
 		/// <remarks>
 		/// The modified rotation in this method is in degree and it z and x
 		/// rotation will be set to 0 degree.
+		/// 
+		/// Rotate 45 degree when facing right
+		/// Rotate 135 degree when facing left
 		/// </remarks>
 		private void flip()
 		{
-			// Rotate 45 degree when facing right
-			// Rotate 135 degree when facing left
+			m_facingRight = !m_facingRight;
 			float yRotation = (m_facingRight) ? 45f : 135f;
 
 			transform.rotation = Quaternion.Euler (0f, yRotation, 0f);

@@ -7,7 +7,7 @@ namespace ZigZag
 	/// This class handles user inputs and performs the correct
 	/// actions based on the inputs.
 	/// </summary>
-	public class InputController : MonoBehaviour
+	public class InputManager : MonoBehaviour
 	{
 	 	#region Public Variables
 
@@ -85,7 +85,6 @@ namespace ZigZag
 				{
 					SkillManager.Air ();
 				}
-
 			}
 		}
 
