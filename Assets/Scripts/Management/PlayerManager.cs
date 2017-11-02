@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace ZigZag 
 {		
-	public class PlayerManager : MonoBehaviour {
-
+	public class PlayerManager : MonoBehaviour 
+	{
 		#region Public Variables
 
 		[Tooltip("Main camera which follows the active player")]
