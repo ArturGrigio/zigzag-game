@@ -20,6 +20,18 @@ namespace Huy
 		[Tooltip("Value indicating how high the character should jump")]
 		public float jumpPower = 1.0f;
 
+		/// <summary>
+		/// The left rotation.
+		/// </summary>
+		[Tooltip("The rotation when the character faces to the left direction")]
+		public float leftRotation;
+
+		/// <summary>
+		/// The right rotation.
+		/// </summary>
+		[Tooltip("The rotation when the character faces to the right direction")]
+		public float rightRotation;
+
 		#endregion
 
 		#region Private Variables
@@ -60,6 +72,21 @@ namespace Huy
 		/// </summary>
 		private EdgeCollider2D m_edgeCollider2D;
 
+		#endregion
+
+		#region Public Properties
+
+		public bool IsGrounded 
+		{
+			get { return m_isGrounded; }
+			set { m_isGrounded = value; }
+		}
+
+		public bool IsSliding 
+		{
+			set { m_isSliding = value; }
+		}
+			
 		#endregion
 
 		#region Public Methods
@@ -104,6 +131,23 @@ namespace Huy
 				m_rigidbody2D.velocity = Vector2.up * jumpPower;
 				m_isGrounded = false;
 			}
+		}
+
+		/// <summary>
+		/// Detect if the player has collided to a wall.
+		/// </summary>
+		/// 
+		/// <returns>
+		/// True if wall was collided. False otherwise.
+		/// </returns>
+		public bool WallCollided()
+		{
+			// Cast a ray in the direction the character is facing in 
+			// order to detect a wall
+			Vector2 direction = (m_facingRight) ? Vector2.right : Vector2.left;
+			RaycastHit2D hit = Physics2D.Raycast (transform.position, direction, 1f);
+
+			return (hit.normal == Vector2.left || hit.normal == Vector2.right);
 		}
 
 		#endregion
@@ -168,9 +212,6 @@ namespace Huy
 					health.ReceiveDamage (1f);
 				}
 			}
-
-			wallJump ();
-			slideDownWall ();
 		}
 
 		/// <summary>
@@ -225,50 +266,10 @@ namespace Huy
 		private void flip()
 		{
 			m_facingRight = !m_facingRight;
-			float yRotation = (m_facingRight) ? 45f : 135f;
+			float yRotation = (m_facingRight) ? rightRotation : leftRotation;
 
 			transform.rotation = Quaternion.Euler (0f, yRotation, 0f);
 			transform.Rotate (Vector3.left * Time.deltaTime);
-		}
-
-		/// <summary>
-		/// Enable the wall jump mechanic.
-		/// </summary>
-		private void wallJump()
-		{
-			if (wallCollided())
-			{
-				m_isGrounded = true;
-			}
-		}
-
-		/// <summary>
-		/// Enable the sliding down wall mechanic.
-		/// </summary>
-		private void slideDownWall()
-		{
-			if (wallCollided ())
-			{
-				m_rigidbody2D.velocity = new Vector2 (m_rigidbody2D.velocity.x, -Time.deltaTime);
-				m_isSliding = true;
-			}
-		}
-
-		/// <summary>
-		/// Detect if the player has collided to a wall.
-		/// </summary>
-		/// 
-		/// <returns>
-		/// True if wall was collided. False otherwise.
-		/// </returns>
-		private bool wallCollided()
-		{
-			// Cast a ray in the direction the character is facing in 
-			// order to detect a wall
-			Vector2 direction = (m_facingRight) ? Vector2.right : Vector2.left;
-			RaycastHit2D hit = Physics2D.Raycast (transform.position, direction, 1f);
-
-			return (hit.normal == Vector2.left || hit.normal == Vector2.right);
 		}
 			
 		#endregion

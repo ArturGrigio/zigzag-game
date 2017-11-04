@@ -19,10 +19,6 @@ namespace Huy
 		#endregion
 
 		#region Private/Protected Variables
-		/// <summary>
-		/// Flag indicating if the character is on the ground or not.
-		/// </summary>
-		protected bool m_isGrounded;
 
 		/// <summary>
 		/// Flag indicating if the skill is currently being executed.
@@ -44,6 +40,11 @@ namespace Huy
 		/// </summary>
 		protected Rigidbody2D m_rigidbody2D;
 
+		/// <summary>
+		/// The player component.
+		/// </summary>
+		protected Player m_player;
+
 		#endregion
 
 		#region Public Properties
@@ -63,14 +64,6 @@ namespace Huy
 		{
 			get { return m_isEnabled; }
 			set { m_isEnabled = value; }
-		}
-
-		/// <summary>
-		/// Gets a value indicating whether the character is grounded.
-		/// </summary>
-		public bool IsGrounded 
-		{
-			get { return m_isGrounded; }
 		}
 
 		/// <summary>
@@ -106,9 +99,9 @@ namespace Huy
 		protected virtual void Awake()
 		{
 			m_isActive = false;
-			m_isEnabled = false;
-			m_isGrounded = true;
+			m_isEnabled = true;
 			m_rigidbody2D = GetComponent<Rigidbody2D> ();
+			m_player = GetComponent<Player> ();
 		}
 
 		#endregion
