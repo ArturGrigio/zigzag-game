@@ -2,25 +2,25 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace ZigZag
+namespace Huy
 {
 	public class TouchAttack : MonoBehaviour
 	{
-		private EnemyMovement m_enemyMovement;
+		private Enemy m_enemy;
 
 		// Use this for initialization
 		private void Awake ()
 		{
-			m_enemyMovement = GetComponent<EnemyMovement> ();
+			m_enemy = GetComponent<Enemy> ();
 		}
 		
 		// Update is called once per frame
 		private void Update ()
 		{
 			// Constantly deal damage to the player if enemy and player are touching each other
-			if (m_enemyMovement.TouchTarget)
+			if (m_enemy.TouchTarget)
 			{
-				Transform parentTransform = m_enemyMovement.TargetTransform.parent;
+				Transform parentTransform = m_enemy.TargetTransform.parent;
 
 				if (parentTransform != null)
 				{

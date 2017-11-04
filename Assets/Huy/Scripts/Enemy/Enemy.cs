@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ZigZag
+namespace Huy
 {
-	public class EnemyMovement : MonoBehaviour
+	public class Enemy : MonoBehaviour
 	{
 		#region Public Variables
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ZigZag
+namespace Huy
 {
 	public class Camera2DFollow : MonoBehaviour
 	{
