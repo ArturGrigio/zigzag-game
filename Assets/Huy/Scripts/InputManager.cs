@@ -92,9 +92,12 @@ namespace Huy
 		/// Use for updating physics movement in a fixed frame rate.
 		/// </summary>
 		private void FixedUpdate()
-		{			
-			PlayerManager.CurrentShape.Move (m_velocityX, 0f);
-			PlayerManager.CurrentShape.Jump (m_pressedJump);
+		{		
+			if (!SkillManager.IsSkillActive)
+			{
+				PlayerManager.CurrentShape.Move (m_velocityX, 0f);
+				PlayerManager.CurrentShape.Jump (m_pressedJump);
+			}
 		}
 
 		#endregion

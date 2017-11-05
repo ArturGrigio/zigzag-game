@@ -86,6 +86,11 @@ namespace Huy
 		{
 			set { m_isSliding = value; }
 		}
+
+		public bool FacingRight
+		{
+			get { return m_facingRight; }
+		}
 			
 		#endregion
 

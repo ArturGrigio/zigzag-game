@@ -4,18 +4,46 @@ using System.Collections;
 
 namespace Huy
 {
+	/// <summary>
+	/// Represent the player health and handle receiving damage.
+	/// This class is shared among all objects.
+	/// </summary>
 	public class PlayerHealth : Health
 	{
-		public GameObject healthBar;
-		public Image redPanel;
-		private bool m_coroutineRunning;
+		#region Public Variables
+
+		/// <summary>
+		/// Reference to the green health bar.
+		/// </summary>
+		[Tooltip("Reference to the green health bar")]
+		public GameObject HealthBar;
+
+		/// <summary>
+		/// The red panel used for when player is damaged.
+		/// </summary>
+		[Tooltip("The red panel used for when player is damaged")]
+		public Image RedPanel;
+
+		#endregion
+
+		#region Private Variables
+
+		/// <summary>
+		/// Flag indicating whether the flashing red coroutine is running or not.
+		/// </summary>
+		private bool m_flashingRedCoroutineRunning;
+
+		#endregion
 
 		#region Unity Methods
 
+		/// <summary>
+		/// Initialize member variables.
+		/// </summary>
 		private void Awake()
 		{
 			currentHealth = FullHealth;
-			m_coroutineRunning = false;
+			m_flashingRedCoroutineRunning = false;
 		}
 
 		#endregion
@@ -42,7 +70,7 @@ namespace Huy
 			}
 
 			// Only run 1 coroutine at a time
-			if (!m_coroutineRunning)
+			if (!m_flashingRedCoroutineRunning)
 			{
 				StartCoroutine (flashScreenCoroutine ());
 			}
@@ -63,14 +91,15 @@ namespace Huy
 		/// </param>
 		protected override void setHealth(float scaledDamage)
 		{
-			float y = healthBar.transform.localScale.y;
-			float z = healthBar.transform.localScale.z;
-			healthBar.transform.localScale = new Vector3 (scaledDamage, y, z);
+			float y = HealthBar.transform.localScale.y;
+			float z = HealthBar.transform.localScale.z;
+			HealthBar.transform.localScale = new Vector3 (scaledDamage, y, z);
 		}
 
 		protected override void die()
 		{
 			// TODO: Load the Game Over UI or scene
+			throw new System.NotImplementedException();
 		}
 
 		/// <summary>
@@ -80,13 +109,13 @@ namespace Huy
 		/// <returns>The coroutine.</returns>
 		private IEnumerator flashScreenCoroutine()
 		{
-			m_coroutineRunning = true;
-			redPanel.enabled = true;
+			m_flashingRedCoroutineRunning = true;
+			RedPanel.enabled = true;
 
 			yield return new WaitForSeconds (0.09f);
 
-			redPanel.enabled = false;
-			m_coroutineRunning = false;
+			RedPanel.enabled = false;
+			m_flashingRedCoroutineRunning = false;
 		}
 
 		#endregion

@@ -35,7 +35,11 @@ namespace Huy
 		{
 			get
 			{
-				return false; //TODO: Add skills to player objects and remove this line.
+				return (m_attack != null && m_attack.IsActive) ||
+					   (m_ground != null && m_ground.IsActive) ||
+					   (m_air != null && m_air.IsActive);
+				
+				//return false; //TODO: Add skills to player objects and remove this line.
 				//return (m_attack.IsActive || m_ground.IsActive || m_air.IsActive);
 			}
 		}
