@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ZigZag
 {
-	public class Health : MonoBehaviour
+	public abstract class Health : MonoBehaviour
 	{
 		#region Public Variables
 		[Tooltip("Maximum health the object can attain.")]

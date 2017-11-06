@@ -881,13 +881,13 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1832548800}
-  - component: {fileID: 1832548799}
   - component: {fileID: 1832548798}
   - component: {fileID: 1832548797}
   - component: {fileID: 1832548796}
   - component: {fileID: 1832548795}
   - component: {fileID: 1832548801}
   - component: {fileID: 1832548794}
+  - component: {fileID: 1832548799}
   m_Layer: 0
   m_Name: player_prefab
   m_TagString: Untagged
@@ -907,8 +907,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_activator: Horizontal
-  m_activatorMode: 0
-  m_activatorType: 1
 --- !u!114 &1832548795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -986,15 +984,14 @@ Rigidbody2D:
   m_AngularDrag: 100
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 03c17e20befc79b4d8a47b9a0bf92fbc, type: 2}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!212 &1832548799
 SpriteRenderer:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 212920318785590172, guid: 4ff23cb24ae4eb34b9ea6c17370f20d1,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1832548793}
   m_Enabled: 1
@@ -1043,7 +1040,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1832548793}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.67, y: -2.83, z: 0}
+  m_LocalPosition: {x: -3.67, y: -2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1645754186}
@@ -1061,8 +1058,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_activator: Jump
-  m_activatorMode: 0
-  m_activatorType: 0
 --- !u!1 &1841556224
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,10 +20,7 @@ namespace ZigZag {
 		[SerializeField]
 		protected string m_activator = "";
 
-		[SerializeField]
 		protected ActivatorModes m_activatorMode = ActivatorModes.Activate;
-
-		[SerializeField]
 		protected ActivatorTypes m_activatorType = ActivatorTypes.Button;
 
 		protected bool m_canCancel = false;
