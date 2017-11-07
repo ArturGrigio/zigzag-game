@@ -14,8 +14,8 @@ namespace Huy
 		/// The sliding multiplier that determines the speed of sliding down against a wall.
 		/// </summary>
 		[Tooltip("The sliding multiplier that determines the speed of sliding down against a wall.")]
-		[Range(0f, 1.0f)]
-		public float SlidingMultiplier = 0.001f;
+		[Range(10f, 50f)]
+		public float SlidingMultiplier = 10f;
 
 		#endregion
 
@@ -29,8 +29,8 @@ namespace Huy
 			if (m_player.WallCollided() && m_isEnabled)
 			{
 				m_isActive = true;
-				m_rigidbody2D.velocity = new Vector2 (m_rigidbody2D.velocity.x, -Time.deltaTime * SlidingMultiplier);
 				m_player.IsSliding = true;
+				m_rigidbody2D.angularDrag = SlidingMultiplier;
 			}
 		}
 

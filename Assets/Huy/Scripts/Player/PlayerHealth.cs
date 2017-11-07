@@ -66,13 +66,13 @@ namespace Huy
 			}
 			else
 			{
-				scaledDamage = currentHealth / FullHealth;
-			}
+				// Only run 1 coroutine at a time
+				if (!m_flashingRedCoroutineRunning)
+				{
+					StartCoroutine (flashScreenCoroutine ());
+				}
 
-			// Only run 1 coroutine at a time
-			if (!m_flashingRedCoroutineRunning)
-			{
-				StartCoroutine (flashScreenCoroutine ());
+				scaledDamage = currentHealth / FullHealth;
 			}
 
 			setHealth (scaledDamage);

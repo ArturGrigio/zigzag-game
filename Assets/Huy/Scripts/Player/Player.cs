@@ -63,6 +63,11 @@ namespace Huy
 		private const float LowFallMultiplier = 1f;
 
 		/// <summary>
+		/// The original angular drag.
+		/// </summary>
+		private float m_originalAngularDrag;
+
+		/// <summary>
 		/// The 2D rigid body component of the character.
 		/// </summary>
 		private Rigidbody2D m_rigidbody2D;
@@ -84,6 +89,7 @@ namespace Huy
 
 		public bool IsSliding 
 		{
+			get { return m_isSliding; }
 			set { m_isSliding = value; }
 		}
 
@@ -169,6 +175,8 @@ namespace Huy
 			m_facingRight = true;
 			m_rigidbody2D = GetComponent<Rigidbody2D>();
 			m_edgeCollider2D = GetComponent<EdgeCollider2D> ();
+
+			m_originalAngularDrag = m_rigidbody2D.angularDrag;
 		}
 
 		/// <summary>
@@ -232,7 +240,13 @@ namespace Huy
 			{
 				m_isGrounded = false;
 			}
-			m_isSliding = false;
+
+			// Reset the angular drag when wall sliding is not needed anymore
+			if (m_isSliding)
+			{
+				m_isSliding = false;
+				m_rigidbody2D.angularDrag = m_originalAngularDrag;
+			}
 		}
 
 		#endregion

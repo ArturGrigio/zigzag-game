@@ -24,6 +24,18 @@ namespace Huy
 		public float Speed = 1f;
 
 		/// <summary>
+		/// The mass of the titan form.
+		/// </summary>
+		[Tooltip("The mass of the titan form")]
+		public float Mass = 2f;
+
+		/// <summary>
+		/// The number of particles to emit when transform
+		/// </summary>
+		[Tooltip("The number of particles to emit when transform")]
+		public int ParticleCount = 100;
+
+		/// <summary>
 		/// Reference to the error Text component.
 		/// </summary>
 		[Tooltip("Reference to the error Text component")]
@@ -39,6 +51,11 @@ namespace Huy
 		private Vector3 m_originalScale;
 
 		/// <summary>
+		/// The original mass of the sphere.
+		/// </summary>
+		private float m_originalMass;
+
+		/// <summary>
 		/// The circle collider 2D component.
 		/// </summary>
 		private CircleCollider2D m_circleCollider2D;
@@ -47,6 +64,11 @@ namespace Huy
 		/// Flag indicating whether the display error courtine is running.
 		/// </summary>
 		private bool m_errorCoroutineRunning;
+
+		/// <summary>
+		/// The particle system component.
+		/// </summary>
+		private ParticleSystem m_particleSystem;
 
 		#endregion
 
@@ -76,6 +98,8 @@ namespace Huy
 			{
 				m_rigidbody2D.velocity = new Vector2 (0f, m_rigidbody2D.velocity.y);
 				transform.localScale /= Size;
+
+				m_rigidbody2D.mass = m_originalMass;
 			}
 		}
 
@@ -93,7 +117,10 @@ namespace Huy
 			m_skillType = SkillTypeEnum.Attack;
 			m_originalScale = transform.localScale;
 			m_circleCollider2D = GetComponent<CircleCollider2D> ();
+
 			m_errorCoroutineRunning = false;
+			m_originalMass = m_rigidbody2D.mass;
+			m_particleSystem = GetComponentInChildren<ParticleSystem> ();
 		}
 
 		/// <summary>
@@ -141,9 +168,12 @@ namespace Huy
 					yield break;
 				}
 			}
+				
+			m_particleSystem.Emit (ParticleCount);
 
 			transform.position = titanFormPosition;
 			transform.localScale *= Size;
+			m_rigidbody2D.mass = Mass;
 
 			yield return new WaitForSeconds (5.0f);
 			Deactivate ();
