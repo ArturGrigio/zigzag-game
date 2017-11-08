@@ -5,47 +5,30 @@ using UnityEngine;
 namespace ZigZag {
 
 	[RequireComponent (typeof(Rigidbody2D))]
-	[RequireComponent (typeof(EdgeCollider2D))]
 	public abstract class Agent : Health {
 
 		#region Public Variables
 
 		public enum Direction { Left = -1, Center = 0, Right = 1};
 
-		/// <summary>
-		/// Character movement speed.
-		/// </summary>
-		[Tooltip("Character movement speed")]
-		public float Speed = 10.0f;
-
-		/// <summary>
-		/// The value that determines how high when the character jumps.
-		/// </summary>
-		[Tooltip("Value indicating how high the character should jump")]
-		public float JumpPower = 10.0f;
-
-		[Tooltip("Direction the agent is facing. Can be Left,Center,Right [-1,0,1]")]
-		public Direction Facing = Direction.Center;
+		[SerializeField]
+		[Tooltip("Gameobject with 2D collider used to determine where ground is. MUST be set as a trigger and in the GroundDetection layer.")]
+		private GroundDetector m_GroundTrigger;
 
 		#endregion
 
 		#region Private/Protected Variables
 
 		private bool m_isGrounded = true;
-		private Dictionary<string, AgentSkill> m_skills;
+		private Dictionary<string, Skill> m_skills;
 		private Vector2 m_newVelocity = Vector2.zero;
 		private bool m_updateVelocity = false;
 
+
+		protected Direction m_facing = Direction.Right;
 		protected Rigidbody2D m_rigidBody2D;
 		protected bool m_lockSkills = false;
-		protected AgentSkill m_activeSkill = null;
-
-		/// <summary>
-		/// The 2D edge collider component of the character.
-		/// </summary>
-		private EdgeCollider2D m_edgeCollider2D;
-
-
+		protected Skill m_activeSkill = null;
 
 		#endregion
 
@@ -64,7 +47,7 @@ namespace ZigZag {
 		/// Set of <see cref="ZigZag.AgentSkill"/>s available to this <see cref="ZigZag.Agent"/>.
 		/// </summary>
 		/// <value>Reference to <see cref="ZigZag.AgentSkill"/> object, using its <see cref="ZigZag.AgentSkill.Activator"/> as the key. </value>
-		public Dictionary<string, AgentSkill> Skills
+		public Dictionary<string, Skill> Skills
 		{
 			get { return m_skills; }
 		}
@@ -83,12 +66,17 @@ namespace ZigZag {
 			get { return m_rigidBody2D; }
 		}
 
+		public Direction Facing 
+		{
+			get { return m_facing; }
+		}
+
 		public bool IsAttacking { get; set; }
 
 		#endregion
 
 		#region Public Methods
-		public bool ActivateAgentSkill(AgentSkill s)
+		public bool ActivateAgentSkill(Skill s)
 		{
 			Debug.Log ("ActiveSkill = " + ((m_activeSkill == null) ? "null" : m_activeSkill.name));
 			if (m_activeSkill == null || 
@@ -100,7 +88,7 @@ namespace ZigZag {
 			return false;
 		}
 
-		public bool DeactivateAgentSkill(AgentSkill s)
+		public bool DeactivateAgentSkill(Skill s)
 		{
 			if (m_activeSkill == s)
 			{
@@ -132,22 +120,35 @@ namespace ZigZag {
 		#region Private/Protected Methods
 		private void loadSkills()
 		{
-			m_skills = new Dictionary<string, AgentSkill> ();
+			m_skills = new Dictionary<string, Skill> ();
 			Debug.Log ("Load skills (" + gameObject.name + "): ");
-			foreach (AgentSkill skill in gameObject.GetComponents<AgentSkill>()) {
+			foreach (Skill skill in gameObject.GetComponents<Skill>()) {
 				Debug.Log ("Found: " + skill.Activator);
 				m_skills.Add (skill.Activator, skill);
 			}
 		}
 
+		private void OnGroundEnter(Collider2D collider) 
+		{
+			Debug.Log ("Ground Enter Agent");
+			m_isGrounded = true;
+		}
+
+		private void OnGroundExit(Collider2D collider)
+		{
+			Debug.Log ("Ground Exit Agent");
+			m_isGrounded = false;
+		}
+
 		#endregion
 
 		#region Unity Methods
-		protected override void Awake()
+		protected void Start()
 		{
 			base.Awake ();
 			m_rigidBody2D = GetComponent<Rigidbody2D> ();
-			m_edgeCollider2D = GetComponent<EdgeCollider2D> ();
+			m_GroundTrigger.OnGroundEnter += OnGroundEnter;
+			m_GroundTrigger.OnGroundExit += OnGroundExit;
 			loadSkills ();
 		}
 
@@ -160,23 +161,6 @@ namespace ZigZag {
 				m_newVelocity = Vector2.zero;
 			}
 		}
-
-		void OnCollisionEnter2D(Collision2D collision)
-		{
-			if (collision.gameObject.tag == "Platform" && collision.otherCollider == m_edgeCollider2D) 
-			{
-				m_isGrounded = true;
-			}
-		}
-
-		void OnCollisionExit2D(Collision2D collision)
-		{
-			if (collision.gameObject.tag == "Platform" && collision.otherCollider == m_edgeCollider2D) 
-			{
-				m_isGrounded = false;
-			}
-		}
-
 
 		#endregion
 

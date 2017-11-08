@@ -11,15 +11,17 @@ namespace ZigZag
 		[Tooltip("Sets the starting player object when set in a scene. Indicates the active player object at runtime.")]
 		public Player CurrentShape;
 
+		[Tooltip("Main camera which follows the active player")]
+		public Camera2DFollow PlayerCamera;
+
 		#endregion
 
 		#region Private/Protected Variables
 
 		private int m_activeIndex = 0;
-
-		private Rigidbody2D m_rb2D;
-
 		private List<Player> m_players = new List<Player>();
+		private int m_activeLayer;
+		private int m_inactiveLayer;
 
 		#endregion
 
@@ -27,24 +29,12 @@ namespace ZigZag
 
 		// Use this for initialization
 		// Update is called once per frame
-		void Start()
+		void Awake()
 		{
 			//Disable collision between player objects and set active player
-			foreach (Transform t in transform) {
-				Player player = t.gameObject.GetComponent<Player> ();
-				if (player != null) 
-				{
-					for (int i = 0; i < m_players.Count; ++i) 
-					{
-						Physics2D.IgnoreCollision (m_players [i].GetComponent<Collider2D> (), player.GetComponent<Collider2D> ());
-					}
-					if (player == CurrentShape) 
-					{
-						m_activeIndex = m_players.Count;
-					}
-					m_players.Add (player);
-				}
-			}
+			m_activeLayer = LayerMask.NameToLayer("Active Player");
+			m_inactiveLayer = LayerMask.NameToLayer("Inactive Player");
+			loadPlayers ();
 			changePlayer (m_activeIndex);
 		}
 
@@ -69,10 +59,37 @@ namespace ZigZag
 		/// Sets the active player object.
 		/// </summary>
 		/// <param name="index">Index of desired player object.</param>
-		private void changePlayer(int index) {
+		private void changePlayer(int index) 
+		{
+			CurrentShape.gameObject.layer = m_inactiveLayer;
 			m_activeIndex = index;
 			CurrentShape = m_players [m_activeIndex];
-			m_rb2D = CurrentShape.GetComponent<Rigidbody2D> ();
+			CurrentShape.gameObject.layer = m_activeLayer;
+			PlayerCamera.Target = CurrentShape.gameObject.transform;
+		}
+
+		private void loadPlayers()
+		{
+			bool activeSet = false;
+			m_players.Clear ();
+
+			foreach (Transform t in transform) {
+				Player player = t.gameObject.GetComponent<Player> ();
+				if (player != null) 
+				{
+					if (player == CurrentShape) 
+					{
+						m_activeIndex = m_players.Count;
+						activeSet = true;
+					}
+					m_players.Add (player);
+				}
+			}
+
+			if (activeSet == false)
+			{
+				CurrentShape = m_players [m_activeIndex];
+			}
 		}
 
 		#endregion

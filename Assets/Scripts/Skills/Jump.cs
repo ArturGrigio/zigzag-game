@@ -5,8 +5,13 @@ using UnityEngine;
 namespace ZigZag 
 {
 
-	public class ASJump : AgentSkill {
+	public class Jump : Skill {
 		#region Public Variables
+		/// <summary>
+		/// The value that determines how high when the character jumps.
+		/// </summary>
+		[Tooltip("Value indicating how high the character should jump")]
+		public float JumpPower = 30f;
 		#endregion
 
 		#region Private/Protected Variables
@@ -21,7 +26,7 @@ namespace ZigZag
 			Debug.Log ("IsGrounded: " + AgentComponent.IsGrounded.ToString ());
 			if (AgentComponent.IsGrounded && AgentComponent.ActivateAgentSkill (this))
 			{
-				AgentComponent.SetVelocityY (AgentComponent.JumpPower);
+				AgentComponent.SetVelocityY (JumpPower);
 				AgentComponent.DeactivateAgentSkill (this);
 				return true;
 			}

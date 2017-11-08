@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ZigZag {
 
 	[RequireComponent (typeof (Agent))]
-	public abstract class AgentSkill : MonoBehaviour 
+	public abstract class Skill : MonoBehaviour 
 	{
 		#region Public Variables
 		public enum ActivatorModes {Activate, Toggle, Hold};

@@ -23,8 +23,6 @@ GameObject:
   - component: {fileID: 50582010000282776}
   - component: {fileID: 61796780051491464}
   - component: {fileID: 68540564131215044}
-  - component: {fileID: 114577121421014570}
-  - component: {fileID: 114077914525639724}
   m_Layer: 0
   m_Name: player_prefab
   m_TagString: Untagged
@@ -107,31 +105,6 @@ EdgeCollider2D:
   m_Points:
   - {x: -0.5, y: 0}
   - {x: 0.5, y: 0}
---- !u!114 &114077914525639724
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1663509395873296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dff8e6166c4fe12419a24a18b9ea1b0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FullHealth: 100
---- !u!114 &114577121421014570
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1663509395873296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd30d3393fe0a65408a5bea1d216a95a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  jumpPower: 10
 --- !u!212 &212920318785590172
 SpriteRenderer:
   m_ObjectHideFlags: 1

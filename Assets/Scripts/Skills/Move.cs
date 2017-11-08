@@ -4,9 +4,13 @@ using UnityEngine;
 
 namespace ZigZag {
 
-	public class ASMove : AgentSkill {
+	public class Move : Skill {
 		#region Public Variables
-
+		/// <summary>
+		/// Character movement speed.
+		/// </summary>
+		[Tooltip("Character movement speed")]
+		public float Speed = 10.0f;
 		#endregion
 
 		#region Private/Protected Variables
@@ -18,9 +22,9 @@ namespace ZigZag {
 		#region Public Methods
 		public override bool ActivateAxis (float axis)
 		{
-			if(AgentComponent.IsGrounded && AgentComponent.ActivateAgentSkill(this))
+			if(AgentComponent.ActivateAgentSkill(this))
 			{
-				AgentComponent.SetVelocityX (axis * AgentComponent.Speed);
+				AgentComponent.SetVelocityX (axis * Speed);
 				AgentComponent.DeactivateAgentSkill (this);
 				return true;
 			}

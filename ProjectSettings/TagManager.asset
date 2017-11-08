@@ -16,14 +16,14 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Active Player
+  - Inactive Player
+  - Enemies
+  - Foreground
+  - Background
+  - Player Projectile
+  - Enemy Projectile
+  - Ground Detection
   - 
   - 
   - 
