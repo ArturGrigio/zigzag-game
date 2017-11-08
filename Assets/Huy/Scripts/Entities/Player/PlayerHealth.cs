@@ -40,9 +40,9 @@ namespace Huy
 		/// <summary>
 		/// Initialize member variables.
 		/// </summary>
-		private void Awake()
+        protected override void Awake()
 		{
-			currentHealth = FullHealth;
+            base.Awake();
 			m_flashingRedCoroutineRunning = false;
 		}
 
@@ -56,10 +56,10 @@ namespace Huy
 		/// <param name="damage">Damage amount.</param>
 		public override void ReceiveDamage(float damage)
 		{
-			currentHealth -= damage;
+			m_currentHealth -= damage;
 			float scaledDamage;
 
-			if (currentHealth <= 0f)
+            if (m_currentHealth <= 0f)
 			{
 				// TODO: Player dies and load Game Over UI
 				scaledDamage = 0f;
@@ -72,10 +72,10 @@ namespace Huy
 					StartCoroutine (flashScreenCoroutine ());
 				}
 
-				scaledDamage = currentHealth / FullHealth;
+                scaledDamage = m_currentHealth / FullHealth;
 			}
 
-			setHealth (scaledDamage);
+			setHealthBar (scaledDamage);
 		}
 
 		#endregion
@@ -89,17 +89,11 @@ namespace Huy
 		/// <param name="scaledDamage">
 		/// The amount of health to set to.
 		/// </param>
-		protected override void setHealth(float scaledDamage)
+        protected void setHealthBar(float scaledDamage)
 		{
 			float y = HealthBar.transform.localScale.y;
 			float z = HealthBar.transform.localScale.z;
 			HealthBar.transform.localScale = new Vector3 (scaledDamage, y, z);
-		}
-
-		protected override void die()
-		{
-			// TODO: Load the Game Over UI or scene
-			throw new System.NotImplementedException();
 		}
 
 		/// <summary>

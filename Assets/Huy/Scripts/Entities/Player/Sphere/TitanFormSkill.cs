@@ -77,30 +77,33 @@ namespace Huy
 		/// <summary>
 		/// Activate the skill and begin any sort of animations or movements.
 		/// </summary>
-		public override void Activate ()
+		public override bool Activate ()
 		{
-			if (m_isEnabled)
-			{
-				StartCoroutine (growCoroutine ());
-			}
+//			if (m_isEnabled)
+//			{
+//				StartCoroutine (growCoroutine ());
+//			}
+			return false;
 		}
 
 		/// <summary>
 		/// Deactivate the skill and stop the player during the skill executation
 		/// or when the skill is done executing.
 		/// </summary>
-		public override void Deactivate ()
+		public bool Deactivate ()
 		{
 			m_isActive = false;
 
 			// Prevent accidental shrinking beyond the original size
 			if (m_originalScale != transform.localScale)
 			{
-				m_rigidbody2D.velocity = new Vector2 (0f, m_rigidbody2D.velocity.y);
-				transform.localScale /= Size;
-
-				m_rigidbody2D.mass = m_originalMass;
+//				m_rigidbody2D.velocity = new Vector2 (0f, m_rigidbody2D.velocity.y);
+//				transform.localScale /= Size;
+//
+//				m_rigidbody2D.mass = m_originalMass;
 			}
+
+			return false;
 		}
 
 		#endregion
@@ -114,12 +117,12 @@ namespace Huy
 		{
 			base.Awake ();
 
-			m_skillType = SkillTypeEnum.Attack;
+//			m_skillType = SkillTypeEnum.Attack;
 			m_originalScale = transform.localScale;
 			m_circleCollider2D = GetComponent<CircleCollider2D> ();
 
 			m_errorCoroutineRunning = false;
-			m_originalMass = m_rigidbody2D.mass;
+//			m_originalMass = m_rigidbody2D.mass;
 			m_particleSystem = GetComponentInChildren<ParticleSystem> ();
 		}
 
@@ -128,11 +131,11 @@ namespace Huy
 		/// </summary>
 		private void FixedUpdate()
 		{
-			if (m_isActive && m_isEnabled)
-			{
-				float velocityX = (m_player.FacingRight) ? Speed : -Speed;
-				m_rigidbody2D.velocity = new Vector2 (velocityX, m_rigidbody2D.velocity.y);
-			}
+//			if (m_isActive && m_isEnabled)
+//			{
+//				float velocityX = (m_player.FacingRight) ? Speed : -Speed;
+//				m_rigidbody2D.velocity = new Vector2 (velocityX, m_rigidbody2D.velocity.y);
+//			}
 		}
 
 		#endregion
@@ -173,7 +176,7 @@ namespace Huy
 
 			transform.position = titanFormPosition;
 			transform.localScale *= Size;
-			m_rigidbody2D.mass = Mass;
+//			m_rigidbody2D.mass = Mass;
 
 			yield return new WaitForSeconds (5.0f);
 			Deactivate ();

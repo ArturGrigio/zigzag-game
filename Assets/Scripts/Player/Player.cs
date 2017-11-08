@@ -138,27 +138,7 @@ namespace ZigZag
 		/// </param>
 		void OnCollisionEnter2D(Collision2D collision)
 		{
-			if (collision.gameObject.tag == "Platform") 
-			{
-				m_isGrounded = true;
-			}
 
-			if (collision.otherCollider == m_edgeCollider2D)
-			{
-				// Fix the z rotation if it is not 0 when the edge collider
-				// collides with something else
-				if (transform.eulerAngles.z != 0f)
-				{
-					flip ();
-				}
-
-				// Deal jump damage here
-				Health health = collision.gameObject.GetComponent<Health> ();
-				if (health != null)
-				{
-					health.ReceiveDamage (1f);
-				}
-			}
 		}
 
 		/// <summary>
@@ -170,10 +150,7 @@ namespace ZigZag
 		/// </param>
 		void OnCollisionExit2D(Collision2D collision)
 		{
-			if (collision.gameObject.tag == "Platform") 
-			{
-				m_isGrounded = false;
-			}
+
 		}
 
 		#endregion

@@ -101,9 +101,9 @@ namespace Huy
 		{
 			m_skills = new List<Skill> (playerManager.CurrentShape.GetComponents<Skill> ());
 
-			m_attack = m_skills.Find (skill => skill.SkillType == SkillTypeEnum.Attack);
-			m_ground = m_skills.Find (skill => skill.SkillType == SkillTypeEnum.Ground);
-			m_air = m_skills.Find (skill => skill.SkillType == SkillTypeEnum.Air);
+//			m_attack = m_skills.Find (skill => skill.SkillType == SkillTypeEnum.Attack);
+//			m_ground = m_skills.Find (skill => skill.SkillType == SkillTypeEnum.Ground);
+//			m_air = m_skills.Find (skill => skill.SkillType == SkillTypeEnum.Air);
 		}
 			
 		#endregion
