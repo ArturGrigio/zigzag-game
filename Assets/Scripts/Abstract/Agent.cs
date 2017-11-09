@@ -5,30 +5,28 @@ using UnityEngine;
 namespace ZigZag {
 
 	[RequireComponent (typeof(Rigidbody2D))]
+	[RequireComponent (typeof(SpriteRenderer))]
 	public abstract class Agent : Health {
 
 		#region Public Variables
 
 		public enum Direction { Left = -1, Center = 0, Right = 1};
 
-		[SerializeField]
-		[Tooltip("Gameobject with 2D collider used to determine where ground is. MUST be set as a trigger and in the GroundDetection layer.")]
-		private GroundDetector m_GroundTrigger;
-
 		#endregion
 
 		#region Private/Protected Variables
 
-		private bool m_isGrounded = true;
-		private Dictionary<string, Skill> m_skills;
-		private Vector2 m_newVelocity = Vector2.zero;
-		private bool m_updateVelocity = false;
-
-
+		protected GroundDetector m_groundDetector;
 		protected Direction m_facing = Direction.Right;
 		protected Rigidbody2D m_rigidBody2D;
-		protected bool m_lockSkills = false;
 		protected Skill m_activeSkill = null;
+		protected SpriteRenderer m_spriteRenderer;
+
+
+		private bool m_isGrounded = true;
+		private List<Skill> m_skills;
+		private Vector2 m_newVelocity = Vector2.zero;
+		private bool m_updateVelocity = false;
 
 		#endregion
 
@@ -47,7 +45,7 @@ namespace ZigZag {
 		/// Set of <see cref="ZigZag.AgentSkill"/>s available to this <see cref="ZigZag.Agent"/>.
 		/// </summary>
 		/// <value>Reference to <see cref="ZigZag.AgentSkill"/> object, using its <see cref="ZigZag.AgentSkill.Activator"/> as the key. </value>
-		public Dictionary<string, Skill> Skills
+		public List<Skill> Skills
 		{
 			get { return m_skills; }
 		}
@@ -60,25 +58,29 @@ namespace ZigZag {
 		{
 			get { return (m_activeSkill == null || m_activeSkill.CanCancel); }
 		}
-
-		public Rigidbody2D Rigidbody2DComponent
-		{
-			get { return m_rigidBody2D; }
-		}
-
+			
 		public Direction Facing 
 		{
 			get { return m_facing; }
 		}
 
-		public bool IsAttacking { get; set; }
+		public GroundDetector GroundDetectorComponent
+		{
+			get { return m_groundDetector; }
+		}
+
+		public Skill ActiveSkill
+		{
+			get { return m_activeSkill; }
+		}
+
+		public float AttackDamage { get; set; }
 
 		#endregion
 
 		#region Public Methods
 		public bool ActivateAgentSkill(Skill s)
 		{
-			Debug.Log ("ActiveSkill = " + ((m_activeSkill == null) ? "null" : m_activeSkill.name));
 			if (m_activeSkill == null || 
 				(m_activeSkill.CanCancel && m_activeSkill.Cancel () == true))
 			{
@@ -98,57 +100,90 @@ namespace ZigZag {
 			return false;
 		}
 
+		/// <summary>
+		/// Sets the x velocity of the agent. If velocity was set since the last FixedUpdate,
+		/// uses the new y velocity. Otherwise, uses current Agent y velocity.
+		/// </summary>
+		/// <param name="velocity">Velocity.</param>
 		public void SetVelocityX(float velocity) 
 		{
 			SetVelocity (velocity, m_updateVelocity ? m_newVelocity.y : m_rigidBody2D.velocity.y);
 		}
 
+		/// <summary>
+		/// Sets the y velocity of the agent. If velocity was set since the last FixedUpdate,
+		/// uses the new x velocity. Otherwise, uses the current Agent x velocity.
+		/// </summary>
+		/// <param name="velocity">Velocity.</param>
 		public void SetVelocityY(float velocity)
 		{
 			SetVelocity (m_updateVelocity ? m_newVelocity.x : m_rigidBody2D.velocity.x, velocity);
 		}
 
+		/// <summary>
+		/// Sets the velocity of the agent.
+		/// </summary>
+		/// <param name="velocityX">Velocity x.</param>
+		/// <param name="velocityY">Velocity y.</param>
 		public void SetVelocity(float velocityX, float velocityY)
 		{
 			m_updateVelocity = true;
 			m_newVelocity = new Vector2 (velocityX, velocityY);
-			Debug.Log("Set velocity: " + m_newVelocity.ToString());
+			if (velocityX < 0 && m_facing == Direction.Right)
+			{
+				m_facing = Direction.Left;
+				horizontalFlip ();
+			} else if (velocityX > 0 && m_facing == Direction.Left)
+			{
+				m_facing = Direction.Right;
+				horizontalFlip ();
+			}
 		}
 
 		#endregion
 
 		#region Private/Protected Methods
+
+		/// <summary>
+		/// Detects skill scripts attached to the agent and adds them to its skills list.
+		/// </summary>
 		private void loadSkills()
 		{
-			m_skills = new Dictionary<string, Skill> ();
-			Debug.Log ("Load skills (" + gameObject.name + "): ");
+			m_skills = new List<Skill> ();
 			foreach (Skill skill in gameObject.GetComponents<Skill>()) {
-				Debug.Log ("Found: " + skill.Activator);
-				m_skills.Add (skill.Activator, skill);
+				m_skills.Add (skill);
 			}
 		}
 
 		private void OnGroundEnter(Collider2D collider) 
 		{
-			Debug.Log ("Ground Enter Agent");
 			m_isGrounded = true;
 		}
 
 		private void OnGroundExit(Collider2D collider)
 		{
-			Debug.Log ("Ground Exit Agent");
 			m_isGrounded = false;
 		}
 
+		/// <summary>
+		/// Performs actions which are required when facing direction changes.
+		/// </summary>
+		protected virtual void horizontalFlip ()
+		{
+			m_spriteRenderer.flipX = !m_spriteRenderer.flipX;
+		}
 		#endregion
 
 		#region Unity Methods
-		protected void Start()
+		protected override void Awake()
 		{
 			base.Awake ();
 			m_rigidBody2D = GetComponent<Rigidbody2D> ();
-			m_GroundTrigger.OnGroundEnter += OnGroundEnter;
-			m_GroundTrigger.OnGroundExit += OnGroundExit;
+			m_groundDetector = GetComponentInChildren<GroundDetector> ();
+			m_groundDetector.OnGroundEnter += OnGroundEnter;
+			m_groundDetector.OnGroundExit += OnGroundExit;
+			m_spriteRenderer = GetComponent<SpriteRenderer> ();
+			AttackDamage = 0f;
 			loadSkills ();
 		}
 

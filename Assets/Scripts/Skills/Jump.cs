@@ -11,20 +11,26 @@ namespace ZigZag
 		/// The value that determines how high when the character jumps.
 		/// </summary>
 		[Tooltip("Value indicating how high the character should jump")]
-		public float JumpPower = 30f;
+		public float JumpPower = 15f;
 		#endregion
 
 		#region Private/Protected Variables
 		#endregion
 
 		#region Properties
+		public override bool CanActivate {
+			get
+			{
+				return AgentComponent.IsGrounded;
+			}
+		}
 		#endregion
 
 		#region Public Methods
+
 		public override bool Activate ()
 		{
-			Debug.Log ("IsGrounded: " + AgentComponent.IsGrounded.ToString ());
-			if (AgentComponent.IsGrounded && AgentComponent.ActivateAgentSkill (this))
+			if (AgentComponent.ActivateAgentSkill(this))
 			{
 				AgentComponent.SetVelocityY (JumpPower);
 				AgentComponent.DeactivateAgentSkill (this);
@@ -43,7 +49,6 @@ namespace ZigZag
 		protected override void Awake()
 		{
 			base.Awake ();
-			m_activator = "Jump";
 		}
 		#endregion
 	}

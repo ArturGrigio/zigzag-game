@@ -8,15 +8,16 @@ namespace ZigZag
 
 		#region Public Variables
 
-		[Tooltip("Sets the starting player object when set in a scene. Indicates the active player object at runtime.")]
-		public Player CurrentShape;
-
 		[Tooltip("Main camera which follows the active player")]
 		public Camera2DFollow PlayerCamera;
 
 		#endregion
 
 		#region Private/Protected Variables
+
+		[SerializeField]
+		[Tooltip("Sets the starting player object when set in a scene. Indicates the active player object at runtime.")]
+		private Player m_currentShape;
 
 		private int m_activeIndex = 0;
 		private List<Player> m_players = new List<Player>();
@@ -25,19 +26,11 @@ namespace ZigZag
 
 		#endregion
 
-		#region Unity Methods
-
-		// Use this for initialization
-		// Update is called once per frame
-		void Awake()
+		#region Properties
+		public Player CurrentShape
 		{
-			//Disable collision between player objects and set active player
-			m_activeLayer = LayerMask.NameToLayer("Active Player");
-			m_inactiveLayer = LayerMask.NameToLayer("Inactive Player");
-			loadPlayers ();
-			changePlayer (m_activeIndex);
+			get { return m_currentShape; }
 		}
-
 		#endregion
 
 		#region Public Methods
@@ -61,35 +54,48 @@ namespace ZigZag
 		/// <param name="index">Index of desired player object.</param>
 		private void changePlayer(int index) 
 		{
-			CurrentShape.gameObject.layer = m_inactiveLayer;
+			m_currentShape.gameObject.layer = m_inactiveLayer;
 			m_activeIndex = index;
-			CurrentShape = m_players [m_activeIndex];
-			CurrentShape.gameObject.layer = m_activeLayer;
-			PlayerCamera.Target = CurrentShape.gameObject.transform;
+			m_currentShape = m_players [m_activeIndex];
+			m_currentShape.gameObject.layer = m_activeLayer;
+			PlayerCamera.Target = m_currentShape.gameObject.transform;
 		}
 
+		/// <summary>
+		/// Loads the players from the PlayerManager's child objects.
+		/// </summary>
 		private void loadPlayers()
 		{
 			bool activeSet = false;
 			m_players.Clear ();
-
-			foreach (Transform t in transform) {
-				Player player = t.gameObject.GetComponent<Player> ();
-				if (player != null) 
+			foreach(Player player in GetComponentsInChildren<Player>())
+			{
+				if (player == m_currentShape) 
 				{
-					if (player == CurrentShape) 
-					{
-						m_activeIndex = m_players.Count;
-						activeSet = true;
-					}
-					m_players.Add (player);
+					m_activeIndex = m_players.Count;
+					activeSet = true;
 				}
+				m_players.Add (player);
 			}
-
 			if (activeSet == false)
 			{
-				CurrentShape = m_players [m_activeIndex];
+				m_currentShape = m_players [m_activeIndex];
 			}
+		}
+
+		#endregion
+
+		#region Unity Methods
+
+		// Use this for initialization
+		// Update is called once per frame
+		void Awake()
+		{
+			//Disable collision between player objects and set active player
+			m_activeLayer = LayerMask.NameToLayer("Active Player");
+			m_inactiveLayer = LayerMask.NameToLayer("Inactive Player");
+			loadPlayers ();
+			changePlayer (m_activeIndex);
 		}
 
 		#endregion

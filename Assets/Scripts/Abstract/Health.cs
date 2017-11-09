@@ -22,6 +22,10 @@ namespace ZigZag
 		#endregion
 
 		#region Public Methods
+		/// <summary>
+		/// Deals damage to the agent and checks for death.
+		/// </summary>
+		/// <param name="damage">Damage.</param>
 		public virtual void ReceiveDamage(int damage)
 		{
 			m_currentHealth -= damage;
@@ -31,6 +35,10 @@ namespace ZigZag
 			}
 		}
 
+		/// <summary>
+		/// Removes damage from the agent.
+		/// </summary>
+		/// <param name="heal">Heal.</param>
 		public virtual void ReceiveHeal(int heal)
 		{
 			m_currentHealth += heal;
@@ -42,6 +50,9 @@ namespace ZigZag
 		#endregion
 
 		#region Private/Protected Methods
+		/// <summary>
+		/// Performs required actions when the agent dies.
+		/// </summary>
 		protected virtual void die() 
 		{
 			Destroy (gameObject);

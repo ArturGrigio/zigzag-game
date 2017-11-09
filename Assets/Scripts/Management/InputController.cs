@@ -21,45 +21,69 @@ namespace ZigZag
 
 		#region Private/Protected Variables
 
-		/// <summary>
-		/// The input velocity in the x direction.
-		/// </summary>
-		private float m_velocityX;
-
 		#endregion
 
 		#region Unity Methods
 			
-		/// <summary>
-		/// Update is called once per frame.
-		/// </summary>
-		/// 
+
 		/// <remarks>
 		/// Check for user inputs every frame.
 		/// </remarks>
 		private void Update ()
 		{
-			// UI/Universal input processing
-			if (Input.GetButtonDown ("Swap Character")) 
+			if (PlayerManager.CurrentShape.CanCancel)
 			{
-				PlayerManager.NextPlayer ();
-			}
-			Debug.Log ("Checking for skills: ");
-			foreach (KeyValuePair<string,Skill> skill in PlayerManager.CurrentShape.Skills)
-			{
-				switch (skill.Value.ActivatorType)
+				// UI/Universal input processing
+				if (Input.GetButtonDown ("Swap Character"))
 				{
-					case Skill.ActivatorTypes.Button:
-						Debug.Log (skill.Key + ": " + Input.GetButtonDown(skill.Key).ToString());
-						if (Input.GetButtonDown (skill.Key))
+					if (PlayerManager.CurrentShape.ActiveSkill == null 
+						|| PlayerManager.CurrentShape.ActiveSkill.Cancel())
+					{
+						PlayerManager.NextPlayer ();
+					}
+				}
+				// Player skill checks
+				foreach (Skill skill in PlayerManager.CurrentShape.Skills)
+				{
+					if (skill.CanActivate)
+					{
+						switch (skill.ActivatorType)
 						{
-							skill.Value.Activate ();
+							case Skill.ActivatorTypes.Axis:
+								skill.ActivateAxis (Input.GetAxis (skill.Activator));
+								break;
+							case Skill.ActivatorTypes.Hold:
+								if (skill.IsActive && Input.GetButton(skill.Activator) == false)
+								{
+									Debug.Log ("HOLD RELEASE");
+									skill.Cancel ();
+								}
+								else if (Input.GetButtonDown (skill.Activator))
+								{
+									Debug.Log ("HOLD BEGIN");
+									skill.Activate ();
+								}
+								break;
+							case Skill.ActivatorTypes.Toggle:
+								if (skill.IsActive == false && Input.GetButton (skill.Activator))
+								{
+									if (skill.IsActive)
+									{
+										skill.Cancel ();
+									} else
+									{
+										skill.Activate ();
+									}
+								}
+								break;
+							case Skill.ActivatorTypes.Instant:
+								if (Input.GetButtonDown (skill.Activator))
+								{
+									skill.Activate ();
+								}
+								break;
 						}
-						break;
-					case Skill.ActivatorTypes.Axis:
-						Debug.Log (skill.Key + ": " + Input.GetAxis(skill.Key).ToString());
-						skill.Value.ActivateAxis (Input.GetAxis (skill.Key));
-						break;
+					}
 				}
 			}
 		}
