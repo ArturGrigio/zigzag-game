@@ -32,13 +32,13 @@ namespace Huy
 		#region Unity Methods
 		void OnTriggerEnter2D(Collider2D collider)
 		{
-			Debug.Log ("Ground Enter");
+			//Debug.Log ("Ground Enter");
 			OnGroundEnter.Invoke (collider);
 		}
 
 		void OnTriggerExit2D(Collider2D collider)
 		{
-			Debug.Log ("Ground Exit");
+			//Debug.Log ("Ground Exit");
 			OnGroundExit.Invoke (collider);
 		}
 		#endregion

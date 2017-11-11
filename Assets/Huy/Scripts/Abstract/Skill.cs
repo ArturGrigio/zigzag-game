@@ -5,13 +5,12 @@ using UnityEngine;
 
 namespace Huy 
 {
-
-	[RequireComponent (typeof (Agent))]
+	[RequireComponent (typeof (Player))]
 	public abstract class Skill : MonoBehaviour 
 	{
 		#region Public Variables
 		public enum ActivatorModes {Activate, Toggle, Hold};
-		public enum ActivatorTypes {Button, Axis};
+		public enum ActivatorTypes {Button, Axis, Passive};
 		#endregion
 
 		#region Private/Protected Variables
@@ -83,7 +82,14 @@ namespace Huy
 
 		public virtual bool Activate ()
 		{
-			return false;
+			m_isActive = true;
+			return true;
+		}
+
+		public virtual bool Deactivate()
+		{
+			m_isActive = false;
+			return true;
 		}
 
 		public virtual bool ActivateAxis(float axis)
@@ -110,10 +116,16 @@ namespace Huy
 		#endregion
 
 		#region Unity Methods
-		protected virtual void Awake()
+//		protected virtual void Awake()
+//		{
+//			m_agent = GetComponent<Agent> ();
+//		}
+
+		protected virtual void Start()
 		{
 			m_agent = GetComponent<Agent> ();
 		}
+
 		#endregion
 	}
 }

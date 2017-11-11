@@ -39,21 +39,24 @@ namespace Huy
 			{
 				PlayerManager.NextPlayer ();
 			}
-
-			Debug.Log ("Checking for skills: ");
+				
 			foreach (KeyValuePair<string,Skill> skill in PlayerManager.CurrentShape.Skills)
 			{
 				switch (skill.Value.ActivatorType)
 				{
 					case Skill.ActivatorTypes.Button:
-						Debug.Log (skill.Key + ": " + Input.GetButtonDown(skill.Key).ToString());
 						if (Input.GetButtonDown (skill.Key))
 						{
 							skill.Value.Activate ();
 						}
+						else if (Input.GetButtonDown (skill.Key))
+						{
+							skill.Value.Activate ();
+						}
+
 						break;
+
 					case Skill.ActivatorTypes.Axis:
-						Debug.Log (skill.Key + ": " + Input.GetAxis(skill.Key).ToString());
 						skill.Value.ActivateAxis (Input.GetAxis (skill.Key));
 						break;
 				}

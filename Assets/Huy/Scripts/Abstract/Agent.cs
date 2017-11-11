@@ -12,9 +12,9 @@ namespace Huy
 
 		public enum Direction { Left = -1, Center = 0, Right = 1};
 
-		[SerializeField]
+		//[SerializeField]
 		[Tooltip("Gameobject with 2D collider used to determine where ground is. MUST be set as a trigger and in the GroundDetection layer.")]
-		private GroundDetector m_GroundTrigger;
+		private GroundDetector m_groundDetector;
 
 		#endregion
 
@@ -80,6 +80,7 @@ namespace Huy
 		public Direction Facing 
 		{
 			get { return m_facing; }
+			set { m_facing = value; }
 		}
 
 		public bool IsAttacking { get; set; }
@@ -89,7 +90,6 @@ namespace Huy
 		#region Public Methods
 		public bool ActivateAgentSkill(Skill s)
 		{
-			Debug.Log ("ActiveSkill = " + ((m_activeSkill == null) ? "null" : m_activeSkill.name));
 			if (m_activeSkill == null || 
 				(m_activeSkill.CanCancel && m_activeSkill.Cancel () == true))
 			{
@@ -123,21 +123,23 @@ namespace Huy
 		{
 			m_updateVelocity = true;
 			m_newVelocity = new Vector2 (velocityX, velocityY);
-			Debug.Log("Set velocity: " + m_newVelocity.ToString());
 		}
 
 		#endregion
 
 		#region Private/Protected Methods
+
 		private void loadSkills()
 		{
 			m_skills = new Dictionary<string, Skill> ();
-			Debug.Log ("Load skills (" + gameObject.name + "): ");
 
 			foreach (Skill skill in gameObject.GetComponents<Skill>()) 
             {
-				Debug.Log ("Found: " + skill.Activator);
-				m_skills.Add (skill.Activator, skill);
+				if (skill.ActivatorType != Skill.ActivatorTypes.Passive)
+				{
+					m_skills.Add (skill.Activator, skill);
+				}
+					
 			}
 		}
 
@@ -159,27 +161,32 @@ namespace Huy
             }
         }
 
-		private void OnGroundEnter(Collider2D collider) 
+		private void GroundEnterHandler(Collider2D collider) 
 		{
-			Debug.Log ("Ground Enter Agent");
+			//Debug.Log ("Ground Enter Agent");
 			m_isGrounded = true;
 		}
 
-		private void OnGroundExit(Collider2D collider)
+		private void GroundExitHandler(Collider2D collider)
 		{
-			Debug.Log ("Ground Exit Agent");
+			//Debug.Log ("Ground Exit Agent");
 			m_isGrounded = false;
 		}
 
 		#endregion
 
 		#region Unity Methods
+
 		protected override void Awake()
 		{
 			base.Awake ();
+
 			m_rigidbody2D = GetComponent<Rigidbody2D> ();
-//			m_GroundTrigger.OnGroundEnter += OnGroundEnter;
-//			m_GroundTrigger.OnGroundExit += OnGroundExit;
+			m_groundDetector = GetComponentInChildren<GroundDetector> ();
+
+			m_groundDetector.OnGroundEnter += GroundEnterHandler;
+			m_groundDetector.OnGroundExit += GroundExitHandler;
+
 			loadSkills ();
 		}
 

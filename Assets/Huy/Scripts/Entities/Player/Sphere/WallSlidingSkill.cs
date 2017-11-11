@@ -6,6 +6,7 @@ namespace Huy
 	/// <summary>
 	/// Handle the wall sliding mechanic.
 	/// </summary>
+	[RequireComponent(typeof(WallJumpSkill))]
 	public class WallSlidingSkill : Skill
 	{
 		#region Public Variables
@@ -14,8 +15,32 @@ namespace Huy
 		/// The sliding multiplier that determines the speed of sliding down against a wall.
 		/// </summary>
 		[Tooltip("The sliding multiplier that determines the speed of sliding down against a wall.")]
-		[Range(10f, 50f)]
+		[Range(20f, 100f)]
 		public float SlidingMultiplier = 10f;
+
+		#endregion
+
+		#region Private/Protected Variables
+
+		/// <summary>
+		/// Reference to the player agent component.
+		/// </summary>
+		private Player m_player;
+
+		/// <summary>
+		/// Reference to the wall jump skill component.
+		/// </summary>
+		private WallJumpSkill m_wallJumpSkill;
+
+		/// <summary>
+		/// The original angular drag value.
+		/// </summary>
+		private float m_originalAngularDrag;
+
+		/// <summary>
+		/// Flag indicating whether the player has collied against a wall.
+		/// </summary>
+		private bool m_colliedWall;
 
 		#endregion
 
@@ -26,21 +51,7 @@ namespace Huy
 		/// </summary>
 		public override bool Activate ()
 		{
-//			if (m_player.WallCollided() && m_isEnabled)
-//			{
-//				m_isActive = true;
-//				m_player.IsSliding = true;
-//				m_rigidbody2D.angularDrag = SlidingMultiplier;
-//			}
 			return false;
-		}
-
-		/// <summary>
-		/// Deactivate the skill and stop the player during the skill executation
-		/// or when the skill is done executing.
-		/// </summary>
-		public void Deactivate ()
-		{
 		}
 
 		#endregion
@@ -48,12 +59,17 @@ namespace Huy
 		#region Unity Methods
 
 		/// <summary>
-		/// Initialize member variables.
+		/// 
 		/// </summary>
-		protected override void Awake ()
+		protected override void Start ()
 		{
-			base.Awake ();
-//			m_skillType = SkillTypeEnum.Other;
+			base.Start ();
+
+			m_activatorType = ActivatorTypes.Passive;
+			m_activator = "Passive";
+			m_player = AgentComponent as Player;
+			m_originalAngularDrag = m_player.Rigidbody2DComponent.angularDrag;
+			m_wallJumpSkill = GetComponent<WallJumpSkill> ();
 		}
 
 		/// <summary>
@@ -66,7 +82,24 @@ namespace Huy
 		/// <param name="collision">Collision.</param>
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
-			Activate ();
+			if (m_wallJumpSkill.WallCollision)
+			{
+				m_isActive = true;
+				m_player.Rigidbody2DComponent.angularDrag = SlidingMultiplier;
+			}
+		}
+
+		/// <summary>
+		/// Raises the collision exit 2D event.
+		/// </summary>
+		/// <param name="collision">Collision.</param>
+		private void OnCollisionExit2D(Collision2D collision)
+		{
+			if (m_isActive)
+			{
+				m_isActive = false;
+				m_player.Rigidbody2DComponent.angularDrag = m_originalAngularDrag;
+			}
 		}
 
 		#endregion

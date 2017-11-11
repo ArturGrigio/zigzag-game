@@ -63,18 +63,5 @@ namespace Huy
 		}
 		#endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	}
 }

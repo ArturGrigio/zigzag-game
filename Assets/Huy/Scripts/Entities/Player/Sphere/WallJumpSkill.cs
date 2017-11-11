@@ -6,8 +6,37 @@ namespace Huy
 	/// <summary>
 	/// Handle the wall jump mechanic.
 	/// </summary>
+	[RequireComponent(typeof(Jump))]
 	public class WallJumpSkill : Skill
 	{
+		#region Private/Protected Variablels
+
+		/// <summary>
+		/// Reference to the player agent component.
+		/// </summary>
+		private Player m_player;
+
+		/// <summary>
+		/// Flag indicating whether the player has collied against a wall.
+		/// </summary>
+		private bool m_colliedWall;
+
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="Huy.WallJumpSkill"/> wall collision.
+		/// </summary>
+		/// <value><c>true</c> if wall collision; otherwise, <c>false</c>.</value>
+		public bool WallCollision 
+		{
+			get { return m_colliedWall; }
+		
+		}
+
+		#endregion
+
 		#region Public Methods
 
 		/// <summary>
@@ -15,20 +44,7 @@ namespace Huy
 		/// </summary>
 		public override bool Activate ()
 		{
-//			if (m_player.WallCollided() && m_isEnabled)
-//			{
-//				m_isActive = true;
-//				m_player.IsGrounded = true;
-//			}
 			return false;
-		}
-
-		/// <summary>
-		/// Deactivate the skill and stop the player during the skill executation
-		/// or when the skill is done executing.
-		/// </summary>
-		public void Deactivate ()
-		{
 		}
 
 		#endregion
@@ -38,10 +54,13 @@ namespace Huy
 		/// <summary>
 		/// Initialize member variables.
 		/// </summary>
-		protected override void Awake ()
+		protected override void Start ()
 		{
-			base.Awake ();
-//			m_skillType = SkillTypeEnum.Other;
+			base.Start ();
+			m_activatorType = ActivatorTypes.Passive;
+			m_activator = "Passive";
+			m_player = AgentComponent as Player;
+			m_colliedWall = false;
 		}
 
 		/// <summary>
@@ -55,7 +74,24 @@ namespace Huy
 		/// <param name="collision">Collision.</param>
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
-			Activate ();
+			// Only activate when player collies against a wall and it
+			// is not on the ground
+			if (m_player.WallCollided () && !m_player.IsGrounded)
+			{
+				m_colliedWall = true;
+			}
+		}
+
+		/// <summary>
+		/// Raises the collision exit 2D event.
+		/// </summary>
+		/// <param name="collision">Collision.</param>
+		private void OnCollisionExit2D(Collision2D collision)
+		{
+			if (m_colliedWall && !m_player.IsGrounded)
+			{
+				m_colliedWall = false;
+			}
 		}
 
 		#endregion

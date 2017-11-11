@@ -41,6 +41,12 @@ namespace Huy
 		[Tooltip("Reference to the error Text component")]
 		public Text ErrorText;
 
+		/// <summary>
+		/// Layers that to be detected by the raycast of the skill.
+		/// </summary>
+		[Tooltip("Select which layers to be detect when the skill activates")]
+		public LayerMask layers;
+
 		#endregion
 
 		#region Private Variables
@@ -70,6 +76,11 @@ namespace Huy
 		/// </summary>
 		private ParticleSystem m_particleSystem;
 
+		/// <summary>
+		/// THe player component.
+		/// </summary>
+		private Player m_player;
+
 		#endregion
 
 		#region Public Methods
@@ -79,10 +90,12 @@ namespace Huy
 		/// </summary>
 		public override bool Activate ()
 		{
-//			if (m_isEnabled)
-//			{
-//				StartCoroutine (growCoroutine ());
-//			}
+			if (AgentComponent.ActivateAgentSkill(this))
+			{
+				StartCoroutine (growCoroutine ());
+
+				return true;
+			}
 			return false;
 		}
 
@@ -90,17 +103,16 @@ namespace Huy
 		/// Deactivate the skill and stop the player during the skill executation
 		/// or when the skill is done executing.
 		/// </summary>
-		public bool Deactivate ()
+		public override bool Deactivate ()
 		{
-			m_isActive = false;
-
 			// Prevent accidental shrinking beyond the original size
 			if (m_originalScale != transform.localScale)
 			{
-//				m_rigidbody2D.velocity = new Vector2 (0f, m_rigidbody2D.velocity.y);
-//				transform.localScale /= Size;
-//
-//				m_rigidbody2D.mass = m_originalMass;
+				base.Deactivate ();
+				AgentComponent.SetVelocity (0f, 0f);
+
+				transform.localScale /= Size;
+				m_player.Rigidbody2DComponent.mass = m_originalMass;
 			}
 
 			return false;
@@ -113,16 +125,17 @@ namespace Huy
 		/// <summary>
 		/// Initialize member variables.
 		/// </summary>
-		protected override void Awake ()
+		protected override void Start ()
 		{
-			base.Awake ();
+			base.Start ();
 
-//			m_skillType = SkillTypeEnum.Attack;
+			m_activatorType = ActivatorTypes.Button;
 			m_originalScale = transform.localScale;
 			m_circleCollider2D = GetComponent<CircleCollider2D> ();
+			m_player = AgentComponent as Player;
 
 			m_errorCoroutineRunning = false;
-//			m_originalMass = m_rigidbody2D.mass;
+			m_originalMass = m_player.Rigidbody2DComponent.mass;
 			m_particleSystem = GetComponentInChildren<ParticleSystem> ();
 		}
 
@@ -136,6 +149,23 @@ namespace Huy
 //				float velocityX = (m_player.FacingRight) ? Speed : -Speed;
 //				m_rigidbody2D.velocity = new Vector2 (velocityX, m_rigidbody2D.velocity.y);
 //			}
+
+			if (m_isActive)
+			{
+				switch (m_player.Facing)
+				{
+					case Agent.Direction.Left:
+						AgentComponent.SetVelocity (-Speed, m_player.Rigidbody2DComponent.velocity.y);
+						break;
+
+					case Agent.Direction.Right:
+						AgentComponent.SetVelocity (Speed, m_player.Rigidbody2DComponent.velocity.y);
+						break;
+
+					default:
+						break;
+				}
+			}
 		}
 
 		#endregion
@@ -151,12 +181,12 @@ namespace Huy
 		private IEnumerator growCoroutine()
 		{
 			// Set the active flag and get the position in titan form
-			m_isActive = true;
 			Vector2 titanFormPosition = transform.position + new Vector3 (0f, Size / 2f, 0f);
 			float radius = m_circleCollider2D.radius * Size;
 
 			// Check if there are any colliders in all directions
-			RaycastHit2D raycast = Physics2D.CircleCast (titanFormPosition, radius, Vector2.one);
+			RaycastHit2D raycast = Physics2D.CircleCast (titanFormPosition, radius, Vector2.one, radius, layers);
+
 			if (raycast.collider != null)
 			{
 				// Do not enlarge the sphere if there is not enough space to do it
@@ -166,20 +196,22 @@ namespace Huy
 					{
 						StartCoroutine (displayErrorCoroutine ());
 					}
-
-					Deactivate ();
+						
+					AgentComponent.DeactivateAgentSkill (this);
 					yield break;
 				}
 			}
 				
+			m_isActive = true;
 			m_particleSystem.Emit (ParticleCount);
 
 			transform.position = titanFormPosition;
 			transform.localScale *= Size;
-//			m_rigidbody2D.mass = Mass;
+			m_player.Rigidbody2DComponent.mass = Mass;
 
 			yield return new WaitForSeconds (5.0f);
 			Deactivate ();
+			AgentComponent.DeactivateAgentSkill (this);
 		}
 
 		private IEnumerator displayErrorCoroutine()

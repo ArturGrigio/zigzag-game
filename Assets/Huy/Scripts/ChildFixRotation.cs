@@ -8,7 +8,7 @@ namespace Huy
 	/// </summary>
 	public class ChildFixRotation : MonoBehaviour
 	{
-		Quaternion m_rotation;
+		private Quaternion m_rotation;
 
 		private void Awake()
 		{
