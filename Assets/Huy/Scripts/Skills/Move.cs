@@ -34,7 +34,7 @@ namespace Huy
 				if ((axis > 0f && AgentComponent.Facing == Agent.Direction.Left) ||
 					(axis < 0f && AgentComponent.Facing == Agent.Direction.Right))
 				{
-					flip ();
+					//flip ();
 				}
 
 				return true;

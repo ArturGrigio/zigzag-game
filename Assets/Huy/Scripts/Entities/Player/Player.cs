@@ -8,6 +8,8 @@ namespace Huy
 	{
 		#region Public Variables
 
+		public LayerMask Layers;
+
 		#endregion
 
 		#region Private Variables
@@ -37,9 +39,8 @@ namespace Huy
 			{
 				direction = Vector2.right;
 			}
-
-			int inactivePlayerLayer = LayerMask.NameToLayer("Inactive Player");
-			RaycastHit2D hit = Physics2D.Raycast (transform.position, direction, 0.5f, inactivePlayerLayer);
+				
+			RaycastHit2D hit = Physics2D.Raycast (transform.position, direction, 0.5f, Layers);
 
 			return (hit.normal == Vector2.left || hit.normal == Vector2.right);
 		}

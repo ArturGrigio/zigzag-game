@@ -135,11 +135,10 @@ namespace Huy
 
 			foreach (Skill skill in gameObject.GetComponents<Skill>()) 
             {
-				if (skill.ActivatorType != Skill.ActivatorTypes.Passive)
+				if (!m_skills.ContainsKey(skill.Activator))
 				{
 					m_skills.Add (skill.Activator, skill);
 				}
-					
 			}
 		}
 
@@ -198,8 +197,6 @@ namespace Huy
 				m_updateVelocity = false;
 				m_newVelocity = Vector2.zero;
 			}
-
-            fallFaster();
 		}
 
 		#endregion

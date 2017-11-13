@@ -6,6 +6,8 @@ namespace ZigZag
 {
 	public class TouchAttack : MonoBehaviour
 	{
+
+		/*
 		private EnemyMovement m_enemyMovement;
 
 		// Use this for initialization
@@ -34,8 +36,7 @@ namespace ZigZag
 				}
 			}
 		}
-
-
+		*/
 	}
 }
 
