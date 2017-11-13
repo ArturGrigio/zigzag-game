@@ -197,6 +197,8 @@ namespace Huy
 				m_updateVelocity = false;
 				m_newVelocity = Vector2.zero;
 			}
+
+            fallFaster();
 		}
 
 		#endregion
