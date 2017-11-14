@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tom
+namespace ZigZag
 {
-/*	
-	public class Glide : Skill {
+	
+	public class Glide : Skill 
+	{
 
 		#region Public Variables
 		/// <summary>
@@ -22,7 +23,8 @@ namespace Tom
 		#endregion
 
 		#region Properties
-		public override bool CanActivate {
+		public override bool CanActivate 
+		{
 			get { return AgentComponent.IsGrounded == false; }
 		}
 		#endregion
@@ -76,9 +78,9 @@ namespace Tom
 		#endregion
 
 		#region Unity Methods
-		protected override void Awake()
+		protected override void Start()
 		{
-			base.Awake ();
+			base.Start ();
 			m_canCancel = true;
 			m_allowMovement = true;
 			m_activatorType = ActivatorTypes.Hold;
@@ -87,5 +89,4 @@ namespace Tom
 		}
 		#endregion
 	}
-*/
 }

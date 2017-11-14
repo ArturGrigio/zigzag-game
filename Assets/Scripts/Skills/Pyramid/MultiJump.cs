@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tom 
+namespace ZigZag 
 {
-/*
-	public class MultiJump : Jump {
-
+	public class MultiJump : Jump 
+	{
 		#region Public Variables
 
 
@@ -19,7 +18,8 @@ namespace Tom
 		#endregion
 
 		#region Properties
-		public override bool CanActivate {
+		public override bool CanActivate 
+		{
 			get
 			{
 				return base.CanActivate || m_jumpsCompleted < JumpCount;
@@ -60,13 +60,13 @@ namespace Tom
 		#endregion
 
 		#region Unity Methods
-		protected override void Awake()
+		protected override void Start()
 		{
-			base.Awake ();
+			base.Start ();
 			AgentComponent.GroundDetectorComponent.OnGroundEnter += OnGroundEnter;
 			AgentComponent.GroundDetectorComponent.OnGroundExit += OnGroundExit;
 		}
 		#endregion
 	}
-*/
+
 }

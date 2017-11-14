@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ZigZag {
+namespace ZigZag 
+{
 
-	public class Move : Skill {
+	public class Move : Skill 
+	{
 		#region Public Variables
 		/// <summary>
 		/// Character movement speed.
@@ -42,9 +44,9 @@ namespace ZigZag {
 
 		#region Unity Methods
 
-		protected override void Awake()
+		protected override void Start()
 		{
-			base.Awake ();
+			base.Start ();
 			m_activatorType = ActivatorTypes.Axis;
 		}
 

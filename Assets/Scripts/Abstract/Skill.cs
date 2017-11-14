@@ -9,6 +9,7 @@ namespace ZigZag {
 	public abstract class Skill : MonoBehaviour 
 	{
 		#region Public Variables
+
 		/// <summary>
 		/// Activator types: Axis receives axis input. The remaining three are button activation.
 		/// Instant performs an action immediately and sets the skill inactive.
@@ -32,6 +33,7 @@ namespace ZigZag {
 		protected bool m_canCancel = false;
 		protected bool m_isActive = false;
 		protected bool m_allowMovement = false;
+
 		#endregion
 
 
@@ -125,10 +127,9 @@ namespace ZigZag {
 		#endregion
 
 		#region Unity Methods
-		protected virtual void Awake()
+		protected virtual void Start()
 		{
 			m_agent = GetComponent<Agent> ();
-
 		}
 		#endregion
 	}

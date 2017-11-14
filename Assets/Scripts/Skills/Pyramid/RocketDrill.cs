@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tom 
+namespace ZigZag 
 {
-/*
 	[RequireComponent(typeof(MultiJump))]
-	public class RocketDrill : Skill {
-
+	public class RocketDrill : Skill 
+	{
 		#region Public Variables
 		/// <summary>
 		/// The value that determines how high when the character jumps.
@@ -26,7 +25,8 @@ namespace Tom
 		#endregion
 
 		#region Properties
-		public override bool CanActivate {
+		public override bool CanActivate 
+		{
 			get
 			{
 				return m_multiJump.CanActivate;
@@ -75,14 +75,14 @@ namespace Tom
 		#endregion
 
 		#region Unity Methods
-		protected override void Awake()
+		protected override void Start()
 		{
-			base.Awake ();
+			base.Start ();
 			m_multiJump = AgentComponent.GetComponent<MultiJump> ();
 			m_defaultJump = m_multiJump.JumpPower;
 			AgentComponent.GroundDetectorComponent.OnGroundEnter += OnGroundEnter;
 		}
 		#endregion
 	}
-*/
+
 }

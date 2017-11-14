@@ -5,7 +5,8 @@ using UnityEngine;
 namespace ZigZag 
 {
 
-	public class Jump : Skill {
+	public class Jump : Skill 
+	{
 		#region Public Variables
 		/// <summary>
 		/// The value that determines how high when the character jumps.
@@ -15,13 +16,21 @@ namespace ZigZag
 		#endregion
 
 		#region Private/Protected Variables
+
+		/// <summary>
+		/// Reference to the wall jump skill component.
+		/// This will be null if a shape does not have a wall jump capability.
+		/// </summary>
+		private WallJumpSkill m_wallJumpSkill;
+
 		#endregion
 
 		#region Properties
-		public override bool CanActivate {
+		public override bool CanActivate 
+		{
 			get
 			{
-				return AgentComponent.IsGrounded;
+				return (m_wallJumpSkill != null && m_wallJumpSkill.WallCollision) || AgentComponent.IsGrounded;
 			}
 		}
 		#endregion
@@ -30,13 +39,13 @@ namespace ZigZag
 
 		public override bool Activate ()
 		{
-			if (AgentComponent.ActivateAgentSkill(this))
+			if (AgentComponent.ActivateAgentSkill (this) )
 			{
 				AgentComponent.SetVelocityY (JumpPower);
 				AgentComponent.DeactivateAgentSkill (this);
 				return true;
 			}
-			Debug.Log ("Couldn't activate Jump");
+		
 			return false;
 		}
 
@@ -46,9 +55,10 @@ namespace ZigZag
 		#endregion
 
 		#region Unity Methods
-		protected override void Awake()
+		protected override void Start()
 		{
-			base.Awake ();
+			base.Start ();
+			m_wallJumpSkill = GetComponent<WallJumpSkill> ();
 		}
 		#endregion
 	}

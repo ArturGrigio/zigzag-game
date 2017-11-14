@@ -68,6 +68,7 @@ namespace ZigZag
 		{
 			bool activeSet = false;
 			m_players.Clear ();
+
 			foreach(Player player in GetComponentsInChildren<Player>())
 			{
 				if (player == m_currentShape) 
@@ -77,6 +78,7 @@ namespace ZigZag
 				}
 				m_players.Add (player);
 			}
+
 			if (activeSet == false)
 			{
 				m_currentShape = m_players [m_activeIndex];
@@ -89,7 +91,7 @@ namespace ZigZag
 
 		// Use this for initialization
 		// Update is called once per frame
-		void Awake()
+		private void Awake()
 		{
 			//Disable collision between player objects and set active player
 			m_activeLayer = LayerMask.NameToLayer("Active Player");

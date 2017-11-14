@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ZigZag 
+namespace Tom 
 {
-
+/*
 	public class Stomp: Skill {
 		#region Public Variables
 		/// <summary>
@@ -71,5 +71,5 @@ namespace ZigZag
 		}
 		#endregion
 	}
-
+*/
 }

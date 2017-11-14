@@ -7,15 +7,15 @@ namespace ZigZag
 	{
 		#region Public Variables
 		[Tooltip("Maximum health the object can attain.")]
-		public int FullHealth = 100;
+		public float FullHealth = 100;
 		#endregion
 
 		#region Private/Protected Variables
-		protected int m_currentHealth;
+		protected float m_currentHealth;
 		#endregion
 
 		#region Properties
-		public int CurrentHealth
+		public float CurrentHealth
 		{
 			get { return m_currentHealth; }
 		}
@@ -26,7 +26,7 @@ namespace ZigZag
 		/// Deals damage to the agent and checks for death.
 		/// </summary>
 		/// <param name="damage">Damage.</param>
-		public virtual void ReceiveDamage(int damage)
+		public virtual void ReceiveDamage(float damage)
 		{
 			m_currentHealth -= damage;
 			if (m_currentHealth < 0)
@@ -39,7 +39,7 @@ namespace ZigZag
 		/// Removes damage from the agent.
 		/// </summary>
 		/// <param name="heal">Heal.</param>
-		public virtual void ReceiveHeal(int heal)
+		public virtual void ReceiveHeal(float heal)
 		{
 			m_currentHealth += heal;
 			if (m_currentHealth > FullHealth)

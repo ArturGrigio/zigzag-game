@@ -8,7 +8,7 @@ namespace ZigZag
 	/// This class handles user inputs and performs the correct
 	/// actions based on the inputs.
 	/// </summary>
-	public class InputController : MonoBehaviour
+	public class InputManager : MonoBehaviour
 	{
 	 	#region Public Variables
 
@@ -42,6 +42,7 @@ namespace ZigZag
 						PlayerManager.NextPlayer ();
 					}
 				}
+				
 				// Player skill checks
 				foreach (Skill skill in PlayerManager.CurrentShape.Skills)
 				{
@@ -49,39 +50,43 @@ namespace ZigZag
 					{
 						switch (skill.ActivatorType)
 						{
-							case Skill.ActivatorTypes.Axis:
-								skill.ActivateAxis (Input.GetAxis (skill.Activator));
-								break;
-							case Skill.ActivatorTypes.Hold:
-								if (skill.IsActive && Input.GetButton(skill.Activator) == false)
+						case Skill.ActivatorTypes.Axis:
+							skill.ActivateAxis (Input.GetAxis (skill.Activator));
+							break;
+
+						case Skill.ActivatorTypes.Hold:
+							if (skill.IsActive && Input.GetButton (skill.Activator) == false)
+							{
+								Debug.Log ("HOLD RELEASE");
+								skill.Cancel ();
+							}
+							else if (Input.GetButtonDown (skill.Activator))
+							{
+								Debug.Log ("HOLD BEGIN");
+								skill.Activate ();
+							}
+							break;
+
+						case Skill.ActivatorTypes.Toggle:
+							if (skill.IsActive == false && Input.GetButton (skill.Activator))
+							{
+								if (skill.IsActive)
 								{
-									Debug.Log ("HOLD RELEASE");
 									skill.Cancel ();
 								}
-								else if (Input.GetButtonDown (skill.Activator))
-								{
-									Debug.Log ("HOLD BEGIN");
-									skill.Activate ();
-								}
-								break;
-							case Skill.ActivatorTypes.Toggle:
-								if (skill.IsActive == false && Input.GetButton (skill.Activator))
-								{
-									if (skill.IsActive)
-									{
-										skill.Cancel ();
-									} else
-									{
-										skill.Activate ();
-									}
-								}
-								break;
-							case Skill.ActivatorTypes.Instant:
-								if (Input.GetButtonDown (skill.Activator))
+								else
 								{
 									skill.Activate ();
 								}
-								break;
+							}
+							break;
+
+						case Skill.ActivatorTypes.Instant:
+							if (Input.GetButtonDown (skill.Activator))
+							{
+								skill.Activate ();
+							}
+							break;
 						}
 					}
 				}

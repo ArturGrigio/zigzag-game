@@ -6,7 +6,8 @@ namespace ZigZag {
 
 	[RequireComponent (typeof(Rigidbody2D))]
 	[RequireComponent (typeof(SpriteRenderer))]
-	public abstract class Agent : Health {
+	public abstract class Agent : Health 
+	{
 
 		#region Public Variables
 
@@ -150,17 +151,19 @@ namespace ZigZag {
 		private void loadSkills()
 		{
 			m_skills = new List<Skill> ();
-			foreach (Skill skill in gameObject.GetComponents<Skill>()) {
+
+			foreach (Skill skill in gameObject.GetComponents<Skill>()) 
+			{
 				m_skills.Add (skill);
 			}
 		}
 
-		private void OnGroundEnter(Collider2D collider) 
+		private void GroundEnterHandler(Collider2D collider) 
 		{
 			m_isGrounded = true;
 		}
 
-		private void OnGroundExit(Collider2D collider)
+		private void GroundExitHandler(Collider2D collider)
 		{
 			m_isGrounded = false;
 		}
@@ -180,8 +183,8 @@ namespace ZigZag {
 			base.Awake ();
 			m_rigidBody2D = GetComponent<Rigidbody2D> ();
 			m_groundDetector = GetComponentInChildren<GroundDetector> ();
-			m_groundDetector.OnGroundEnter += OnGroundEnter;
-			m_groundDetector.OnGroundExit += OnGroundExit;
+			m_groundDetector.OnGroundEnter += GroundEnterHandler;
+			m_groundDetector.OnGroundExit += GroundExitHandler;
 			m_spriteRenderer = GetComponent<SpriteRenderer> ();
 			AttackDamage = 0f;
 			loadSkills ();
