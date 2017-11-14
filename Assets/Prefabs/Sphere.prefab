@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4555388784159026}
   - component: {fileID: 68965553073326708}
-  - component: {fileID: 114423490463892432}
+  - component: {fileID: 114865767495738856}
   - component: {fileID: 114904623982106674}
   m_Layer: 15
   m_Name: GroundDetector
@@ -212,17 +212,6 @@ MonoBehaviour:
   layers:
     serializedVersion: 2
     m_Bits: 4294909183
---- !u!114 &114423490463892432
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1360856353428178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0804403165123c4cb9b37fc44d4512d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114530310796806480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -248,7 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_activator: Jump
-  JumpPower: 15
+  JumpPower: 5
 --- !u!114 &114737664822244142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -262,6 +251,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_activator: Horizontal
   Speed: 10
+--- !u!114 &114865767495738856
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1360856353428178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a62261433aa91944903fffca40fa88d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114904623982106674
 MonoBehaviour:
   m_ObjectHideFlags: 1
