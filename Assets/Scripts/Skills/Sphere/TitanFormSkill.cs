@@ -134,10 +134,9 @@ namespace ZigZag
 		/// <summary>
 		/// Initialize member variables.
 		/// </summary>
-		protected override void Start ()
+		protected virtual void Start()
 		{
-			base.Start ();
-
+			
 			//m_activatorType = ActivatorTypes.Button;
 			m_originalScale = transform.localScale;
 			m_circleCollider2D = GetComponent<CircleCollider2D> ();

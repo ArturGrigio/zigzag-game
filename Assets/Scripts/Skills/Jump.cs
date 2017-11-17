@@ -17,12 +17,6 @@ namespace ZigZag
 
 		#region Private/Protected Variables
 
-		/// <summary>
-		/// Reference to the wall jump skill component.
-		/// This will be null if a shape does not have a wall jump capability.
-		/// </summary>
-		private WallJumpSkill m_wallJumpSkill;
-
 		#endregion
 
 		#region Properties
@@ -30,7 +24,7 @@ namespace ZigZag
 		{
 			get
 			{
-				return (m_wallJumpSkill != null && m_wallJumpSkill.WallCollision) || AgentComponent.IsGrounded;
+				return AgentComponent.IsGrounded;
 			}
 		}
 		#endregion
@@ -39,7 +33,7 @@ namespace ZigZag
 
 		public override bool Activate ()
 		{
-			if (AgentComponent.ActivateAgentSkill (this) )
+			if (AgentComponent.IsGrounded && AgentComponent.ActivateAgentSkill (this) )
 			{
 				AgentComponent.SetVelocityY (JumpPower);
 				AgentComponent.DeactivateAgentSkill (this);
@@ -55,11 +49,6 @@ namespace ZigZag
 		#endregion
 
 		#region Unity Methods
-		protected override void Start()
-		{
-			base.Start ();
-			m_wallJumpSkill = GetComponent<WallJumpSkill> ();
-		}
 		#endregion
 	}
 

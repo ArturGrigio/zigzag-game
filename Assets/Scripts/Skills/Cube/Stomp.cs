@@ -68,9 +68,8 @@ namespace ZigZag
 		#endregion
 
 		#region Unity Methods
-		protected override void Start()
+		protected virtual void Start()
 		{
-			base.Start ();
 			AgentComponent.SurfaceDetectorComponent.OnSurfaceEnter += OnSurfaceEnter;
 		}
 		#endregion

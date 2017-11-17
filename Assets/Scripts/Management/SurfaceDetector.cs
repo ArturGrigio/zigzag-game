@@ -82,7 +82,7 @@ namespace ZigZag {
 		#endregion
 
 		#region Unity Methods
-		void Start()
+		protected virtual void Awake()
 		{
 			m_collisions = new Dictionary<Collider2D, Surface> ();
 			initSurfaces ();

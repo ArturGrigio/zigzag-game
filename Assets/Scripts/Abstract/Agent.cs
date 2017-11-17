@@ -171,7 +171,7 @@ namespace ZigZag {
 		{
 			base.Awake ();
 			m_rigidBody2D = GetComponent<Rigidbody2D> ();
-			m_surfaceDetector = GetComponentInChildren<SurfaceDetector> ();
+			m_surfaceDetector = GetComponent<SurfaceDetector> ();
 			m_spriteRenderer = GetComponent<SpriteRenderer> ();
 			AttackDamage = 0f;
 			loadSkills ();

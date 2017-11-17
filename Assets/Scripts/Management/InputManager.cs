@@ -31,62 +31,63 @@ namespace ZigZag
 		/// </remarks>
 		private void Update ()
 		{
-			if (PlayerManager.CurrentShape.CanCancel)
+			Skill activeSkill = PlayerManager.CurrentShape.ActiveSkill;
+			// UI/Universal input processing
+			if (Input.GetButtonDown ("Swap Character"))
 			{
-				// UI/Universal input processing
-				if (Input.GetButtonDown ("Swap Character"))
+				if (activeSkill == null || (activeSkill.CanCancel && activeSkill.Cancel()))
 				{
-					if (PlayerManager.CurrentShape.ActiveSkill == null 
-						|| PlayerManager.CurrentShape.ActiveSkill.Cancel())
-					{
-						PlayerManager.NextPlayer ();
-					}
+					PlayerManager.NextPlayer ();
 				}
-				
-				// Player skill checks
-				foreach (Skill skill in PlayerManager.CurrentShape.Skills)
+			}
+			
+			// Player skill checks
+			foreach (Skill skill in PlayerManager.CurrentShape.Skills) 
+			{
+				switch (skill.SkillType) 
 				{
-					
-					switch (skill.ActivatorType)
+				case SkillTypes.Axis:
+					if (skill.CanActivate) 
 					{
-					case Skill.ActivatorTypes.Axis:
 						skill.ActivateAxis (Input.GetAxis (skill.Activator));
-						break;
-
-					case Skill.ActivatorTypes.Hold:
-						if (skill.IsActive && Input.GetButton (skill.Activator) == false)
-						{
-							Debug.Log ("HOLD RELEASE");
-							skill.Cancel ();
-						}
-						else if (Input.GetButtonDown (skill.Activator))
-						{
-							Debug.Log ("HOLD BEGIN");
-							skill.Activate ();
-						}
-						break;
-
-					case Skill.ActivatorTypes.Toggle:
-						if (skill.IsActive == false && Input.GetButton (skill.Activator))
-						{
-							if (skill.IsActive)
-							{
-								skill.Cancel ();
-							}
-							else
-							{
-								skill.Activate ();
-							}
-						}
-						break;
-
-					case Skill.ActivatorTypes.Instant:
-						if (Input.GetButtonDown (skill.Activator))
-						{
-							skill.Activate ();
-						}
-						break;
 					}
+					break;
+
+				case SkillTypes.Hold:
+					if (skill.IsActive && Input.GetButton (skill.Activator) == false) 
+					{
+						Debug.Log ("HOLD RELEASE");
+						skill.Cancel ();
+					} 
+					else if (skill.CanActivate && Input.GetButtonDown (skill.Activator)) 
+					{
+						Debug.Log ("HOLD BEGIN");
+						skill.Activate ();
+					}
+					break;
+
+				case SkillTypes.Toggle:
+					if (Input.GetButton (skill.Activator)) 
+					{
+						if (skill.CanCancel && skill.IsActive) 
+						{
+							skill.Cancel ();
+						} 
+						else if (skill.CanActivate) 
+						{
+							skill.Activate ();
+						}
+					}
+					break;
+
+				case SkillTypes.Instant:
+					if (skill.CanActivate && Input.GetButtonDown (skill.Activator)) 
+					{
+						skill.Activate ();
+					}
+					break;
+				case SkillTypes.Passive:
+					break;
 				}
 			}
 		}

@@ -80,14 +80,17 @@ namespace ZigZag
 		#endregion
 
 		#region Unity Methods
-		protected override void Start()
+		protected override void Awake()
 		{
-			base.Start ();
+			base.Awake ();
 			m_canCancel = true;
 			m_allowMovement = true;
-			m_activatorType = ActivatorTypes.Hold;
-			AgentComponent.SurfaceDetectorComponent.OnSurfaceEnter += OnSurfaceEnter;
+			m_skillType = SkillTypes.Hold;
 			calcGravity ();
+		}
+		protected virtual void Start()
+		{
+			AgentComponent.SurfaceDetectorComponent.OnSurfaceEnter += OnSurfaceEnter;
 		}
 		#endregion
 	}

@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace ZigZag {
 
+	public enum SkillTypes {Axis, Instant, Toggle, Hold, Passive};
+
 	[RequireComponent (typeof (Agent))]
 	public abstract class Skill : MonoBehaviour 
 	{
@@ -16,7 +18,7 @@ namespace ZigZag {
 		/// Toggle will activate an inactive skill or cancel an active skill when the activator is triggered.
 		/// Hold will activate a skill when the activator is triggered and cancel when the activator is absent.
 		/// </summary>
-		public enum ActivatorTypes {Axis, Instant, Toggle, Hold};
+
 
 		#endregion
 
@@ -28,7 +30,7 @@ namespace ZigZag {
 		[Tooltip("Designator used to activate a skill (ie: name of input used for player skills).")]
 		protected string m_activator = "";
 
-		protected ActivatorTypes m_activatorType = ActivatorTypes.Instant;
+		protected SkillTypes m_skillType = SkillTypes.Instant;
 
 		protected bool m_canCancel = false;
 		protected bool m_isActive = false;
@@ -88,9 +90,9 @@ namespace ZigZag {
 		/// Gets the activator type of the skill.
 		/// </summary>
 		/// <value>The type of the activator.</value>
-		public ActivatorTypes ActivatorType
+		public SkillTypes SkillType
 		{
-			get { return m_activatorType; }
+			get { return m_skillType; }
 		}
 
 		/// <summary>
@@ -127,7 +129,7 @@ namespace ZigZag {
 		#endregion
 
 		#region Unity Methods
-		protected virtual void Start()
+		protected virtual void Awake()
 		{
 			m_agent = GetComponent<Agent> ();
 		}

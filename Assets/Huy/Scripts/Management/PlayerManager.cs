@@ -18,7 +18,7 @@ namespace Huy
 
 		#region Private/Protected Variables
 
-		private PlayerHealth m_playerHealth;
+		private PlayerHealth m_playerHealth = null;
 		private int m_activeIndex = 0;
 		private List<Player> m_players = new List<Player>();
 		private int m_activeLayer;

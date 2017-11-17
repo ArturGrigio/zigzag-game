@@ -45,7 +45,7 @@ public class MovingPlatform : MonoBehaviour
 
 	#region Unity Methods
 	// Use this for initialization
-	void Start () 
+	protected virtual void Awake () 
 	{
 		m_rigidBody2D = transform.GetComponent<Rigidbody2D> ();
 		m_min = (Vector2)transform.position - MinOffset;

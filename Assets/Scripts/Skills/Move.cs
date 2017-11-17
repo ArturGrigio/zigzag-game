@@ -43,10 +43,10 @@ namespace ZigZag
 
 		#region Unity Methods
 
-		protected override void Start()
+		protected override void Awake()
 		{
-			base.Start ();
-			m_activatorType = ActivatorTypes.Axis;
+			base.Awake ();
+			m_skillType = SkillTypes.Axis;
 		}
 
 		#endregion

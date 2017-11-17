@@ -66,10 +66,9 @@ namespace ZigZag
 		/// <summary>
 		/// 
 		/// </summary>
-		protected override void Start ()
+		protected virtual void Start()
 		{
-			base.Start ();
-
+			
 			//m_activatorType = ActivatorTypes.Passive;
 			//m_activator = "Passive";
 			m_player = AgentComponent as Player;

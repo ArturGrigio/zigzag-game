@@ -60,9 +60,9 @@ namespace ZigZag
 		/// <summary>
 		/// Initialize member variables.
 		/// </summary>
-		protected override void Start ()
+		protected override void Awake()
 		{
-			base.Start ();
+			base.Awake();
 
 			m_player = AgentComponent as Player;
 			m_colliedWall = false;
@@ -77,30 +77,30 @@ namespace ZigZag
 		/// </remarks>
 		/// 
 		/// <param name="collision">Collision.</param>
-		private void OnCollisionEnter2D(Collision2D collision)
-		{
-			// Only activate when player collies against a wall and if sphere
-			// is not on the ground
-			if (m_player.WallCollided () && !m_player.IsGrounded)
-			{
-				Debug.Log ("collied against wall");
-				m_colliedWall = true;
-			}
-		}
-
+//		private void OnCollisionEnter2D(Collision2D collision)
+//		{
+//			// Only activate when player collies against a wall and if sphere
+//			// is not on the ground
+//			if (m_player.WallCollided () && !m_player.IsGrounded)
+//			{
+//				Debug.Log ("collied against wall");
+//				m_colliedWall = true;
+//			}
+//		}
+//
 		/// <summary>
 		/// Raises the collision exit 2D event.
 		/// </summary>
 		/// <param name="collision">Collision.</param>
-		private void OnCollisionExit2D(Collision2D collision)
-		{
-			if (m_colliedWall && !m_player.IsGrounded)
-			{
-				Debug.Log ("exit wall");
-				m_colliedWall = false;
-			}
-		}
-
+//		private void OnCollisionExit2D(Collision2D collision)
+//		{
+//			if (m_colliedWall && !m_player.IsGrounded)
+//			{
+//				Debug.Log ("exit wall");
+//				m_colliedWall = false;
+//			}
+//		}
+//
 		#endregion
 	}
 }

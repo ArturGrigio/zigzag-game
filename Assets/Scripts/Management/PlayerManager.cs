@@ -99,7 +99,6 @@ namespace ZigZag
 			loadPlayers ();
 			changePlayer (m_activeIndex);
 		}
-
 		#endregion
 	}
 }
