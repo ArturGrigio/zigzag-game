@@ -387,9 +387,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FullHealth: 100
-  Layers:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!212 &397747977
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -887,9 +884,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FullHealth: 100
-  Layers:
-    serializedVersion: 2
-    m_Bits: 2048
 --- !u!58 &639931013
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1304,7 +1298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c1d19ab15d00c4b818870da7a436f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
+  Target: {fileID: 1645754186}
   Damping: 1
   LookAheadFactor: 3
   LookAheadReturnSpeed: 0.5
@@ -1485,7 +1479,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 430189132
+  randomSeed: 255257860
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4982,9 +4976,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FullHealth: 100
-  Layers:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!61 &2008170201
 BoxCollider2D:
   m_ObjectHideFlags: 0
