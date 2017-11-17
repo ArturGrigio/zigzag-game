@@ -157,11 +157,11 @@ namespace ZigZag
 			{
 				switch (AgentComponent.Facing)
 				{
-					case Agent.Direction.Left:
+					case Direction.Left:
 						AgentComponent.SetVelocity (-Speed, m_rigidbody2D.velocity.y);
 						break;
 
-					case Agent.Direction.Right:
+					case Direction.Right:
 						AgentComponent.SetVelocity (Speed, m_rigidbody2D.velocity.y);
 						break;
 

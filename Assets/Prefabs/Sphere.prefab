@@ -19,9 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4555388784159026}
-  - component: {fileID: 68965553073326708}
   - component: {fileID: 114865767495738856}
   - component: {fileID: 114904623982106674}
+  - component: {fileID: 58355099122589772}
   m_Layer: 15
   m_Name: GroundDetector
   m_TagString: Untagged
@@ -78,7 +78,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1995286442311242}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.63, y: 0.273, z: -0.10178773}
+  m_LocalPosition: {x: 12.81, y: 0.24, z: -0.10178773}
   m_LocalScale: {x: 0.17741288, y: 0.17741294, z: 0.17741294}
   m_Children:
   - {fileID: 4395243125771314}
@@ -132,6 +132,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &58355099122589772
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1360856353428178}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.27
 --- !u!58 &58834768448308666
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -147,25 +162,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.27
---- !u!68 &68965553073326708
-EdgeCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1360856353428178}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.5837507, y: -1.1246843}
-  - {x: -0.2864995, y: -1.2389929}
-  - {x: 0.09345436, y: -1.2700868}
-  - {x: 0.4483142, y: -1.1846447}
 --- !u!114 &114093614972434032
 MonoBehaviour:
   m_ObjectHideFlags: 1

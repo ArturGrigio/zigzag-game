@@ -47,7 +47,7 @@ namespace ZigZag
 
 		public override bool Cancel ()
 		{
-			if (IsActive)
+			if (m_isActive)
 			{
 				Debug.Log ("GLIDE STOP");
 				bool result = AgentComponent.DeactivateAgentSkill (this);
@@ -64,16 +64,18 @@ namespace ZigZag
 		#endregion
 
 		#region Private/Protected Methods
-		private void OnGroundEnter (Collider2D collider)
+		private void OnSurfaceEnter (Collision2D collision, Surface surface)
 		{
-			Cancel ();
+			if (surface == Surface.Ground)
+			{
+				Cancel ();
+			}
 		}
 
 		private void calcGravity()
 		{
 			m_defaultGravity = Physics2D.gravity;
 			m_lowGravity = GravityScale * Physics2D.gravity;
-			Debug.Log ("Grav=" + m_defaultGravity.ToString () + ", low grav=" + m_lowGravity.ToString ());
 		}
 		#endregion
 
@@ -84,7 +86,7 @@ namespace ZigZag
 			m_canCancel = true;
 			m_allowMovement = true;
 			m_activatorType = ActivatorTypes.Hold;
-			AgentComponent.GroundDetectorComponent.OnGroundEnter += OnGroundEnter;
+			AgentComponent.SurfaceDetectorComponent.OnSurfaceEnter += OnSurfaceEnter;
 			calcGravity ();
 		}
 		#endregion

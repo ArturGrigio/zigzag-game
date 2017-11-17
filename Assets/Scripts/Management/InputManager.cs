@@ -46,48 +46,46 @@ namespace ZigZag
 				// Player skill checks
 				foreach (Skill skill in PlayerManager.CurrentShape.Skills)
 				{
-					if (skill.CanActivate)
+					
+					switch (skill.ActivatorType)
 					{
-						switch (skill.ActivatorType)
-						{
-						case Skill.ActivatorTypes.Axis:
-							skill.ActivateAxis (Input.GetAxis (skill.Activator));
-							break;
+					case Skill.ActivatorTypes.Axis:
+						skill.ActivateAxis (Input.GetAxis (skill.Activator));
+						break;
 
-						case Skill.ActivatorTypes.Hold:
-							if (skill.IsActive && Input.GetButton (skill.Activator) == false)
+					case Skill.ActivatorTypes.Hold:
+						if (skill.IsActive && Input.GetButton (skill.Activator) == false)
+						{
+							Debug.Log ("HOLD RELEASE");
+							skill.Cancel ();
+						}
+						else if (Input.GetButtonDown (skill.Activator))
+						{
+							Debug.Log ("HOLD BEGIN");
+							skill.Activate ();
+						}
+						break;
+
+					case Skill.ActivatorTypes.Toggle:
+						if (skill.IsActive == false && Input.GetButton (skill.Activator))
+						{
+							if (skill.IsActive)
 							{
-								Debug.Log ("HOLD RELEASE");
 								skill.Cancel ();
 							}
-							else if (Input.GetButtonDown (skill.Activator))
-							{
-								Debug.Log ("HOLD BEGIN");
-								skill.Activate ();
-							}
-							break;
-
-						case Skill.ActivatorTypes.Toggle:
-							if (skill.IsActive == false && Input.GetButton (skill.Activator))
-							{
-								if (skill.IsActive)
-								{
-									skill.Cancel ();
-								}
-								else
-								{
-									skill.Activate ();
-								}
-							}
-							break;
-
-						case Skill.ActivatorTypes.Instant:
-							if (Input.GetButtonDown (skill.Activator))
+							else
 							{
 								skill.Activate ();
 							}
-							break;
 						}
+						break;
+
+					case Skill.ActivatorTypes.Instant:
+						if (Input.GetButtonDown (skill.Activator))
+						{
+							skill.Activate ();
+						}
+						break;
 					}
 				}
 			}

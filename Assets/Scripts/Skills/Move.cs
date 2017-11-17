@@ -28,10 +28,9 @@ namespace ZigZag
 		#region Public Methods
 		public override bool ActivateAxis (float axis)
 		{
-			if( AgentComponent.ActiveSkill == null || AgentComponent.ActiveSkill.AllowMovement == true || AgentComponent.ActivateAgentSkill(this))
+			if( AgentComponent.ActiveSkill == null || AgentComponent.ActiveSkill.AllowMovement == true)
 			{
 				AgentComponent.SetVelocityX (axis * Speed);
-				AgentComponent.DeactivateAgentSkill (this);
 				return true;
 			}
 			return false;

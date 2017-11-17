@@ -42,7 +42,7 @@ namespace ZigZag
 
 		public override bool Cancel ()
 		{
-			if (IsActive)
+			if (m_isActive)
 			{
 				bool result = AgentComponent.DeactivateAgentSkill (this);
 				if (result == true)
@@ -58,9 +58,12 @@ namespace ZigZag
 		#endregion
 
 		#region Private/Protected Methods
-		private void OnGroundEnter (Collider2D collider)
+		private void OnSurfaceEnter (Collision2D collision, Surface surface)
 		{
-			Cancel ();
+			if (surface == Surface.Ground)
+			{
+				Cancel ();
+			}
 		}
 		#endregion
 
@@ -68,7 +71,7 @@ namespace ZigZag
 		protected override void Start()
 		{
 			base.Start ();
-			AgentComponent.GroundDetectorComponent.OnGroundEnter += OnGroundEnter;
+			AgentComponent.SurfaceDetectorComponent.OnSurfaceEnter += OnSurfaceEnter;
 		}
 		#endregion
 	}

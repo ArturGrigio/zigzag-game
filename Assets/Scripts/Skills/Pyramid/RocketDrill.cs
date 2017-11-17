@@ -54,6 +54,7 @@ namespace ZigZag
 
 		public override bool Cancel ()
 		{
+			Debug.Log ("Attempt to cancel Rocket Drill");
 			bool result = AgentComponent.DeactivateAgentSkill (this);
 			if (result == true)
 			{
@@ -68,9 +69,12 @@ namespace ZigZag
 
 
 		#region Private/Protected Methods
-		private void OnGroundEnter (Collider2D collider)
+		protected virtual void OnSurfaceEnter (Collision2D collision, Surface surface)
 		{
-			Cancel ();
+			if (surface == Surface.Ceiling || surface == Surface.Ground)
+			{
+				Cancel ();
+			}
 		}
 		#endregion
 
@@ -78,9 +82,11 @@ namespace ZigZag
 		protected override void Start()
 		{
 			base.Start ();
+			m_activatorType = ActivatorTypes.Hold;
+			m_canCancel = true;
 			m_multiJump = AgentComponent.GetComponent<MultiJump> ();
 			m_defaultJump = m_multiJump.JumpPower;
-			AgentComponent.GroundDetectorComponent.OnGroundEnter += OnGroundEnter;
+			AgentComponent.SurfaceDetectorComponent.OnSurfaceEnter += OnSurfaceEnter;
 		}
 		#endregion
 	}

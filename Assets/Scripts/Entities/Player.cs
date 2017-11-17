@@ -11,7 +11,7 @@ namespace ZigZag
 		/// <summary>
 		/// List of layers to raycast against to.
 		/// </summary>
-		public LayerMask Layers;
+		private LayerMask Layers = 0x800;
 
 		#endregion
 

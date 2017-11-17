@@ -47,14 +47,21 @@ namespace ZigZag
 		#endregion
 
 		#region Private/Protected Methods
-		private void OnGroundEnter (Collider2D collider)
+		protected virtual void OnSurfaceEnter (Collision2D collision, Surface surface)
 		{
-			m_jumpsCompleted = 0;
+			if (surface == Surface.Ground)
+			{
+				m_jumpsCompleted = 0;
+			}
 		}
 
-		private void OnGroundExit(Collider2D collider)
+		protected virtual void OnSurfaceExit(Collision2D collision, Surface surface)
 		{
-			++m_jumpsCompleted;
+			if (surface == Surface.Ground && 
+				AgentComponent.SurfaceDetectorComponent.IsOnSurface(Surface.Ground) == false)
+			{
+				++m_jumpsCompleted;
+			}
 		}
 
 		#endregion
@@ -63,8 +70,8 @@ namespace ZigZag
 		protected override void Start()
 		{
 			base.Start ();
-			AgentComponent.GroundDetectorComponent.OnGroundEnter += OnGroundEnter;
-			AgentComponent.GroundDetectorComponent.OnGroundExit += OnGroundExit;
+			AgentComponent.SurfaceDetectorComponent.OnSurfaceEnter += OnSurfaceEnter;
+			AgentComponent.SurfaceDetectorComponent.OnSurfaceExit += OnSurfaceExit;
 		}
 		#endregion
 	}

@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace ZigZag {
 
+	public enum Direction { Left = -1, Center = 0, Right = 1};
+
 	[RequireComponent (typeof(Rigidbody2D))]
 	[RequireComponent (typeof(SpriteRenderer))]
 	public abstract class Agent : Health 
@@ -11,20 +13,17 @@ namespace ZigZag {
 
 		#region Public Variables
 
-		public enum Direction { Left = -1, Center = 0, Right = 1};
-
 		#endregion
 
 		#region Private/Protected Variables
 
-		protected GroundDetector m_groundDetector;
+		protected SurfaceDetector m_surfaceDetector;
 		protected Direction m_facing = Direction.Right;
 		protected Rigidbody2D m_rigidBody2D;
 		protected Skill m_activeSkill = null;
 		protected SpriteRenderer m_spriteRenderer;
 
 
-		private bool m_isGrounded = true;
 		private List<Skill> m_skills;
 		private Vector2 m_newVelocity = Vector2.zero;
 		private bool m_updateVelocity = false;
@@ -39,7 +38,7 @@ namespace ZigZag {
 		/// <value><c>true</c> if this instance is grounded; otherwise, <c>false</c>.</value>
 		public bool IsGrounded
 		{
-			get { return m_isGrounded; }
+			get { return m_surfaceDetector.IsOnSurface (Surface.Ground); }
 		}
 
 		/// <summary>
@@ -65,11 +64,11 @@ namespace ZigZag {
 			get { return m_facing; }
 		}
 
-		public GroundDetector GroundDetectorComponent
+		public SurfaceDetector SurfaceDetectorComponent
 		{
-			get { return m_groundDetector; }
+			get { return m_surfaceDetector; }
 		}
-
+			
 		public Skill ActiveSkill
 		{
 			get { return m_activeSkill; }
@@ -158,16 +157,6 @@ namespace ZigZag {
 			}
 		}
 
-		private void GroundEnterHandler(Collider2D collider) 
-		{
-			m_isGrounded = true;
-		}
-
-		private void GroundExitHandler(Collider2D collider)
-		{
-			m_isGrounded = false;
-		}
-
 		/// <summary>
 		/// Performs actions which are required when facing direction changes.
 		/// </summary>
@@ -182,9 +171,7 @@ namespace ZigZag {
 		{
 			base.Awake ();
 			m_rigidBody2D = GetComponent<Rigidbody2D> ();
-			m_groundDetector = GetComponentInChildren<GroundDetector> ();
-			m_groundDetector.OnGroundEnter += GroundEnterHandler;
-			m_groundDetector.OnGroundExit += GroundExitHandler;
+			m_surfaceDetector = GetComponentInChildren<SurfaceDetector> ();
 			m_spriteRenderer = GetComponent<SpriteRenderer> ();
 			AttackDamage = 0f;
 			loadSkills ();
