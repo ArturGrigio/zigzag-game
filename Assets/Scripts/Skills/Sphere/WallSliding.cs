@@ -6,8 +6,8 @@ namespace ZigZag
 	/// <summary>
 	/// Handle the wall sliding mechanic.
 	/// </summary>
-	[RequireComponent(typeof(WallJumpSkill))]
-	public class WallSlidingSkill : Skill
+	[RequireComponent(typeof(WallJump))]
+	public class WallSliding : Skill
 	{
 		#region Public Variables
 
@@ -23,14 +23,9 @@ namespace ZigZag
 		#region Private/Protected Variables
 
 		/// <summary>
-		/// Reference to the player agent component.
-		/// </summary>
-		private Player m_player;
-
-		/// <summary>
 		/// Reference to the wall jump skill component.
 		/// </summary>
-		private WallJumpSkill m_wallJumpSkill;
+		private WallJump m_wallJumpSkill;
 
 		/// <summary>
 		/// The original angular drag value.
@@ -49,6 +44,15 @@ namespace ZigZag
 
 		#endregion
 
+		#region Properties
+
+		public override bool CanActivate 
+		{
+			get { return true; }
+		}
+
+		#endregion
+
 		#region Public Methods
 
 		/// <summary>
@@ -64,19 +68,15 @@ namespace ZigZag
 		#region Unity Methods
 
 		/// <summary>
-		/// 
+		/// Initialize member variables.
 		/// </summary>
-		protected virtual void Start()
+		protected override void Awake()
 		{
-			
-			//m_activatorType = ActivatorTypes.Passive;
-			//m_activator = "Passive";
-			m_player = AgentComponent as Player;
+			m_skillType = SkillTypes.Passive;
 			m_rigidbody2D = GetComponent<Rigidbody2D> ();
-			m_wallJumpSkill = GetComponent<WallJumpSkill> ();
+			m_wallJumpSkill = GetComponent<WallJump> ();
 
 			m_originalAngularDrag = m_rigidbody2D.angularDrag;
-
 		}
 
 		/// <summary>

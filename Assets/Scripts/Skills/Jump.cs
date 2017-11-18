@@ -49,6 +49,13 @@ namespace ZigZag
 		#endregion
 
 		#region Unity Methods
+
+		protected override void Awake ()
+		{
+			base.Awake ();
+			m_skillType = SkillTypes.Instant;
+		}
+
 		#endregion
 	}
 

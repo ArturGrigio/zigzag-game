@@ -7,7 +7,7 @@ namespace ZigZag
 	/// <summary>
 	/// Handle the titan size skill.
 	/// </summary>
-	public class TitanFormSkill : Skill
+	public class TitanForm : Skill
 	{
 		#region Public Variables
 
@@ -15,7 +15,8 @@ namespace ZigZag
 		/// The scaled size of the titan form.
 		/// </summary>
 		[Tooltip("The scaled size of the titan form")]
-		public float Size = 2f;
+		[Range(2f, 10f)]
+		public float Size;
 
 		/// <summary>
 		/// The speed of the titan-size sphere.
@@ -45,7 +46,7 @@ namespace ZigZag
 		/// Layers that to be detected by the raycast of the skill.
 		/// </summary>
 		[Tooltip("Select which layers to be detect when the skill activates")]
-		public LayerMask layers;
+		public LayerMask Layers;
 
 		#endregion
 
@@ -134,15 +135,16 @@ namespace ZigZag
 		/// <summary>
 		/// Initialize member variables.
 		/// </summary>
-		protected virtual void Start()
+		protected override void Awake()
 		{
-			
-			//m_activatorType = ActivatorTypes.Button;
-			m_originalScale = transform.localScale;
+			base.Awake();
+
 			m_circleCollider2D = GetComponent<CircleCollider2D> ();
 			m_particleSystem = GetComponentInChildren<ParticleSystem> ();
 			m_rigidbody2D = GetComponent<Rigidbody2D> ();
 
+			m_skillType = SkillTypes.Instant;
+			m_originalScale = transform.localScale;
 			m_errorCoroutineRunning = false;
 			m_originalMass = m_rigidbody2D.mass;
 		}
@@ -173,7 +175,7 @@ namespace ZigZag
 		#endregion
 
 		#region Private/Protected Methods
-
+	
 		/// <summary>
 		/// The grow coroutine in which transform the sphere
 		/// into titan form.
@@ -182,34 +184,41 @@ namespace ZigZag
 		/// <returns>The coroutine.</returns>
 		private IEnumerator growCoroutine()
 		{
-			// Set the active flag and get the position in titan form
-			Vector2 titanFormPosition = transform.position + new Vector3 (0f, Size / 2f, 0f);
-			float radius = m_circleCollider2D.radius * Size;
+			// Get the offset of y in the titan form
+			float yOffset = (Size / 4f) - 0.25f;
+			Vector2 titanFormPosition = transform.position + new Vector3 (0f, yOffset, 0f);
 
-			// Check if there are any colliders in all directions
-			RaycastHit2D raycast = Physics2D.CircleCast (titanFormPosition, radius, Vector2.one, radius, layers);
+			// Create a circle to detect if the are any object that would prevent the sphere from transforming
+			// If the colliders array is NOT empty, it means the sphere might not be able to transform
+			Collider2D[] colliders = Physics2D.OverlapCircleAll (titanFormPosition, Size / 4f, Layers);
 
-			if (raycast.collider != null)
+			if (colliders.Length > 0)
 			{
-				// Do not enlarge the sphere if there is not enough space to do it
-				// Use normal vector to check if we hit the grouond, if yes ignore it
-				if (raycast.normal != Vector2.up && raycast.distance < radius)
+				// Get the "ground" object by raycasting directly down
+				RaycastHit2D raycast = Physics2D.Raycast (titanFormPosition, Vector2.down, Mathf.Infinity, Layers);
+
+				foreach (Collider2D collider in colliders)
 				{
-					if (!m_errorCoroutineRunning)
+					// Do not transform if the collider is not a "ground" collider or if the normal
+					// vector is not pointing up
+					if (collider != raycast.collider || raycast.normal != Vector2.up)
 					{
-						StartCoroutine (displayErrorCoroutine ());
-					}
-						
-					AgentComponent.DeactivateAgentSkill (this);
-					yield break;
+						if (!m_errorCoroutineRunning)
+						{
+							StartCoroutine (displayErrorCoroutine ());
+						}
+													
+						AgentComponent.DeactivateAgentSkill (this);
+						yield break;						
+					}	
 				}
 			}
 				
 			m_isActive = true;
 			m_particleSystem.Emit (ParticleCount);
 
-			transform.position = titanFormPosition;
 			transform.localScale *= Size;
+			transform.position = titanFormPosition;
 			m_rigidbody2D.mass = Mass;
 
 			yield return new WaitForSeconds (5.0f);
@@ -217,11 +226,16 @@ namespace ZigZag
 			AgentComponent.DeactivateAgentSkill (this);
 		}
 
+		/// <summary>
+		/// Display the error UI text.
+		/// </summary>
+		/// 
+		/// <returns>The error coroutine.</returns>
 		private IEnumerator displayErrorCoroutine()
 		{
 			if (ErrorText == null)
 			{
-				Debug.Log ("not enough space to transform");
+				Debug.Log ("ERROR: not enough space to transform");
 				yield break;
 			}
 			

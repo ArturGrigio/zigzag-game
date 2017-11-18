@@ -30,7 +30,7 @@ namespace ZigZag {
 		[Tooltip("Designator used to activate a skill (ie: name of input used for player skills).")]
 		protected string m_activator = "";
 
-		protected SkillTypes m_skillType = SkillTypes.Instant;
+		protected SkillTypes m_skillType;
 
 		protected bool m_canCancel = false;
 		protected bool m_isActive = false;

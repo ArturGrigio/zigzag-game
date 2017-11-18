@@ -6,15 +6,9 @@ namespace ZigZag
 	/// <summary>
 	/// Handle the wall jump mechanic.
 	/// </summary>
-	[RequireComponent(typeof(Jump))]
-	public class WallJumpSkill : Skill
+	public class WallJump : Jump
 	{
 		#region Private/Protected Variablels
-
-		/// <summary>
-		/// Reference to the player agent component.
-		/// </summary>
-		private Player m_player;
 
 		/// <summary>
 		/// Flag indicating whether the player has collied against a wall.
@@ -37,8 +31,7 @@ namespace ZigZag
 			
 		public override bool CanActivate
 		{
-			get
-			{ return false; }
+			get{ return base.CanActivate || m_colliedWall; }
 		}
 
 		#endregion
@@ -50,7 +43,16 @@ namespace ZigZag
 		/// </summary>
 		public override bool Activate ()
 		{
-			return false;
+			if (m_colliedWall && AgentComponent.ActivateAgentSkill (this))
+			{
+				AgentComponent.SetVelocityY (JumpPower);
+				AgentComponent.DeactivateAgentSkill (this);
+				m_colliedWall = false;
+
+				return true;
+			}
+
+			return base.Activate ();
 		}
 
 		#endregion
@@ -63,8 +65,7 @@ namespace ZigZag
 		protected override void Awake()
 		{
 			base.Awake();
-
-			m_player = AgentComponent as Player;
+			m_skillType = SkillTypes.Instant;
 			m_colliedWall = false;
 		}
 
@@ -77,30 +78,36 @@ namespace ZigZag
 		/// </remarks>
 		/// 
 		/// <param name="collision">Collision.</param>
-//		private void OnCollisionEnter2D(Collision2D collision)
-//		{
-//			// Only activate when player collies against a wall and if sphere
-//			// is not on the ground
-//			if (m_player.WallCollided () && !m_player.IsGrounded)
-//			{
-//				Debug.Log ("collied against wall");
-//				m_colliedWall = true;
-//			}
-//		}
-//
+		private void OnCollisionEnter2D(Collision2D collision)
+		{
+			ContactPoint2D[] contacts = new ContactPoint2D[10];
+			collision.GetContacts (contacts);
+
+			// Loop throug each contact point to see if player has come in contact with a wall
+			foreach (ContactPoint2D contact in contacts)
+			{
+				Surface colliedSurface = SurfaceDetector.SurfaceFromNormal (contact.normal);
+
+				if (colliedSurface == Surface.LeftWall || colliedSurface == Surface.RightWall)
+				{
+					m_colliedWall = true;
+					break;
+				}
+			}
+		}
+
 		/// <summary>
 		/// Raises the collision exit 2D event.
 		/// </summary>
 		/// <param name="collision">Collision.</param>
-//		private void OnCollisionExit2D(Collision2D collision)
-//		{
-//			if (m_colliedWall && !m_player.IsGrounded)
-//			{
-//				Debug.Log ("exit wall");
-//				m_colliedWall = false;
-//			}
-//		}
-//
+		private void OnCollisionExit2D(Collision2D collision)
+		{
+			if (m_colliedWall)
+			{
+				m_colliedWall = false;
+			}
+		}
+
 		#endregion
 	}
 }
