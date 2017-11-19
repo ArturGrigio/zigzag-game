@@ -1,23 +1,17 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+      <navbar></navbar>
+      <router-view/>
+      <vfooter></vfooter>
   </div>
 </template>
 
 <script>
+import navbar from './components/Navbar.vue';
+import vfooter from './components/Footer.vue';
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: { navbar, vfooter }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
