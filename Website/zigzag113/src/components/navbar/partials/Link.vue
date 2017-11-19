@@ -1,9 +1,7 @@
 <template>
     <span>
         <li>
-            <a v-bind:href="link.url" class="thin">
-                {{ link.text }}
-            </a>
+            <a v-bind:href="link.url" class="thin" v-html="link.html || link.text"></a>
         </li>
     </span>
 </template>
