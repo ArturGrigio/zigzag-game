@@ -11,6 +11,17 @@ namespace ZigZag
 		[Tooltip("Main camera which follows the active player")]
 		public Camera2DFollow PlayerCamera;
 
+		/// <summary>
+		/// Delegate handler for handling the death of the player.
+		/// </summary>
+		public delegate void PlayerDeathHandler ();
+
+		/// <summary>
+		/// Occurs when the player dies.
+		/// </summary>
+		public event PlayerDeathHandler OnPlayerDeath;
+
+
 		#endregion
 
 		#region Private/Protected Variables
@@ -54,11 +65,16 @@ namespace ZigZag
 		/// <param name="index">Index of desired player object.</param>
 		private void changePlayer(int index) 
 		{
+			// Set the old shape to inactive status
 			m_currentShape.gameObject.layer = m_inactiveLayer;
 			m_activeIndex = index;
+			m_currentShape.OnDeath -= playerDeathHandler;
+
+			// Set the new current shape
 			m_currentShape = m_players [m_activeIndex];
 			m_currentShape.gameObject.layer = m_activeLayer;
 			PlayerCamera.Target = m_currentShape.gameObject.transform;
+			m_currentShape.OnDeath += playerDeathHandler;
 		}
 
 		/// <summary>
@@ -85,6 +101,12 @@ namespace ZigZag
 			}
 		}
 
+		private void playerDeathHandler()
+		{
+			Debug.Log ("Fire player death event");
+			OnPlayerDeath ();
+		}
+
 		#endregion
 
 		#region Unity Methods
@@ -99,6 +121,21 @@ namespace ZigZag
 			loadPlayers ();
 			changePlayer (m_activeIndex);
 		}
+
+		/// <summary>
+		/// Check every frame to see if the player has fallen off over a cliff.
+		/// </summary>
+		private void FixedUpdate()
+		{
+			Vector3 viewPosition = Camera.main.WorldToViewportPoint (CurrentShape.transform.position);
+
+			// Publish the death event when player falls below the camera view
+			if (viewPosition.y < 0f)
+			{
+				playerDeathHandler ();
+			}
+		}
+
 		#endregion
 	}
 }

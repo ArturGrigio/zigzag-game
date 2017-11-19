@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace ZigZag {
-
+namespace ZigZag
+{
 	public enum Surface {Ground, Ceiling, LeftWall, RightWall, Other}
 
 	[RequireComponent(typeof(Collider2D))]
