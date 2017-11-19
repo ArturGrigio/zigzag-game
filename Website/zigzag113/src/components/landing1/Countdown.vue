@@ -11,11 +11,11 @@
             </div>
             <div class="block">
                 <p class="digit" v-text="minutes_val"></p>
-                <h1 class="text thin orange-text"><small>MIN</small></h1>
+                <h1 class="text thin orange-text"><small>MINS</small></h1>
             </div>
             <div class="block">
                 <p class="digit" v-text="seconds_val"></p>
-                <h1 class="text thin orange-text"><small>SEC</small></h1>
+                <h1 class="text thin orange-text"><small>SECS</small></h1>
             </div>
         </span>
         <div class="row no-margin center">

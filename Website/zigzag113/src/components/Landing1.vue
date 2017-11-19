@@ -3,7 +3,7 @@
         <div class="section no-pad-bot">
 
             <div class="row center no-margin">
-                <h1 class="thin"><small class="orange-text">PLAY </small> SHAPELESS</h1>
+                <h1 class="thin"><small class="orange-text">PLAY </small> SHAPELESS <small class="orange-text">IN</small></h1>
             </div>
 
 
