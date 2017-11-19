@@ -20,7 +20,7 @@ npm run build
 git add . && git commit -am "TEXT"
 
 ## PUSH TO HEROKU
-git push heroku master
+git push -f heroku master
 ```
 
 For documentation on content of the web site check out this [document](https://docs.google.com/document/d/1EANw3IcvvASdb0HsfQN2cKhXPJY-D-MnYfjkF5UTReM/edit)
