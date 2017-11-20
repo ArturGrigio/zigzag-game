@@ -89,16 +89,26 @@ namespace ZigZag
 		/// <param name="index">Index of desired player object.</param>
 		private void changePlayer(int index) 
 		{
+			SpriteRenderer spriteRenderer;
+
 			// Set the old shape to inactive status
 			m_currentShape.gameObject.layer = m_inactiveLayer;
 			m_activeIndex = index;
 			m_currentShape.OnDeath -= playerDeathHandler;
 
-			// Set the new current shape
+			// Set the old shape inactive
+			spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
+			spriteRenderer.color = new Color (1f, 1f, 1f, 0.5f);
+
+			// Set the new current shape active
 			m_currentShape = m_players [m_activeIndex];
 			m_currentShape.gameObject.layer = m_activeLayer;
 			PlayerCamera.Target = m_currentShape.gameObject.transform;
 			m_currentShape.OnDeath += playerDeathHandler;
+
+			// Set the new current shape opaque
+			spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
+			spriteRenderer.color = new Color (1f, 1f, 1f, 1f);
 		}
 
 		/// <summary>
