@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using USM = UnityEngine.SceneManagement;
 using System.Collections;
 
 namespace ZigZag
@@ -44,6 +45,7 @@ namespace ZigZag
 		private void clickRestart()
 		{
 			Debug.Log ("Restart game");
+			//USM.SceneManager.LoadScene ("Main");
 		}
 
 		/// <summary>
@@ -51,7 +53,19 @@ namespace ZigZag
 		/// </summary>
 		private void clickContinue()
 		{
-			Debug.Log ("Continue game");
+			// Restart the game if there are no saved positions
+			if (SavePoint.SavedPlayerPositions.Count == 0)
+			{
+				clickRestart ();
+			}
+			else
+			{
+				Debug.Log ("Continue game");
+				Time.timeScale = 1f;
+				GameOver.SetActive (false);
+
+				playerManager.LoadPositions ();
+			}
 		}
 
 		/// <summary>

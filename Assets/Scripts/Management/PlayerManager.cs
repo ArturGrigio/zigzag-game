@@ -1,9 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ZigZag 
 {		
+	/// <summary>
+	/// Manage all the player shapes.
+	/// </summary>
 	public class PlayerManager : MonoBehaviour 
 	{
 		#region Public Variables
@@ -20,7 +24,6 @@ namespace ZigZag
 		/// Occurs when the player dies.
 		/// </summary>
 		public event PlayerDeathHandler OnPlayerDeath;
-
 
 		#endregion
 
@@ -42,6 +45,16 @@ namespace ZigZag
 		{
 			get { return m_currentShape; }
 		}
+
+		/// <summary>
+		/// Get a list of acquired shapes.
+		/// </summary>
+		/// <value>The player shapes.</value>
+		public List<Player> Players
+		{
+			get { return m_players; }
+		}
+
 		#endregion
 
 		#region Public Methods
@@ -53,6 +66,17 @@ namespace ZigZag
 		public void NextPlayer()
 		{
 			changePlayer ((m_activeIndex + 1) % m_players.Count);
+		}
+
+		/// <summary>
+		/// Load the saved positions from the latest save point.
+		/// </summary>
+		public void LoadPositions()
+		{
+			foreach (Player player in m_players)
+			{
+				player.transform.position = SavePoint.SavedPlayerPositions [player];
+			}
 		}
 
 		#endregion
@@ -101,6 +125,10 @@ namespace ZigZag
 			}
 		}
 
+		/// <summary>
+		/// Handle the player death event. Simply forward the event to
+		/// the SceneManager.
+		/// </summary>
 		private void playerDeathHandler()
 		{
 			Debug.Log ("Fire player death event");
@@ -127,10 +155,7 @@ namespace ZigZag
 		/// </summary>
 		private void FixedUpdate()
 		{
-			Vector3 viewPosition = Camera.main.WorldToViewportPoint (CurrentShape.transform.position);
-
-			// Publish the death event when player falls below the camera view
-			if (viewPosition.y < 0f)
+			if (CurrentShape.transform.position.y < -10f)
 			{
 				playerDeathHandler ();
 			}
