@@ -33,7 +33,7 @@ namespace ZigZag
 
 		public override bool Activate ()
 		{
-			if (AgentComponent.IsGrounded && AgentComponent.ActivateAgentSkill (this) )
+			if (AgentComponent.ActivateAgentSkill (this))
 			{
 				AgentComponent.SetVelocityY (JumpPower);
 				AgentComponent.DeactivateAgentSkill (this);
