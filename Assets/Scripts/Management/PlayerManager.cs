@@ -25,6 +25,11 @@ namespace ZigZag
 		/// </summary>
 		public event PlayerDeathHandler PlayerDeath;
 
+		/// <summary>
+		/// The health bar GUI.
+		/// </summary>
+		public GameObject HealthBar;
+
 		#endregion
 
 		#region Private/Protected Variables
@@ -109,6 +114,8 @@ namespace ZigZag
 			// Set the new current shape opaque
 			spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
 			spriteRenderer.color = new Color (1f, 1f, 1f, 1f);
+
+			displayCurrentHealth ();
 		}
 
 		/// <summary>
@@ -153,6 +160,18 @@ namespace ZigZag
 			{
 				PlayerDeath.Invoke ();
 			}
+		}
+
+		/// <summary>
+		/// Display the health of the current shape.
+		/// </summary>
+		private void displayCurrentHealth()
+		{
+			float scaledHealth = CurrentShape.CurrentHealth / CurrentShape.FullHealth;
+
+			float y = HealthBar.transform.localScale.y;
+			float z = HealthBar.transform.localScale.z;
+			HealthBar.transform.localScale = new Vector3 (scaledHealth, y, z);
 		}
 
 		#endregion

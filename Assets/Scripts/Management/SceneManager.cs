@@ -45,6 +45,7 @@ namespace ZigZag
 		private void clickRestart()
 		{
 			Debug.Log ("Restart game");
+			RestartButton.GetComponent<AudioSource> ().Play ();
 			//USM.SceneManager.LoadScene ("Main");
 		}
 
@@ -61,6 +62,7 @@ namespace ZigZag
 			else
 			{
 				Debug.Log ("Continue game");
+				ContinueButton.GetComponent<AudioSource> ().Play ();
 				Time.timeScale = 1f;
 				GameOver.SetActive (false);
 
