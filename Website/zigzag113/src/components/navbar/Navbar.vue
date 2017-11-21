@@ -3,7 +3,7 @@
         <div class="nav-wrapper container">
             <a id="logo-container" href="#" class="brand-logo">
                 <img src="../../assets/logo.png" width="64" height="64">
-                <span class="thin" style="position: relative;bottom: 21px;">SHAPELESS</span>
+                <span class="thin hide-on-med-and-down" style="position: relative;bottom: 21px;">SHAPELESS</span>
             </a>
             <ul class="right hide-on-med-and-down">
                 <span v-for="link in links">
