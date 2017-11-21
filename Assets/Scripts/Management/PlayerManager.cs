@@ -23,7 +23,7 @@ namespace ZigZag
 		/// <summary>
 		/// Occurs when the player dies.
 		/// </summary>
-		public event PlayerDeathHandler OnPlayerDeath;
+		public event PlayerDeathHandler PlayerDeath;
 
 		#endregion
 
@@ -94,9 +94,9 @@ namespace ZigZag
 			// Set the old shape to inactive status
 			m_currentShape.gameObject.layer = m_inactiveLayer;
 			m_activeIndex = index;
-			m_currentShape.OnDeath -= playerDeathHandler;
+			m_currentShape.Death -= playerDeathHandler;
 
-			// Set the old shape inactive
+			// Set the old shape half-transparent
 			spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
 			spriteRenderer.color = new Color (1f, 1f, 1f, 0.5f);
 
@@ -104,7 +104,7 @@ namespace ZigZag
 			m_currentShape = m_players [m_activeIndex];
 			m_currentShape.gameObject.layer = m_activeLayer;
 			PlayerCamera.Target = m_currentShape.gameObject.transform;
-			m_currentShape.OnDeath += playerDeathHandler;
+			m_currentShape.Death += playerDeathHandler;
 
 			// Set the new current shape opaque
 			spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
@@ -136,13 +136,23 @@ namespace ZigZag
 		}
 
 		/// <summary>
-		/// Handle the player death event. Simply forward the event to
-		/// the SceneManager.
+		/// Handle the player death event. Simply fire the 
+		/// player death event to the SceneManager.
 		/// </summary>
 		private void playerDeathHandler()
 		{
-			Debug.Log ("Fire player death event");
 			OnPlayerDeath ();
+		}
+
+		/// <summary>
+		/// Raises the player death event.
+		/// </summary>
+		private void OnPlayerDeath()
+		{
+			if (PlayerDeath != null)
+			{
+				PlayerDeath.Invoke ();
+			}
 		}
 
 		#endregion

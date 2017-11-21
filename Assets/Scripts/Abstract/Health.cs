@@ -18,7 +18,7 @@ namespace ZigZag
 		/// <summary>
 		/// Occurs when an agent dies.
 		/// </summary>
-		public event DeathHandler OnDeath;
+		public event DeathHandler Death;
 
 		#endregion
 
@@ -70,6 +70,18 @@ namespace ZigZag
 			OnDeath ();
 			Destroy (gameObject);
 		}
+
+		/// <summary>
+		/// Raises the death event.
+		/// </summary>
+		protected virtual void OnDeath()
+		{
+			if (Death != null)
+			{
+				Death.Invoke ();
+			}
+		}
+
 		#endregion
 
 		#region Unity Methods

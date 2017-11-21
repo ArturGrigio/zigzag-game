@@ -69,6 +69,14 @@ namespace ZigZag
 		}
 
 		/// <summary>
+		/// Quit the game when the Quit button is clicked.
+		/// </summary>
+		private void clickQuit()
+		{
+			Application.Quit ();
+		}
+
+		/// <summary>
 		/// Handle the player death event.
 		/// </summary>
 		private void playerDeathHandler()
@@ -84,7 +92,7 @@ namespace ZigZag
 		// Use this for initialization
 		private void Awake ()
 		{
-			playerManager.OnPlayerDeath += playerDeathHandler;
+			playerManager.PlayerDeath += playerDeathHandler;
 			RestartButton.onClick.AddListener (clickRestart);
 			ContinueButton.onClick.AddListener (clickContinue);
 		}
