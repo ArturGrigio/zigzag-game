@@ -6,8 +6,20 @@ namespace ZigZag
 	public abstract class Health : MonoBehaviour
 	{
 		#region Public Variables
+
 		[Tooltip("Maximum health the object can attain.")]
 		public float FullHealth = 100;
+
+		/// <summary>
+		/// Delegate handler for handling the death of an agent.
+		/// </summary>
+		public delegate void DeathHandler ();
+
+		/// <summary>
+		/// Occurs when an agent dies.
+		/// </summary>
+		public event DeathHandler Death;
+
 		#endregion
 
 		#region Private/Protected Variables
@@ -55,8 +67,21 @@ namespace ZigZag
 		/// </summary>
 		protected virtual void die() 
 		{
+			OnDeath ();
 			Destroy (gameObject);
 		}
+
+		/// <summary>
+		/// Raises the death event.
+		/// </summary>
+		protected virtual void OnDeath()
+		{
+			if (Death != null)
+			{
+				Death.Invoke ();
+			}
+		}
+
 		#endregion
 
 		#region Unity Methods
@@ -65,19 +90,5 @@ namespace ZigZag
 			m_currentHealth = FullHealth;
 		}
 		#endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	}
 }

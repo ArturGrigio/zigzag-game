@@ -1,15 +1,29 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ZigZag 
 {		
+	/// <summary>
+	/// Manage all the player shapes.
+	/// </summary>
 	public class PlayerManager : MonoBehaviour 
 	{
 		#region Public Variables
 
 		[Tooltip("Main camera which follows the active player")]
 		public Camera2DFollow PlayerCamera;
+
+		/// <summary>
+		/// Delegate handler for handling the death of the player.
+		/// </summary>
+		public delegate void PlayerDeathHandler ();
+
+		/// <summary>
+		/// Occurs when the player dies.
+		/// </summary>
+		public event PlayerDeathHandler PlayerDeath;
 
 		#endregion
 
@@ -31,6 +45,16 @@ namespace ZigZag
 		{
 			get { return m_currentShape; }
 		}
+
+		/// <summary>
+		/// Get a list of acquired shapes.
+		/// </summary>
+		/// <value>The player shapes.</value>
+		public List<Player> Players
+		{
+			get { return m_players; }
+		}
+
 		#endregion
 
 		#region Public Methods
@@ -44,6 +68,17 @@ namespace ZigZag
 			changePlayer ((m_activeIndex + 1) % m_players.Count);
 		}
 
+		/// <summary>
+		/// Load the saved positions from the latest save point.
+		/// </summary>
+		public void LoadPositions()
+		{
+			foreach (Player player in m_players)
+			{
+				player.transform.position = SavePoint.SavedPlayerPositions [player];
+			}
+		}
+
 		#endregion
 
 		#region Private/Protected Methods
@@ -54,11 +89,26 @@ namespace ZigZag
 		/// <param name="index">Index of desired player object.</param>
 		private void changePlayer(int index) 
 		{
+			SpriteRenderer spriteRenderer;
+
+			// Set the old shape to inactive status
 			m_currentShape.gameObject.layer = m_inactiveLayer;
 			m_activeIndex = index;
+			m_currentShape.Death -= playerDeathHandler;
+
+			// Set the old shape half-transparent
+			spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
+			spriteRenderer.color = new Color (1f, 1f, 1f, 0.5f);
+
+			// Set the new current shape active
 			m_currentShape = m_players [m_activeIndex];
 			m_currentShape.gameObject.layer = m_activeLayer;
 			PlayerCamera.Target = m_currentShape.gameObject.transform;
+			m_currentShape.Death += playerDeathHandler;
+
+			// Set the new current shape opaque
+			spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
+			spriteRenderer.color = new Color (1f, 1f, 1f, 1f);
 		}
 
 		/// <summary>
@@ -85,6 +135,26 @@ namespace ZigZag
 			}
 		}
 
+		/// <summary>
+		/// Handle the player death event. Simply fire the 
+		/// player death event to the SceneManager.
+		/// </summary>
+		private void playerDeathHandler()
+		{
+			OnPlayerDeath ();
+		}
+
+		/// <summary>
+		/// Raises the player death event.
+		/// </summary>
+		private void OnPlayerDeath()
+		{
+			if (PlayerDeath != null)
+			{
+				PlayerDeath.Invoke ();
+			}
+		}
+
 		#endregion
 
 		#region Unity Methods
@@ -99,6 +169,18 @@ namespace ZigZag
 			loadPlayers ();
 			changePlayer (m_activeIndex);
 		}
+
+		/// <summary>
+		/// Check every frame to see if the player has fallen off over a cliff.
+		/// </summary>
+		private void FixedUpdate()
+		{
+			if (CurrentShape.transform.position.y < -10f)
+			{
+				playerDeathHandler ();
+			}
+		}
+
 		#endregion
 	}
 }

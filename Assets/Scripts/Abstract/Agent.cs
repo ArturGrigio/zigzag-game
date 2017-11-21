@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ZigZag {
-
+namespace ZigZag 
+{
 	public enum Direction { Left = -1, Center = 0, Right = 1};
 
 	[RequireComponent (typeof(Rigidbody2D))]
 	[RequireComponent (typeof(SpriteRenderer))]
 	public abstract class Agent : Health 
 	{
-
 		#region Public Variables
 
 		#endregion
