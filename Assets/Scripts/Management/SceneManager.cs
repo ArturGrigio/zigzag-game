@@ -31,6 +31,12 @@ namespace ZigZag
 		public Button ContinueButton;
 
 		/// <summary>
+		/// The quit button.
+		/// </summary>
+		[Tooltip("The quit button")]
+		public Button QuitButton;
+
+		/// <summary>
 		/// The player manager component.
 		/// </summary>
 		public PlayerManager playerManager;
@@ -75,6 +81,7 @@ namespace ZigZag
 		/// </summary>
 		private void clickQuit()
 		{
+			QuitButton.GetComponent<AudioSource> ().Play ();
 			Application.Quit ();
 		}
 
@@ -97,6 +104,7 @@ namespace ZigZag
 			playerManager.PlayerDeath += playerDeathHandler;
 			RestartButton.onClick.AddListener (clickRestart);
 			ContinueButton.onClick.AddListener (clickContinue);
+			QuitButton.onClick.AddListener (clickQuit);
 		}
 
 		#endregion

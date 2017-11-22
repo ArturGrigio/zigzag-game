@@ -81,6 +81,7 @@ namespace ZigZag
 			foreach (Player player in m_players)
 			{
 				player.transform.position = SavePoint.SavedPlayerPositions [player];
+				player.ReceiveHeal (player.FullHealth);
 			}
 		}
 
