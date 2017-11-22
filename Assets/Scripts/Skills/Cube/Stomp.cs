@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace ZigZag 
 {
+	[RequireComponent(typeof(Attacker))]
 	public class Stomp: Skill 
 	{
 		#region Public Variables
@@ -11,7 +12,7 @@ namespace ZigZag
 		/// The value that determines how high when the character jumps.
 		/// </summary>
 		[Tooltip("Value indicating how much damage the skill will do")]
-		public int AttackDamage = 1;
+		public float AttackDamage = 1f;
 		public float Speed = 30f;
 		#endregion
 
@@ -22,8 +23,7 @@ namespace ZigZag
 		#region Properties
 		public override bool CanActivate
 		{
-			get
-			{ return AgentComponent.IsGrounded == false; }
+			get { return AgentComponent.IsGrounded == false; }
 		}
 		#endregion
 
@@ -32,7 +32,7 @@ namespace ZigZag
 		{
 			if (AgentComponent.ActivateAgentSkill (this))
 			{
-				AgentComponent.AttackDamage = AttackDamage;
+				AgentComponent.AttackerComponent.AttackDamage = AttackDamage;
 				m_isActive = true;
 				AgentComponent.SetVelocity (0, -Speed);
 				return true;
@@ -48,7 +48,7 @@ namespace ZigZag
 				if (result == true)
 				{
 					m_isActive = false;
-					AgentComponent.AttackDamage = 0f;
+					AgentComponent.AttackerComponent.AttackDamage = AgentComponent.AttackerComponent.DefaultAttackDamage;
 				}
 				return result;
 			}

@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 4012508475252232}
   - component: {fileID: 212515999018430264}
   - component: {fileID: 50770338237607648}
+  - component: {fileID: 114535163593051156}
   - component: {fileID: 58834768448308666}
   - component: {fileID: 114093614972434032}
   - component: {fileID: 114737664822244142}
@@ -151,6 +152,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_activator: Jump
   JumpPower: 15
+--- !u!114 &114535163593051156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1995286442311242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6215d9c0b657221449444ffa4ac798cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultAttackDamage: 0
+  IsContinuous: 0
 --- !u!114 &114737664822244142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -191,7 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_activator: 
-  SlidingMultiplier: 89
+  SlidingMultiplier: 10
 --- !u!114 &114959766231596904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -204,10 +218,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_activator: Attack
-  Size: 2.4
-  Speed: 4
-  Mass: 5
-  ParticleCount: 300
+  AttackDamage: 1
+  Size: 0
+  Speed: 1
+  Mass: 2
+  ParticleCount: 100
   ErrorText: {fileID: 0}
   Layers:
     serializedVersion: 2
@@ -3618,7 +3633,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9ef6fc3352b1cdb4dabfaef3fff1f77d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

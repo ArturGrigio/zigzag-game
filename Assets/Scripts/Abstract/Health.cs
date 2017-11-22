@@ -31,6 +31,9 @@ namespace ZigZag
 		{
 			get { return m_currentHealth; }
 		}
+
+		public bool IsInvulnerable { get; set;}
+
 		#endregion
 
 		#region Public Methods

@@ -5,6 +5,7 @@ using UnityEngine;
 namespace ZigZag 
 {
 	[RequireComponent(typeof(MultiJump))]
+	[RequireComponent(typeof(Attacker))]
 	public class RocketDrill : Skill 
 	{
 		#region Public Variables
@@ -12,7 +13,7 @@ namespace ZigZag
 		/// The value that determines how high when the character jumps.
 		/// </summary>
 		[Tooltip("Value indicating how much damage the skill will do")]
-		public int AttackDamage = 1;
+		public float AttackDamage = 1f;
 
 		[Tooltip("Value indicating how high the character should jump")]
 		public float JumpPower = 20f;
@@ -44,7 +45,7 @@ namespace ZigZag
 				if(result == true)
 				{
 					AgentComponent.SetVelocityX (0f);
-					AgentComponent.AttackDamage = AttackDamage;
+					AgentComponent.AttackerComponent.AttackDamage = AttackDamage;
 					m_isActive = true;
 				}
 			}
@@ -59,7 +60,7 @@ namespace ZigZag
 			if (result == true)
 			{
 				m_isActive = false;
-				AgentComponent.AttackDamage = 0f;
+				AgentComponent.AttackerComponent.AttackDamage = AgentComponent.AttackerComponent.DefaultAttackDamage;
 			}
 			return result;
 		}
