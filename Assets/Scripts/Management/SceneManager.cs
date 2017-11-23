@@ -60,20 +60,12 @@ namespace ZigZag
 		/// </summary>
 		private void clickContinue()
 		{
-			// Restart the game if there are no saved positions
-			if (SavePoint.SavedPlayerPositions.Count == 0)
-			{
-				clickRestart ();
-			}
-			else
-			{
-				Debug.Log ("Continue game");
-				ContinueButton.GetComponent<AudioSource> ().Play ();
-				Time.timeScale = 1f;
-				GameOver.SetActive (false);
+			Debug.Log ("Continue game");
+			ContinueButton.GetComponent<AudioSource> ().Play ();
+			Time.timeScale = 1f;
+			GameOver.SetActive (false);
 
-				playerManager.LoadPositions ();
-			}
+			playerManager.LoadPositions ();
 		}
 
 		/// <summary>
@@ -91,6 +83,14 @@ namespace ZigZag
 		private void playerDeathHandler()
 		{
 			Time.timeScale = 0f;
+
+			if (!ContinueButton.interactable && SavePoint.SavedPlayerPositions.Count > 0)
+			{
+				ContinueButton.interactable = true;
+				Text continueText = ContinueButton.GetComponentInChildren<Text> ();
+				continueText.color = new Color (continueText.color.r, continueText.color.g, continueText.color.b, 1f);
+			}
+
 			GameOver.SetActive (true);
 		}
 

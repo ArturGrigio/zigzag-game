@@ -168,7 +168,7 @@ namespace ZigZag
 		/// </summary>
 		private void displayCurrentHealth()
 		{
-			float scaledHealth = CurrentShape.CurrentHealth / CurrentShape.FullHealth;
+			float scaledHealth = m_currentShape.CurrentHealth / m_currentShape.FullHealth;
 
 			float y = HealthBar.transform.localScale.y;
 			float z = HealthBar.transform.localScale.z;
@@ -195,7 +195,7 @@ namespace ZigZag
 		/// </summary>
 		private void FixedUpdate()
 		{
-			if (CurrentShape.transform.position.y < -10f)
+			if (m_currentShape.transform.position.y < -10f)
 			{
 				playerDeathHandler ();
 			}
