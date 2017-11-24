@@ -25,6 +25,11 @@ namespace ZigZag
 		/// </summary>
 		public event PlayerDeathHandler PlayerDeath;
 
+		/// <summary>
+		/// The health bar GUI.
+		/// </summary>
+		public GameObject HealthBar;
+
 		#endregion
 
 		#region Private/Protected Variables
@@ -76,6 +81,7 @@ namespace ZigZag
 			foreach (Player player in m_players)
 			{
 				player.transform.position = SavePoint.SavedPlayerPositions [player];
+				player.ReceiveHeal (player.FullHealth);
 			}
 		}
 
@@ -109,6 +115,8 @@ namespace ZigZag
 			// Set the new current shape opaque
 			spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
 			spriteRenderer.color = new Color (1f, 1f, 1f, 1f);
+
+			displayCurrentHealth ();
 		}
 
 		/// <summary>
@@ -155,6 +163,18 @@ namespace ZigZag
 			}
 		}
 
+		/// <summary>
+		/// Display the health of the current shape.
+		/// </summary>
+		private void displayCurrentHealth()
+		{
+			float scaledHealth = m_currentShape.CurrentHealth / m_currentShape.FullHealth;
+
+			float y = HealthBar.transform.localScale.y;
+			float z = HealthBar.transform.localScale.z;
+			HealthBar.transform.localScale = new Vector3 (scaledHealth, y, z);
+		}
+
 		#endregion
 
 		#region Unity Methods
@@ -175,7 +195,7 @@ namespace ZigZag
 		/// </summary>
 		private void FixedUpdate()
 		{
-			if (CurrentShape.transform.position.y < -10f)
+			if (m_currentShape.transform.position.y < -10f)
 			{
 				playerDeathHandler ();
 			}
