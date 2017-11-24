@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" :src="loadImg()">
+            <img class="activator" :src="loadImg(creator.image)">
             <!-- <img class="activator" src="../../../../../static/creators/artur.jpg"> -->
             <!-- <img v-lazy="creator.image"/> -->
         </div>
@@ -16,13 +16,13 @@
                 <span v-text="creator.name"></span>
                 <i class="mdi mdi-close right"></i>
             </span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
+            <br />
+            <a class="col s12" v-for="link in creator.links" v-bind:href="link.url" v-html="link.text"></a>
         </div>
     </div>
 </template>
 
 <script>
-    // import img from '../../../../../assets/creators/artur.jpg';
     export default {
         props: {
             creator: {
@@ -31,16 +31,9 @@
         },
 
         methods: {
-            loadImg() {
-                // return "";
-                return require("../../../../../assets/creators/artur.jpg");
+            loadImg(img) {
+                return require("@/assets/creators/"+ img);
             }
         },
-
-        mounted() {
-            // this.img = require(creator.image)
-            this.img = require("../../../../../assets/creators/artur.jpg")
-            // console.log(require.context("../../../../../assets/creators", false, /\.jpg$/));
-        }
     }
 </script>

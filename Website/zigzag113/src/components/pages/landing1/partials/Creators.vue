@@ -20,8 +20,68 @@
                 creators: [
                     {
                         name: "Artur Grigoryan",
-                        image:"~/static/img/creators/artur.jpg",
-                    }
+                        image:"artur.jpg",
+                        links: [
+                            {
+                                text: "GitHub",
+                                url: "https://github.com/ArturGrigio"
+                            },
+                            {
+                                text: "StackOverflow",
+                                url: "https://stackoverflow.com/users/2321515/grigio?tab=profile"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Michael Callan",
+                        image:"michael.png",
+                        links: [
+                            {
+                                text: "GitHub",
+                                url: "https://github.com/keiki83"
+                            },
+                        ]
+                    },
+                    {
+                        name: "Huy Ngo",
+                        image:"huy.png",
+                        links: [
+                            {
+                                text: "GitHub",
+                                url: "https://github.com/pandabytes"
+                            },
+                        ]
+                    },
+                    {
+                        name: "Matt Legaspi",
+                        image:"matt.png",
+                        links: [
+                            {
+                                text: "GitHub",
+                                url: "https://github.com/Zakkusu41"
+                            },
+                        ]
+                    },
+                    {
+                        name: "Thomas Halstead",
+                        image:"thomas.png",
+                        links: [
+                            {
+                                text: "GitHub",
+                                url: "https://github.com/tomhalstead"
+                            },
+                        ]
+                    },
+                    {
+                        name: "Daniel Ackerman",
+                        image:"dan.png",
+                        links: [
+                            {
+                                text: "GitHub",
+                                url: "https://github.com/ackd151"
+                            },
+                        ]
+                    },
                 ]
             }
         }
