@@ -1,70 +1,87 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 namespace ZigZag
 {
+	/// <summary>
+	/// This class handles the camera movement.
+	/// </summary>
 	public class Camera2DFollow : MonoBehaviour
 	{
-
 		#region Public Variables
+
+		/// <summary>
+		/// The target for the camera to follow.
+		/// </summary>
+		[Tooltip("The target for the camera to follow")]
 		public Transform Target;
-		public float Damping = 1;
-		public float LookAheadFactor = 3;
-		public float LookAheadReturnSpeed = 0.5f;
-		public float LookAheadMoveThreshold = 0.1f;
+
+		/// <summary>
+		/// The time to make the camera catch up to the target after the target has moved.
+		/// </summary>
+		[Tooltip("The time to make the camera catch up to the target after the target has moved")]
+		public float SmoothTime = 0.3f;
+
+		/// <summary>
+		/// The offset determines the position of the camera relative to the target.
+		/// </summary>
+		[Tooltip("The offset determines the position of the camera relative to the target")]
+		public Vector3 Offset = new Vector3(0f, 0f, -10f);
+
+		/// <summary>
+		/// The minimum x position the camera can have.
+		/// </summary>
+		[Tooltip("The minimum x position the camera can have")]
+		public float MinX;
+
+		/// <summary>
+		/// The maximum x position the camera can have.
+		/// </summary>
+		[Tooltip("The maximum x position the camera can have")]
+		public float MaxX;
+
+		/// <summary>
+		/// The minimum y position the camera can have.
+		/// </summary>
+		[Tooltip("The minimum y position the camera can have")]
+		public float MinY;
+
+		/// <summary>
+		/// The maximum y position the camera can have.
+		/// </summary>
+		[Tooltip("The maximum y position the camera can have")]
+		public float MaxY;
+
 		#endregion
 
-		#region Private/Protected Variables
-		private float m_OffsetZ;
-		private Vector3 m_LastTargetPosition;
-		private Vector3 m_CurrentVelocity;
-		private Vector3 m_LookAheadPos;
-		#endregion
+		#region Private Variables
 
-		#region Properties
-		#endregion
+		/// <summary>
+		/// The current velocity.
+		/// </summary>
+		private Vector3 currentVelocity;
 
-		#region Public Methods
-		#endregion
-
-		#region Private/Protected Methods
 		#endregion
 
 		#region Unity Methods
+
 		// Use this for initialization
-		private void Start()
+		private void Awake ()
 		{
-			m_LastTargetPosition = Target.position;
-			m_OffsetZ = (transform.position - Target.position).z;
-			transform.parent = null;
+			currentVelocity = Vector3.zero;
 		}
 
 		// Update is called once per frame
-		private void Update()
+		private void Update ()
 		{
-			// only update lookahead pos if accelerating or changed direction
-			float xMoveDelta = (Target.position - m_LastTargetPosition).x;
+			Vector3 targetPosition = Target.TransformPoint (Offset);
+			Vector3 desiredPosition = Vector3.SmoothDamp (transform.position, targetPosition, ref currentVelocity, SmoothTime);
 
-			bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > LookAheadMoveThreshold;
-
-			if (updateLookAheadTarget)
-			{
-				m_LookAheadPos = LookAheadFactor*Vector3.right*Mathf.Sign(xMoveDelta);
-			}
-			else
-			{
-				m_LookAheadPos = Vector3.MoveTowards(m_LookAheadPos, Vector3.zero, Time.deltaTime*LookAheadReturnSpeed);
-			}
-
-			Vector3 aheadTargetPos = Target.position + m_LookAheadPos + Vector3.forward*m_OffsetZ;
-			Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, Damping);
-
-			transform.position = newPos;
-
-			m_LastTargetPosition = Target.position;
+			float clampX = Mathf.Clamp (desiredPosition.x, MinX, MaxX);
+			float clampY = Mathf.Clamp (desiredPosition.y, MinY, MaxY);
+			transform.position = new Vector3 (clampX, clampY, desiredPosition.z);
 		}
-		#endregion
 
+		#endregion
 	}
 }
