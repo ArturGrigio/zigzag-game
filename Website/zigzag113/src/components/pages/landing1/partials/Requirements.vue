@@ -4,7 +4,7 @@
         <h2 class="thin orange-text">System Requirements</h2>
         <div class="row">
             <div class="col m6 s12">
-                <img src="../../assets/win7.png" width="30" class="inline">
+                <img src="../../../../assets/win7.png" width="30" class="inline">
                 <h2 class="thin inline no-margin"><small> Windows 7</small></h2>
                 <ul class="no-margin">
                     <li><strong>Graphics:</strong> DX9 (Shader model 3.0) or DX11 with feature level 9.3</li>
@@ -14,7 +14,7 @@
                 </ul>
             </div>
             <div class="col m6 s12">
-                <img src="../../assets/win10.png" width="30" class="inline">
+                <img src="../../../../assets/win10.png" width="30" class="inline">
                 <h2 class="thin inline no-margin"><small> Windows 10</small></h2>
                 <ul class="no-margin">
                     <li><strong>Graphics:</strong> Integrated graphics or better</li>

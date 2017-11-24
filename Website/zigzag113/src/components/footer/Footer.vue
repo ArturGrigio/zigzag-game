@@ -39,7 +39,7 @@
 </template>
 
 <script>
-    import links from './navbar/links.js';
+    import links from '@/components/navbar/links.js';
 
     export default {
         data: () => {

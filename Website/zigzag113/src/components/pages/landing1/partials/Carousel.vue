@@ -3,12 +3,12 @@
         <div class="carousel carousel-slider center v-height" data-indicators="true">
 
             <div class="carousel-fixed-item center">
-                <a class="btn waves-effect white grey-text darken-text-2">DOWNLOAD</a>
+                <a class="btn waves-effect orange thin">DOWNLOAD</a>
             </div>
 
             <div class="carousel-item red white-text" href="#one!">
                 <h2 class="thin"><small>CREATED </small> BY ZIGZAG</h2>
-                <img src="../../assets/logo.png" style="height: 300px; width: 300px"/>
+                <img src="../../../../assets/logo.png" style="height: 300px; width: 300px"/>
             </div>
 
             <div class="carousel-item amber white-text" href="#two!">

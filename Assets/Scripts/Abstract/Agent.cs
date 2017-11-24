@@ -21,7 +21,7 @@ namespace ZigZag
 		protected Rigidbody2D m_rigidBody2D;
 		protected Skill m_activeSkill = null;
 		protected SpriteRenderer m_spriteRenderer;
-
+		protected Attacker m_attacker = null;
 
 		private List<Skill> m_skills;
 		private Vector2 m_newVelocity = Vector2.zero;
@@ -73,7 +73,10 @@ namespace ZigZag
 			get { return m_activeSkill; }
 		}
 
-		public float AttackDamage { get; set; }
+		public Attacker AttackerComponent
+		{
+			get { return m_attacker; }
+		}
 
 		#endregion
 
@@ -139,6 +142,11 @@ namespace ZigZag
 			}
 		}
 
+		public Vector2 GetVelocity()
+		{
+			return m_rigidBody2D.velocity;
+		}
+
 		#endregion
 
 		#region Private/Protected Methods
@@ -172,8 +180,9 @@ namespace ZigZag
 			m_rigidBody2D = GetComponent<Rigidbody2D> ();
 			m_surfaceDetector = GetComponent<SurfaceDetector> ();
 			m_spriteRenderer = GetComponent<SpriteRenderer> ();
-			AttackDamage = 0f;
+			m_attacker = GetComponent<Attacker> ();
 			loadSkills ();
+
 		}
 
 		private void FixedUpdate() 

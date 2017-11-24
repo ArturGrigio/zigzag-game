@@ -16,14 +16,14 @@
         </p>
         <div class="row">
             <div class="col l6 m12">
-                <img src="../../assets/cube.png" width="80"/>
+                <img src="../../../../assets/cube.png" width="80"/>
                 <p>
                     The Cube is one of the few remaining Shapes existence, but one day it regained its Color back. Now it is attempting to restore balance to the world of Shapes and Color by finding its lost allies to support the cause.
                 </p>
             </div>
             <div class="col l6 m12">
-                <img src="../../assets/pyramid.png" width="80"/>
-                <img src="../../assets/sphere.png" width="80"/>
+                <img src="../../../../assets/pyramid.png" width="80"/>
+                <img src="../../../../assets/sphere.png" width="80"/>
                 <p>
                     The Pyramid and Sphere were leaders along the Cube before the Shapeless Era; these beings were pillars that maintained prosperity to the world of Shapes. They were consumed by Slimes and are thought to be lost forever along with the peaceful world they upheld.
                 </p>

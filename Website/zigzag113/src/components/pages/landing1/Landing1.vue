@@ -1,22 +1,26 @@
 <template>
     <span>
-        <div class="section no-pad-bot">
-
-            <div class="row center no-margin">
-                <h1 class="thin"><small class="orange-text">PLAY </small> SHAPELESS <small class="orange-text">IN</small></h1>
-            </div>
-
-
-            <div class="row center" id="countdown">
-                <countdown date="12-15-2017"></countdown>
-            </div>
+        <div class="section no-padding">
 
             <div id="#download">
                 <carousel></carousel>
             </div>
 
+            <div class="row center no-margin">
+                <div class="spacer-4"></div>
+                <div class="spacer-2"></div>
+                <h1 class="thin"><small class="orange-text">PLAY </small> SHAPELESS <small class="orange-text">IN</small></h1>
+            </div>
+            <div class="row center" id="countdown">
+                <countdown date="12-15-2017"></countdown>
+            </div>
+
+            <div class="container" id="creators">
+                <creators></creators>
+            </div>
+
             <div class="spacer-4"></div>
-            <div class="spacer-4"></div>
+            <div class="spacer-2"></div>
             <div class="container" id="overview">
                 <overview></overview>
             </div>
@@ -34,14 +38,15 @@
 </template>
 
 <script>
-import countdown from './landing1/Countdown.vue';
-import carousel from './landing1/Carousel.vue';
-import requirements from './landing1/Requirements.vue';
-import overview from './landing1/Overview.vue';
-import lore from './landing1/Lore.vue';
+import countdown from './partials/Countdown.vue';
+import carousel from './partials/Carousel.vue';
+import requirements from './partials/Requirements.vue';
+import overview from './partials/Overview.vue';
+import lore from './partials/Lore.vue';
+import creators from './partials/Creators.vue';
 
 export default {
-    components: { countdown, carousel, requirements, overview, lore },
+    components: { countdown, carousel, requirements, overview, lore, creators },
 
   data () {
     return {

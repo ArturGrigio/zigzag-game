@@ -7,9 +7,17 @@ namespace ZigZag
 	/// <summary>
 	/// Handle the titan size skill.
 	/// </summary>
+	[RequireComponent(typeof(Attacker))]
 	public class TitanForm : Skill
 	{
 		#region Public Variables
+
+		/// <summary>
+		/// The attack damage of the titan form.
+		/// </summary>
+		[Tooltip("The damage dealt by the titan form")]
+		public float AttackDamage = 1f;
+
 
 		/// <summary>
 		/// The scaled size of the titan form.
@@ -113,19 +121,19 @@ namespace ZigZag
 		/// Deactivate the skill and stop the player during the skill executation
 		/// or when the skill is done executing.
 		/// </summary>
-		public bool Deactivate ()
+		public override bool Cancel ()
 		{
 			// Prevent accidental shrinking beyond the original size
 			if (m_originalScale != transform.localScale)
 			{
 				m_isActive = false;
 				AgentComponent.SetVelocity (0f, 0f);
-
+				AgentComponent.AttackerComponent.AttackDamage = AgentComponent.AttackerComponent.DefaultAttackDamage;
 				transform.localScale /= Size;
 				m_rigidbody2D.mass = m_originalMass;
 			}
-
-			return false;
+			AgentComponent.DeactivateAgentSkill (this);
+			return true;
 		}
 
 		#endregion
@@ -215,6 +223,7 @@ namespace ZigZag
 			}
 				
 			m_isActive = true;
+			AgentComponent.AttackerComponent.AttackDamage = AttackDamage;
 			m_particleSystem.Emit (ParticleCount);
 
 			transform.localScale *= Size;
@@ -222,8 +231,7 @@ namespace ZigZag
 			m_rigidbody2D.mass = Mass;
 
 			yield return new WaitForSeconds (5.0f);
-			Deactivate ();
-			AgentComponent.DeactivateAgentSkill (this);
+			Cancel ();
 		}
 
 		/// <summary>

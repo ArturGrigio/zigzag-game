@@ -7,8 +7,12 @@
 </template>
 
 <script>
-import navbar from './components/navbar/Navbar.vue';
-import vfooter from './components/Footer.vue';
+import navbar from '@/components/navbar/Navbar.vue';
+import vfooter from '@/components/footer/Footer.vue';
+import Vue from 'vue';
+import VueLazyload from 'vue-lazyload';
+
+Vue.use(VueLazyload)
 
 export default {
   name: 'app',

@@ -59,11 +59,11 @@ namespace ZigZag
 			}
 			else if (normal == Vector2.left)
 			{
-				return Surface.LeftWall;
+				return Surface.RightWall;
 			}
 			else if (normal == Vector2.right)
 			{
-				return Surface.RightWall;
+				return Surface.LeftWall;
 			}
 
 			return Surface.Other;

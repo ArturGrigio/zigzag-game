@@ -30,8 +30,12 @@ namespace ZigZag
 		{
 			if( AgentComponent.ActiveSkill == null || AgentComponent.ActiveSkill.AllowMovement == true)
 			{
-				AgentComponent.SetVelocityX (axis * Speed);
-				return true;
+				if ((axis > 0 && AgentComponent.SurfaceDetectorComponent.IsOnSurface (Surface.RightWall) == false)
+				   || (axis < 0 && AgentComponent.SurfaceDetectorComponent.IsOnSurface (Surface.LeftWall) == false))
+				{
+					AgentComponent.SetVelocityX (axis * Speed);
+					return true;
+				}
 			}
 			return false;
 		}
