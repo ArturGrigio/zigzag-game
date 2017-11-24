@@ -9,7 +9,14 @@
             <div class="row center no-margin">
                 <div class="spacer-4"></div>
                 <div class="spacer-2"></div>
-                <h1 class="thin"><small class="orange-text">PLAY </small> SHAPELESS <small class="orange-text">IN</small></h1>
+                <h2 class="thin no-margin">
+                    <small class="orange-text">PLAY </small>
+                </h2>
+                <div class="row no-margin">
+                    <div class="col l4 offset-l4 m6 offset-m3 s12">
+                        <img src="~@/assets/misc/game_logo.png" style="width: 100%"/>
+                    </div>
+                </div>
             </div>
             <div class="row center" id="countdown">
                 <countdown date="12-15-2017"></countdown>

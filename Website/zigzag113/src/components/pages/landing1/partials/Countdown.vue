@@ -107,4 +107,18 @@ export default {
     margin: 0px;
     text-align: center;
 }
+@media only screen and (max-width: 991px) {
+    .digit {
+        color: #ecf0f1;
+        font-size: 55px;
+        line-height: 30px;
+    }
+    .text {
+        font-size: 30px;
+    }
+    .block {
+        min-width: 55px;
+        margin: 10px;
+    }
+}
 </style>
