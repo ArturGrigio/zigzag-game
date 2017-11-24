@@ -928,7 +928,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1645754186}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &737762563
 GameObject:
@@ -1192,7 +1192,17 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4012508475252232, guid: f22334d391196b34ea0efb880a7ed3c8, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114959766231596904, guid: f22334d391196b34ea0efb880a7ed3c8,
+        type: 2}
+      propertyPath: Size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114959766231596904, guid: f22334d391196b34ea0efb880a7ed3c8,
+        type: 2}
+      propertyPath: Layers.m_Bits
+      value: 4294940895
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f22334d391196b34ea0efb880a7ed3c8, type: 2}
@@ -1290,10 +1300,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 1645754186}
-  Damping: 1
-  LookAheadFactor: 3
-  LookAheadReturnSpeed: 0.5
-  LookAheadMoveThreshold: 0.1
+  SmoothTime: 0.3
+  Offset: {x: 0, y: 0, z: -10}
+  MinX: 0
+  MaxX: 100
+  MinY: 0
+  MaxY: 15
 --- !u!4 &1390162247 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4012508475252232, guid: f22334d391196b34ea0efb880a7ed3c8,
@@ -1327,6 +1339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCamera: {fileID: 1388397687}
+  HealthBar: {fileID: 2026331353}
   m_currentShape: {fileID: 0}
 --- !u!4 &1645754186
 Transform:
@@ -1338,6 +1351,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2026331354}
   - {fileID: 1832548800}
   - {fileID: 508979869}
   - {fileID: 1390162247}
@@ -1356,7 +1370,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1645754186}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1841556224
 GameObject:
@@ -1615,3 +1629,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultAttackDamage: 0
   IsContinuous: 0
+--- !u!1 &2026331353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2026331354}
+  m_Layer: 0
+  m_Name: Empty Health Bar Object
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2026331354
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2026331353}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1645754186}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

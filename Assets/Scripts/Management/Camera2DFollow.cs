@@ -26,7 +26,7 @@ namespace ZigZag
 		/// The offset determines the position of the camera relative to the target.
 		/// </summary>
 		[Tooltip("The offset determines the position of the camera relative to the target")]
-		public Vector3 Offset;
+		public Vector3 Offset = new Vector3(0f, 0f, -10f);
 
 		/// <summary>
 		/// The minimum x position the camera can have.
