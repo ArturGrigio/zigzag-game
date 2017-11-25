@@ -1,1 +1,19 @@
 Painted HQ 2D Forest Medieval Background:     https://www.assetstore.unity3d.com/en/#!/content/97738
+
+brick: https://www.assetstore.unity3d.com/en/#!/content/17692
+       https://www.assetstore.unity3d.com/en/#!/content/21934
+       https://www.assetstore.unity3d.com/en/#!/content/72427
+
+cavern: https://opengameart.org/content/dawn-of-the-gods
+        https://opengameart.org/content/psygen
+        https://opengameart.org/content/cavern-tile-set
+
+hillside: https://opengameart.org/content/woodland-platformer-tileset
+
+ground: https://www.assetstore.unity3d.com/en/#!/content/62018
+        https://www.assetstore.unity3d.com/en/#!/content/31347
+
+platform: https://opengameart.org/content/platformer-art-deluxe
+          https://opengameart.org/content/mystery-forest-tile-set
+          https://opengameart.org/content/platformer-tiles-1
+          https://opengameart.org/content/platformer-tiles-2
