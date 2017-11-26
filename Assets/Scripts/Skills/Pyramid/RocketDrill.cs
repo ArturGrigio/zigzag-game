@@ -23,6 +23,8 @@ namespace ZigZag
 		#region Private/Protected Variables
 		protected MultiJump m_multiJump;
 		protected float m_defaultJump;
+		private Animator m_animator;
+		private AudioSource m_audioSource;
 		#endregion
 
 		#region Properties
@@ -40,15 +42,21 @@ namespace ZigZag
 		{
 			m_multiJump.JumpPower = JumpPower;
 			bool result = m_multiJump.Activate ();
-			if(result == true) {
+			if(result == true)
+			{
 				result = AgentComponent.ActivateAgentSkill (this);
 				if(result == true)
 				{
 					AgentComponent.SetVelocityX (0f);
 					AgentComponent.AttackerComponent.AttackDamage = AttackDamage;
 					m_isActive = true;
+
+					// Play the drill audio and animation
+					m_audioSource.Play ();
+					m_animator.SetInteger ("RocketDrill", 1);
 				}
 			}
+				
 			m_multiJump.JumpPower = m_defaultJump;
 			return result;
 		}
@@ -62,18 +70,18 @@ namespace ZigZag
 				m_isActive = false;
 				AgentComponent.AttackerComponent.AttackDamage = AgentComponent.AttackerComponent.DefaultAttackDamage;
 			}
+
 			return result;
 		}
 
 		#endregion
-
-
 
 		#region Private/Protected Methods
 		protected virtual void OnSurfaceEnter (Collision2D collision, Surface surface)
 		{
 			if (surface == Surface.Ceiling || surface == Surface.Ground)
 			{
+				m_animator.SetInteger ("RocketDrill", 0);
 				Cancel ();
 			}
 		}
@@ -87,6 +95,9 @@ namespace ZigZag
 			m_canCancel = true;
 			m_multiJump = AgentComponent.GetComponent<MultiJump> ();
 			m_defaultJump = m_multiJump.JumpPower;
+
+			m_audioSource = GetComponent<AudioSource> ();
+			m_animator = GetComponent<Animator> ();
 		}
 
 		protected virtual void Start()

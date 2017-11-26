@@ -18,6 +18,7 @@ namespace ZigZag
 
 		#region Private/Protected Variables
 		private float m_defaultMass;
+		private AudioSource m_audioSource;
 		#endregion
 
 		#region Properties
@@ -50,6 +51,8 @@ namespace ZigZag
 					m_isActive = false;
 					AgentComponent.AttackerComponent.AttackDamage = AgentComponent.AttackerComponent.DefaultAttackDamage;
 				}
+
+				m_audioSource.Play ();
 				return result;
 			}
 			return false;
@@ -73,6 +76,7 @@ namespace ZigZag
 		{
 			base.Awake ();
 			m_skillType = SkillTypes.Instant;
+			m_audioSource = GetComponent<AudioSource> ();
 		}
 
 		protected virtual void Start()

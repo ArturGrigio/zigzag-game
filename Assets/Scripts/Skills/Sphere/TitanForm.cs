@@ -90,6 +90,11 @@ namespace ZigZag
 		/// </summary>
 		private Rigidbody2D m_rigidbody2D;
 
+		/// <summary>
+		/// The audio source component.
+		/// </summary>
+		private AudioSource m_audioSource;
+
 		#endregion
 
 		#region Properties
@@ -150,6 +155,7 @@ namespace ZigZag
 			m_circleCollider2D = GetComponent<CircleCollider2D> ();
 			m_particleSystem = GetComponentInChildren<ParticleSystem> ();
 			m_rigidbody2D = GetComponent<Rigidbody2D> ();
+			m_audioSource = GetComponent<AudioSource> ();
 
 			m_skillType = SkillTypes.Instant;
 			m_originalScale = transform.localScale;
@@ -229,6 +235,8 @@ namespace ZigZag
 			transform.localScale *= Size;
 			transform.position = titanFormPosition;
 			m_rigidbody2D.mass = Mass;
+
+			m_audioSource.Play ();
 
 			yield return new WaitForSeconds (5.0f);
 			Cancel ();
