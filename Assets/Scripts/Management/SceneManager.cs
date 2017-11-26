@@ -92,6 +92,7 @@ namespace ZigZag
 			}
 
 			GameOver.SetActive (true);
+			GameOver.GetComponent<AudioSource> ().Play ();
 		}
 
 		#endregion

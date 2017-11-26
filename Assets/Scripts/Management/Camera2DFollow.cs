@@ -74,7 +74,7 @@ namespace ZigZag
 		// Update is called once per frame
 		private void Update ()
 		{
-			Vector3 targetPosition = Target.TransformPoint (Offset);
+			Vector3 targetPosition = Target.position + Offset;
 			Vector3 desiredPosition = Vector3.SmoothDamp (transform.position, targetPosition, ref currentVelocity, SmoothTime);
 
 			float clampX = Mathf.Clamp (desiredPosition.x, MinX, MaxX);
