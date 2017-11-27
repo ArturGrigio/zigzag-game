@@ -13,7 +13,19 @@ namespace ZigZag
 		/// </summary>
 		[Tooltip("Value indicating how much damage the skill will do")]
 		public float AttackDamage = 1f;
+
+		/// <summary>
+		/// The speed of crashing down when Stomp is activated.
+		/// </summary>
+		[Tooltip("The speed of crashing down when Stomp is activated")]
 		public float Speed = 30f;
+
+		/// <summary>
+		/// The stomp audio.
+		/// </summary>
+		[Tooltip("The stomp audio")]
+		public AudioClip StompAudio;
+
 		#endregion
 
 		#region Private/Protected Variables
@@ -50,9 +62,12 @@ namespace ZigZag
 				{
 					m_isActive = false;
 					AgentComponent.AttackerComponent.AttackDamage = AgentComponent.AttackerComponent.DefaultAttackDamage;
-				}
 
-				m_audioSource.Play ();
+					// Play the stomp audio
+					m_audioSource.clip = StompAudio;
+					m_audioSource.Play ();
+				}
+					
 				return result;
 			}
 			return false;

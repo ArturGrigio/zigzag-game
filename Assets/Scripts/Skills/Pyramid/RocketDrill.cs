@@ -15,8 +15,17 @@ namespace ZigZag
 		[Tooltip("Value indicating how much damage the skill will do")]
 		public float AttackDamage = 1f;
 
+		/// <summary>
+		/// Value indicating how high the character should jump
+		/// </summary>
 		[Tooltip("Value indicating how high the character should jump")]
 		public float JumpPower = 20f;
+
+		/// <summary>
+		/// The rocket drill audio.
+		/// </summary>
+		[Tooltip("The rocket drill audio")]
+		public AudioClip RocketDrillAudio;
 
 		#endregion
 
@@ -42,16 +51,17 @@ namespace ZigZag
 		{
 			m_multiJump.JumpPower = JumpPower;
 			bool result = m_multiJump.Activate ();
-			if(result == true)
+			if (result == true)
 			{
 				result = AgentComponent.ActivateAgentSkill (this);
-				if(result == true)
+				if (result == true)
 				{
 					AgentComponent.SetVelocityX (0f);
 					AgentComponent.AttackerComponent.AttackDamage = AttackDamage;
 					m_isActive = true;
 
 					// Play the drill audio and animation
+					m_audioSource.clip = RocketDrillAudio;
 					m_audioSource.Play ();
 					m_animator.SetInteger ("RocketDrill", 1);
 				}

@@ -4,22 +4,29 @@ using UnityEngine;
 
 namespace ZigZag
 {
-	
 	public class Glide : Skill 
 	{
-
 		#region Public Variables
+
 		/// <summary>
 		/// The value that determines how high when the character jumps.
 		/// </summary>
 		[Tooltip("Value indicating how much damage the skill will do")]
 		public float GravityScale = 0.25f;
+
+		/// <summary>
+		/// The glide audio clip.
+		/// </summary>
+		[Tooltip("The glide audio clip")]
+		public AudioClip GlideAudio;
+
 		#endregion
 
 		#region Private/Protected Variables
 		private Vector2 m_defaultGravity;
 		private Vector2 m_lowGravity;
-
+		private AudioSource m_audioSource;
+		private Animator m_animator;
 		#endregion
 
 		#region Properties
@@ -33,13 +40,19 @@ namespace ZigZag
 
 		public override bool Activate ()
 		{
-			
 			if (AgentComponent.ActivateAgentSkill (this))
 			{
 				Debug.Log ("GLIDE START");
 				m_isActive = true;
 				AgentComponent.SetVelocityY(0);
 				Physics2D.gravity = m_lowGravity;
+
+				// Play the glide audio and animation
+				m_audioSource.clip = GlideAudio;
+				m_audioSource.loop = true;
+				m_audioSource.Play ();
+				m_animator.SetInteger ("Glide", 1);
+
 				return true;
 			}
 			return false;
@@ -56,6 +69,10 @@ namespace ZigZag
 					m_isActive = false;
 					Physics2D.gravity = m_defaultGravity;
 				}
+
+				m_animator.SetInteger ("Glide", 0);
+				m_audioSource.loop = false;
+
 				return result;
 			}
 			return false;
@@ -87,6 +104,9 @@ namespace ZigZag
 			m_allowMovement = true;
 			m_skillType = SkillTypes.Hold;
 			calcGravity ();
+
+			m_audioSource = GetComponent<AudioSource> ();
+			m_animator = GetComponent<Animator> ();
 		}
 		protected virtual void Start()
 		{

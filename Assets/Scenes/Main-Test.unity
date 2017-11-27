@@ -126,7 +126,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1bde513c59d7ec648980e9c6730c97dd, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -197,6 +197,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!95 &3747510
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 3747508}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ab7a05c72d989e845838deacdf2bfbb2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &23100140
 GameObject:
   m_ObjectHideFlags: 0
@@ -2488,7 +2505,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: fbe040145ee936546aa437c98f21fa14, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -7322,7 +7339,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4113029245278438, guid: d5d8d18b7259d7d41850785b7722c325, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1.63
+      value: -1.79
       objectReference: {fileID: 0}
     - target: {fileID: 4113029245278438, guid: d5d8d18b7259d7d41850785b7722c325, type: 2}
       propertyPath: m_LocalPosition.z
@@ -7360,6 +7377,11 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114108699329356878, guid: d5d8d18b7259d7d41850785b7722c325,
+        type: 2}
+      propertyPath: RocketDrillAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: fbe040145ee936546aa437c98f21fa14, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d5d8d18b7259d7d41850785b7722c325, type: 2}
   m_IsPrefabParent: 0
@@ -10783,7 +10805,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4919829930073326, guid: d40a7376ff2163e49ad729a5006547fd, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1.6
+      value: -1.891
       objectReference: {fileID: 0}
     - target: {fileID: 4919829930073326, guid: d40a7376ff2163e49ad729a5006547fd, type: 2}
       propertyPath: m_LocalPosition.z
@@ -10809,6 +10831,28 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4919829930073326, guid: d40a7376ff2163e49ad729a5006547fd, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919829930073326, guid: d40a7376ff2163e49ad729a5006547fd, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919829930073326, guid: d40a7376ff2163e49ad729a5006547fd, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114267835911347116, guid: d40a7376ff2163e49ad729a5006547fd,
+        type: 2}
+      propertyPath: StompAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 1bde513c59d7ec648980e9c6730c97dd, type: 3}
+    - target: {fileID: 114965141746229430, guid: d40a7376ff2163e49ad729a5006547fd,
+        type: 2}
+      propertyPath: GlideAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: f9c2582971e51a941b2a1af1dae90a59, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d40a7376ff2163e49ad729a5006547fd, type: 2}
   m_IsPrefabParent: 0
@@ -15139,7 +15183,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 340e13dda01f16f408278936112e7d6e, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -17502,6 +17546,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114959766231596904, guid: f22334d391196b34ea0efb880a7ed3c8,
+        type: 2}
+      propertyPath: TitanAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 340e13dda01f16f408278936112e7d6e, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f22334d391196b34ea0efb880a7ed3c8, type: 2}
   m_IsPrefabParent: 0

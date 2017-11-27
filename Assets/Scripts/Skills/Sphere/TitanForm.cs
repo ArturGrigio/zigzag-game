@@ -18,7 +18,6 @@ namespace ZigZag
 		[Tooltip("The damage dealt by the titan form")]
 		public float AttackDamage = 1f;
 
-
 		/// <summary>
 		/// The scaled size of the titan form.
 		/// </summary>
@@ -55,6 +54,12 @@ namespace ZigZag
 		/// </summary>
 		[Tooltip("Select which layers to be detect when the skill activates")]
 		public LayerMask Layers;
+
+		/// <summary>
+		/// The titan audio clip.
+		/// </summary>
+		[Tooltip("The titan audio clip")]
+		public AudioClip TitanAudioClip;
 
 		#endregion
 
@@ -236,6 +241,8 @@ namespace ZigZag
 			transform.position = titanFormPosition;
 			m_rigidbody2D.mass = Mass;
 
+			// Play the titan form audio clip
+			m_audioSource.clip = TitanAudioClip;
 			m_audioSource.Play ();
 
 			yield return new WaitForSeconds (5.0f);
