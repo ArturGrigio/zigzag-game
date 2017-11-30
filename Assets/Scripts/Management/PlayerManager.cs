@@ -190,17 +190,6 @@ namespace ZigZag
 			changePlayer (m_activeIndex);
 		}
 
-		/// <summary>
-		/// Check every frame to see if the player has fallen off over a cliff.
-		/// </summary>
-		private void FixedUpdate()
-		{
-			if (m_currentShape.transform.position.y < -10f)
-			{
-				playerDeathHandler ();
-			}
-		}
-
 		#endregion
 	}
 }

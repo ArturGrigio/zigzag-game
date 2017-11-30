@@ -9,10 +9,16 @@ namespace ZigZag
 		#region Public Variables
 
 		/// <summary>
-		/// The value that determines how high when the character jumps.
+		/// The value that determines how much gravity force should affect the cube.
 		/// </summary>
-		[Tooltip("Value indicating how much damage the skill will do")]
+		[Tooltip("The value that determines how much gravity force should affect the cube")]
 		public float GravityScale = 0.25f;
+
+		/// <summary>
+		/// The linear drag that determines the how slow the cube moves in glide form.
+		/// </summary>
+		[Tooltip("The linear drag that determines how slow the cube moves in glide form")]
+		public float LinearDrag = 0.25f;
 
 		/// <summary>
 		/// The glide audio clip.
@@ -23,10 +29,9 @@ namespace ZigZag
 		#endregion
 
 		#region Private/Protected Variables
-		private Vector2 m_defaultGravity;
-		private Vector2 m_lowGravity;
 		private AudioSource m_audioSource;
 		private Animator m_animator;
+		private Rigidbody2D m_rigidbody2D;
 		#endregion
 
 		#region Properties
@@ -45,7 +50,10 @@ namespace ZigZag
 				Debug.Log ("GLIDE START");
 				m_isActive = true;
 				AgentComponent.SetVelocityY(0);
-				Physics2D.gravity = m_lowGravity;
+
+				// Apply the gravity scale and linear drag
+				m_rigidbody2D.gravityScale = GravityScale;
+				m_rigidbody2D.drag = LinearDrag;
 
 				// Play the glide audio and animation
 				m_audioSource.clip = GlideAudio;
@@ -67,9 +75,13 @@ namespace ZigZag
 				if (result == true)
 				{
 					m_isActive = false;
-					Physics2D.gravity = m_defaultGravity;
+
+					// Revert the gravity scale and linear drag to default values
+					m_rigidbody2D.gravityScale = 1f;
+					m_rigidbody2D.drag = 0f;
 				}
 
+				// Stop playing the Glide animation and stop the audio from looping
 				m_animator.SetInteger ("Glide", 0);
 				m_audioSource.loop = false;
 
@@ -88,12 +100,7 @@ namespace ZigZag
 				Cancel ();
 			}
 		}
-
-		private void calcGravity()
-		{
-			m_defaultGravity = Physics2D.gravity;
-			m_lowGravity = GravityScale * Physics2D.gravity;
-		}
+			
 		#endregion
 
 		#region Unity Methods
@@ -103,11 +110,12 @@ namespace ZigZag
 			m_canCancel = true;
 			m_allowMovement = true;
 			m_skillType = SkillTypes.Hold;
-			calcGravity ();
 
 			m_audioSource = GetComponent<AudioSource> ();
 			m_animator = GetComponent<Animator> ();
+			m_rigidbody2D = GetComponent<Rigidbody2D> ();
 		}
+
 		protected virtual void Start()
 		{
 			AgentComponent.SurfaceDetectorComponent.OnSurfaceEnter += OnSurfaceEnter;

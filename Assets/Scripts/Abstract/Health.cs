@@ -70,7 +70,6 @@ namespace ZigZag
 		/// </summary>
 		protected virtual void die() 
 		{
-			OnDeath ();
 			Destroy (gameObject);
 		}
 

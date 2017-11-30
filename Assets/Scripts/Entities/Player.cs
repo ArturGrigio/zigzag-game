@@ -23,11 +23,24 @@ namespace ZigZag
 		#region Private/Protected Methods
 		protected override void die ()
 		{
-			throw new System.NotImplementedException ();
+			OnDeath ();
 		}	
 		#endregion
 
 		#region Unity Methods
+
+		/// <summary>
+		/// Raises the trigger enter 2D event.
+		/// </summary>
+		/// <param name="collider">Collider.</param>
+		private void OnTriggerEnter2D(Collider2D collider)
+		{
+			// The player dies when he falls into a pitfall
+			if (collider.CompareTag ("PitFall"))
+			{
+				this.die ();
+			}
+		}
 
 		#endregion
 	}

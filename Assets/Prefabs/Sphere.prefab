@@ -44,9 +44,9 @@ GameObject:
   - component: {fileID: 114093614972434032}
   - component: {fileID: 114737664822244142}
   - component: {fileID: 114511561012276120}
-  - component: {fileID: 114889773383027784}
   - component: {fileID: 114959766231596904}
   - component: {fileID: 114925908947020614}
+  - component: {fileID: 82114940174429062}
   m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
@@ -94,7 +94,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 1
-  m_AngularDrag: 2
+  m_AngularDrag: 5
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 1
@@ -116,6 +116,86 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.31999996
+--- !u!82 &82114940174429062
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1995286442311242}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114093614972434032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,19 +258,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_activator: Horizontal
   Speed: 10
---- !u!114 &114889773383027784
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1995286442311242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 320c1b4a328fcd34586394cfb07274eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_activator: 
-  SlidingMultiplier: 10
 --- !u!114 &114925908947020614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -220,13 +287,14 @@ MonoBehaviour:
   m_activator: Attack
   AttackDamage: 1
   Size: 4.4
-  Speed: 1
+  Speed: 5
   Mass: 2
   ParticleCount: 100
   ErrorText: {fileID: 0}
   Layers:
     serializedVersion: 2
     m_Bits: 4294940927
+  TitanAudioClip: {fileID: 8300000, guid: 340e13dda01f16f408278936112e7d6e, type: 3}
 --- !u!198 &198878682446004282
 ParticleSystem:
   m_ObjectHideFlags: 1

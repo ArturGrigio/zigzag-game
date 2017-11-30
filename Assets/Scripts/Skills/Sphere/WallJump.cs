@@ -8,12 +8,28 @@ namespace ZigZag
 	/// </summary>
 	public class WallJump : Jump
 	{
+		#region Public Variables
+
+		/// <summary>
+		/// The sliding multiplier that determines the speed of sliding down a wall.
+		/// </summary>
+		[Tooltip("The sliding multiplier that determines the speed of sliding down a wall.")]
+		[Range(20f, 50f)]
+		public float SlidingMultiplier = 10f;
+
+		#endregion
+
 		#region Private/Protected Variablels
 
 		/// <summary>
 		/// Flag indicating whether the player has collied against a wall.
 		/// </summary>
 		private bool m_colliedWall;
+
+		/// <summary>
+		/// The rigidbody 2D component.
+		/// </summary>
+		private Rigidbody2D m_rigidbody2D;
 
 		#endregion
 
@@ -45,6 +61,7 @@ namespace ZigZag
 		{
 			if (m_colliedWall && AgentComponent.ActivateAgentSkill (this))
 			{
+				m_rigidbody2D.drag = 1f;
 				AgentComponent.SetVelocityY (JumpPower);
 				AgentComponent.DeactivateAgentSkill (this);
 				m_colliedWall = false;
@@ -67,6 +84,8 @@ namespace ZigZag
 			base.Awake();
 			m_skillType = SkillTypes.Instant;
 			m_colliedWall = false;
+
+			m_rigidbody2D = GetComponent<Rigidbody2D> ();
 		}
 
 		/// <summary>
@@ -91,6 +110,7 @@ namespace ZigZag
 				if (colliedSurface == Surface.LeftWall || colliedSurface == Surface.RightWall)
 				{
 					m_colliedWall = true;
+					m_rigidbody2D.drag = SlidingMultiplier;
 					break;
 				}
 			}
@@ -105,6 +125,7 @@ namespace ZigZag
 			if (m_colliedWall)
 			{
 				m_colliedWall = false;
+				m_rigidbody2D.drag = 1f;
 			}
 		}
 
