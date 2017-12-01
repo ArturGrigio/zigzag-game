@@ -16,14 +16,9 @@ namespace ZigZag
 		public Camera2DFollow PlayerCamera;
 
 		/// <summary>
-		/// Delegate handler for handling the death of the player.
-		/// </summary>
-		public delegate void PlayerDeathHandler ();
-
-		/// <summary>
 		/// Occurs when the player dies.
 		/// </summary>
-		public event PlayerDeathHandler PlayerDeath;
+		public event Health.DeathHandler PlayerDeath;
 
 		/// <summary>
 		/// The health bar GUI.

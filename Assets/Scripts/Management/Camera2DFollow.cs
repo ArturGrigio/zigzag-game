@@ -61,6 +61,11 @@ namespace ZigZag
 		/// </summary>
 		private Vector3 currentVelocity;
 
+		/// <summary>
+		/// Flag indicating if the camera is locked.
+		/// </summary>
+		private bool lockCamera;
+
 		#endregion
 
 		#region Unity Methods
@@ -69,6 +74,7 @@ namespace ZigZag
 		private void Awake ()
 		{
 			currentVelocity = Vector3.zero;
+			lockCamera = false;
 		}
 
 		// Update is called once per frame
@@ -80,6 +86,15 @@ namespace ZigZag
 			float clampX = Mathf.Clamp (desiredPosition.x, MinX, MaxX);
 			float clampY = Mathf.Clamp (desiredPosition.y, MinY, MaxY);
 			transform.position = new Vector3 (clampX, clampY, desiredPosition.z);
+
+			// Lock the camera in place when player fights the boss
+			if (!lockCamera && transform.position.x >= 872f)
+			{
+				Debug.Log ("Lock camera");
+				lockCamera = true;
+				MinX = 872f;
+				MaxX = MinX;
+			}
 		}
 
 		#endregion

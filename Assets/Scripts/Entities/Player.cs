@@ -35,8 +35,10 @@ namespace ZigZag
 		/// <param name="collider">Collider.</param>
 		private void OnTriggerEnter2D(Collider2D collider)
 		{
-			// The player dies when he falls into a pitfall
-			if (collider.CompareTag ("PitFall"))
+			int activePlayerLayer = LayerMask.NameToLayer ("Active Player");
+
+			// The active player dies when he falls into a pitfall
+			if (gameObject.layer == activePlayerLayer && collider.CompareTag ("PitFall"))
 			{
 				this.die ();
 			}

@@ -151,18 +151,6 @@ namespace ZigZag
 			ContinueButton.onClick.AddListener (clickContinue);
 			QuitGameOverButton.onClick.AddListener (clickQuit);
 		}
-			
-//		float timer = 0f;
-//		private void Update()
-//		{
-//			// Set the FadeInImage inactive after 5 and before 6 seconds
-//
-//			timer = Time.unscaledTime * timer;
-//			if (FadeInImage.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length < timer)
-//			{
-//				FadeInImage.gameObject.SetActive (false);
-//			}
-//		}
 
 		#endregion
 	}
