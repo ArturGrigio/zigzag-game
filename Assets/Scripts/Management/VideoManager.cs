@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using USM = UnityEngine.SceneManagement;
 using System.Collections;
 
 namespace ZigZag
@@ -48,8 +49,20 @@ namespace ZigZag
 			m_audioSource.clip = movie.audioClip;
 			m_audioSource.Play ();
 
-			yield return new WaitForSeconds (m_audioSource.clip.length + 5f);
+			yield return new WaitForSeconds (m_audioSource.clip.length);
+
 			// TODO: switch to the game scene
+			StartCoroutine(loadScene());
+		}
+
+		private IEnumerator loadScene()
+		{
+			AsyncOperation asyncLoad = USM.SceneManager.LoadSceneAsync ("Main-Test");
+
+			while (!asyncLoad.isDone)
+			{
+				yield return null;
+			}
 		}
 	}
 }

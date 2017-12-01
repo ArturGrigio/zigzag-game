@@ -13,10 +13,33 @@ namespace ZigZag
 		#region Public Variables
 
 		/// <summary>
-		/// The parent GameOver object that contains other related game over objects.
+		/// The Start Menu gameobject.
 		/// </summary>
-		[Tooltip("The parent GameOver object that contains other related game over objects")]
-		public GameObject GameOver;
+		[Tooltip("The Start Menu gameobject")]
+		public GameObject StartMenu;
+
+		/// <summary>
+		/// The play button in the Start Menu.
+		/// </summary>
+		[Tooltip("The play button in the Start Menu")]
+		public Button PlayButton;
+
+		/// <summary>
+		/// The quit button in the Start Menu.
+		/// </summary>
+		[Tooltip("The quit button in the Start Menu")]
+		public Button QuitStartButton;
+
+		/// <summary>
+		/// The fade in image.
+		/// </summary>
+		public RawImage FadeInImage;
+
+		/// <summary>
+		/// The Game Over Menu gameobject.
+		/// </summary>
+		[Tooltip("The Game Over Menu gameobject")]
+		public GameObject GameOverMenu;
 
 		/// <summary>
 		/// The restart button.
@@ -31,10 +54,10 @@ namespace ZigZag
 		public Button ContinueButton;
 
 		/// <summary>
-		/// The quit button.
+		/// The quit button in the Game Over Menu.
 		/// </summary>
-		[Tooltip("The quit button")]
-		public Button QuitButton;
+		[Tooltip("The quit button in the Game Over Menu")]
+		public Button QuitGameOverButton;
 
 		/// <summary>
 		/// The player manager component.
@@ -46,13 +69,22 @@ namespace ZigZag
 		#region Private/Protected Methods
 
 		/// <summary>
+		/// Unpause the game and begin the gameplay.
+		/// </summary>
+		private void clickPlay()
+		{
+			Time.timeScale = 1f;
+			StartMenu.SetActive (false);
+		}
+
+		/// <summary>
 		/// Restart the game when the button is clicked.
 		/// </summary>
 		private void clickRestart()
 		{
 			Debug.Log ("Restart game");
 			RestartButton.GetComponent<AudioSource> ().Play ();
-			//USM.SceneManager.LoadScene ("Main");
+			//USM.SceneManager.LoadScene ("Main-Test");
 		}
 
 		/// <summary>
@@ -63,7 +95,7 @@ namespace ZigZag
 			Debug.Log ("Continue game");
 			ContinueButton.GetComponent<AudioSource> ().Play ();
 			Time.timeScale = 1f;
-			GameOver.SetActive (false);
+			GameOverMenu.SetActive (false);
 
 			playerManager.LoadPositions ();
 		}
@@ -73,7 +105,7 @@ namespace ZigZag
 		/// </summary>
 		private void clickQuit()
 		{
-			QuitButton.GetComponent<AudioSource> ().Play ();
+			QuitGameOverButton.GetComponent<AudioSource> ().Play ();
 			Application.Quit ();
 		}
 
@@ -91,8 +123,13 @@ namespace ZigZag
 				continueText.color = new Color (continueText.color.r, continueText.color.g, continueText.color.b, 1f);
 			}
 
-			GameOver.SetActive (true);
-			GameOver.GetComponent<AudioSource> ().Play ();
+			GameOverMenu.SetActive (true);
+			GameOverMenu.GetComponent<AudioSource> ().Play ();
+		}
+
+		private void fadeIn()
+		{
+			
 		}
 
 		#endregion
@@ -102,11 +139,30 @@ namespace ZigZag
 		// Use this for initialization
 		private void Awake ()
 		{
+			Time.timeScale = 0f;
+
 			playerManager.PlayerDeath += playerDeathHandler;
+
+			// Register event handlers
+			PlayButton.onClick.AddListener(clickPlay);
+			QuitStartButton.onClick.AddListener(clickQuit);
+
 			RestartButton.onClick.AddListener (clickRestart);
 			ContinueButton.onClick.AddListener (clickContinue);
-			QuitButton.onClick.AddListener (clickQuit);
+			QuitGameOverButton.onClick.AddListener (clickQuit);
 		}
+			
+//		float timer = 0f;
+//		private void Update()
+//		{
+//			// Set the FadeInImage inactive after 5 and before 6 seconds
+//
+//			timer = Time.unscaledTime * timer;
+//			if (FadeInImage.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length < timer)
+//			{
+//				FadeInImage.gameObject.SetActive (false);
+//			}
+//		}
 
 		#endregion
 	}
