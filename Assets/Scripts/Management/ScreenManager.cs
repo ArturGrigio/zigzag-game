@@ -27,10 +27,10 @@ namespace ZigZag
 		public GameObject GameOverMenu;
 
 		/// <summary>
-		/// The end menu.
+		/// The ending of the game.
 		/// </summary>
-		[Tooltip("The end menu")]
-		public GameObject EndMenu;
+		[Tooltip("The ending gameobject")]
+		public GameObject Ending;
 
 		/// <summary>
 		/// The fade in image.
@@ -67,9 +67,15 @@ namespace ZigZag
 			"The story continues..."
 		};
 
+		/// <summary>
+		/// Array containing buttons that belong to the game over menu.
+		/// </summary>
 		private Button[] m_gameOverButtons;
-		private Button[] m_startMenuButtons;
 
+		/// <summary>
+		/// Array containing buttons that belong to the start menu.
+		/// </summary>
+		private Button[] m_startMenuButtons;
 
 		#endregion
 
@@ -106,7 +112,7 @@ namespace ZigZag
 			audioManager.PlaySoundEffect ("button");
 			GameOverMenu.SetActive (false);
 
-			playerManager.LoadPositions ();
+			playerManager.Respawn ();
 		}
 
 		/// <summary>
@@ -126,7 +132,7 @@ namespace ZigZag
 			Time.timeScale = 0f;
 
 			Button continueButton = m_gameOverButtons.Single (button => button.name.Contains ("Continue"));
-			if (!continueButton.interactable && SavePoint.SavedPlayerPositions.Count > 0)
+			if (!continueButton.interactable)
 			{
 				continueButton.interactable = true;
 				Text continueText = continueButton.GetComponentInChildren<Text> ();
@@ -134,20 +140,19 @@ namespace ZigZag
 			}
 
 			GameOverMenu.SetActive (true);
-			GameOverMenu.GetComponent<AudioSource> ().Play ();
 		}
 
 		/// <summary>
-		/// Display the end menu and its animations.
+		/// Play the ending and its animations.
 		/// </summary>
-		/// <returns>The end menu coroutine.</returns>
-		private IEnumerator displayEndMenu()
+		/// <returns>The ending coroutine.</returns>
+		private IEnumerator playEnding()
 		{
-			yield return new WaitForSeconds (2f);
+			yield return new WaitForSeconds (4f);
 
 			Time.timeScale = 0f;
-			EndMenu.SetActive (true);
-			Text endTextComponent = EndMenu.GetComponentInChildren<Text> ();
+			Ending.SetActive (true);
+			Text endTextComponent = Ending.GetComponentInChildren<Text> ();
 			Animator animator = endTextComponent.GetComponent<Animator> ();
 
 			foreach (string text in EndTexts)
@@ -168,6 +173,7 @@ namespace ZigZag
 			}
 
 			animator.enabled = false;
+			yield return audioManager.FadeOutAudio (0.015f);
 
 			// Restart the game by loading Opening scene once the game is finished
 			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync ("Opening");
@@ -178,11 +184,11 @@ namespace ZigZag
 		}
 
 		/// <summary>
-		/// Handle the finish event. Simply display the end menu.
+		/// Handle the finish event. Simply play the ending.
 		/// </summary>
 		private void finishHandler()
 		{
-			StartCoroutine (displayEndMenu ());
+			StartCoroutine (playEnding ());
 		}
 
 		#endregion

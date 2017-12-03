@@ -22,6 +22,23 @@ namespace ZigZag
 
 		#endregion
 
+		#region Private/Protected Methods
+
+		/// <summary>
+		/// Raises the boss event.
+		/// </summary>
+		private void OnBoss()
+		{
+			if (BeforeBoss != null)
+			{
+				BeforeBoss.Invoke ();
+			}
+		}
+
+		#endregion
+
+		#region Unity Methods
+
 		/// <summary>
 		/// Raises the trigger enter 2D event.
 		/// </summary>
@@ -38,15 +55,6 @@ namespace ZigZag
 			}
 		}
 
-		/// <summary>
-		/// Raises the boss event.
-		/// </summary>
-		private void OnBoss()
-		{
-			if (BeforeBoss != null)
-			{
-				BeforeBoss.Invoke ();
-			}
-		}
+		#endregion
 	}
 }

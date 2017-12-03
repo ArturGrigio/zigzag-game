@@ -52,6 +52,23 @@ namespace ZigZag
 		[Tooltip("The maximum y position the camera can have")]
 		public float MaxY;
 
+		/// <summary>
+		/// The camera range 1.
+		/// </summary>
+		[Tooltip("The first CamerRange object in the level")]
+		public CameraRange cameraRange1;
+
+		/// <summary>
+		/// The camera range 2.
+		/// </summary>
+		[Tooltip("The second CamerRange object in the level")]
+		public CameraRange cameraRange2;
+
+		/// <summary>
+		/// The player manager.
+		/// </summary>
+		public PlayerManager playerManager;
+
 		#endregion
 
 		#region Private Variables
@@ -67,9 +84,28 @@ namespace ZigZag
 		private bool lockCamera;
 
 		/// <summary>
-		/// The default width of the camera view
+		/// The default width of the camera view.
 		/// </summary>
 		private float defaultWidth;
+
+		#endregion
+
+		#region Private/Protected Methods
+
+		/// <summary>
+		/// Handle the player respawn event.
+		/// Load the saved boundary values.
+		/// </summary>
+		private void respawnPlayerHandler()
+		{
+			MinX = SavePoint.SavedCameraBoundary [0];
+			MaxX = SavePoint.SavedCameraBoundary [1];
+			MinY = SavePoint.SavedCameraBoundary [2];
+			MaxY = SavePoint.SavedCameraBoundary [3];
+
+			cameraRange1.CameraMinY = SavePoint.SavedCameraRangeValue1;
+			cameraRange2.CameraMinY = SavePoint.SavedCameraRangeValue2;
+		}
 
 		#endregion
 
@@ -78,6 +114,8 @@ namespace ZigZag
 		// Use this for initialization
 		private void Awake ()
 		{
+			playerManager.RespawnPlayer += respawnPlayerHandler;
+
 			currentVelocity = Vector3.zero;
 			lockCamera = false;
 			defaultWidth = Camera.main.orthographicSize * Camera.main.aspect;

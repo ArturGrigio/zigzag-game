@@ -4,8 +4,8 @@ using System.Collections;
 namespace ZigZag
 {
 	/// <summary>
-	/// This class holds the needed minimum x position of the camera and swaps this value
-	/// with the current camera minimum x position depending on the location in the level.
+	/// This class holds the needed minimum y position of the camera and swaps this value
+	/// with the current camera minimum y position depending on the location in the level.
 	/// </summary>
 	public class CameraRange : MonoBehaviour
 	{
@@ -13,7 +13,7 @@ namespace ZigZag
 		private Camera2DFollow m_cameraFollow2D;
 
 		// Use this for initialization
-		void Start ()
+		private void Awake ()
 		{
 			m_cameraFollow2D = Camera.main.GetComponent<Camera2DFollow> ();
 		}

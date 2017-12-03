@@ -21,6 +21,16 @@ namespace ZigZag
 		public event Health.DeathHandler PlayerDeath;
 
 		/// <summary>
+		/// Spawn player handler delegate.
+		/// </summary>
+		public delegate void RespawnPlayerHandler();
+
+		/// <summary>
+		/// Occurs when player is respawned.
+		/// </summary>
+		public event RespawnPlayerHandler RespawnPlayer;
+
+		/// <summary>
 		/// The health bar GUI.
 		/// </summary>
 		public GameObject HealthBar;
@@ -69,15 +79,18 @@ namespace ZigZag
 		}
 
 		/// <summary>
-		/// Load the saved positions from the latest save point.
+		/// Respawn the player and publish the RespawnPlayer event.
 		/// </summary>
-		public void LoadPositions()
+		public void Respawn()
 		{
 			foreach (Player player in m_players)
 			{
-				player.transform.position = SavePoint.SavedPlayerPositions [player];
+				player.transform.position = SavePoint.LatestSavePoint;
 				player.ReceiveHeal (player.FullHealth);
 			}
+
+			// Let subscribers know the player has been respawned
+			OnRespawnPlayer ();
 		}
 
 		#endregion
@@ -155,6 +168,17 @@ namespace ZigZag
 			if (PlayerDeath != null)
 			{
 				PlayerDeath.Invoke ();
+			}
+		}
+
+		/// <summary>
+		/// Raises the respawn player event.
+		/// </summary>
+		private void OnRespawnPlayer()
+		{
+			if (RespawnPlayer != null)
+			{
+				RespawnPlayer.Invoke ();
 			}
 		}
 
