@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 namespace ZigZag
 {
@@ -23,18 +24,50 @@ namespace ZigZag
 		public AudioClip BossTheme;
 
 		/// <summary>
+		/// Array of sound effects.
+		/// </summary>
+		[Tooltip("Array of sound effects")]
+		public AudioClip[] SoundEffects;
+
+		/// <summary>
+		/// The music source.
+		/// </summary>
+		public AudioSource MusicSource;
+
+		/// <summary>
+		/// The sound effect source.
+		/// </summary>
+		public AudioSource SoundEffectSource;
+
+		/// <summary>
 		/// The boss trigger when player is about to fight the boss.
 		/// </summary>
 		public BossTrigger bossTrigger;
 
 		#endregion
 
-		#region Private/Protected Variables
+		#region Public Methods
 
 		/// <summary>
-		/// The audio source component.
+		/// Play a single sound effect clip.
 		/// </summary>
-		private AudioSource m_audioSource;
+		/// <param name="soundEffectClip">Sound effect clip.</param>
+		public void PlaySoundEffect(AudioClip soundEffectClip)
+		{
+			SoundEffectSource.clip = soundEffectClip;
+			SoundEffectSource.Play ();
+		}
+
+		/// <summary>
+		/// Play a single sound effect clip
+		/// </summary>
+		/// <param name="soundEffectName">Sound effect name.</param>
+		public void PlaySoundEffect(string soundEffectName)
+		{
+			AudioClip soundEffect = SoundEffects.First (audio => audio.name.Contains (soundEffectName));
+			SoundEffectSource.clip = soundEffect;
+			SoundEffectSource.Play ();
+		}
 
 		#endregion
 
@@ -45,7 +78,7 @@ namespace ZigZag
 		/// </summary>
 		private void BeforeBossHandler()
 		{
-			StartCoroutine(switchAudio (0.01f));
+			StartCoroutine(switchAudio (BossTheme, 0.01f));
 			bossTrigger.BeforeBoss -= BeforeBossHandler;
 		}
 
@@ -54,23 +87,23 @@ namespace ZigZag
 		/// </summary>
 		/// <returns>Coroutine.</returns>
 		/// <param name="fadeTime">Fade time.</param>
-		private IEnumerator switchAudio(float fadeTime)
+		private IEnumerator switchAudio(AudioClip nextAudioClip, float fadeTime)
 		{
-			float startVolume = m_audioSource.volume;
+			float startVolume = MusicSource.volume;
 
-			// Fade out the main theme
-			while (m_audioSource.volume > 0f)
+			// Fade out the current theme
+			while (MusicSource.volume > 0f)
 			{
-				m_audioSource.volume -= fadeTime;
+				MusicSource.volume -= fadeTime;
 				yield return null;
 			}
 
-			m_audioSource.Stop ();
-			m_audioSource.volume = startVolume;
+			MusicSource.Stop ();
+			MusicSource.volume = startVolume;
 
-			// Play the boss theme audio clip
-			m_audioSource.clip = BossTheme;
-			m_audioSource.Play ();
+			// Play the next audio clip
+			MusicSource.clip = nextAudioClip;
+			MusicSource.Play ();
 		}
 
 		#endregion
@@ -82,9 +115,8 @@ namespace ZigZag
 		{
 			bossTrigger.BeforeBoss += BeforeBossHandler;
 
-			m_audioSource = GetComponent<AudioSource> ();
-			m_audioSource.clip = MainTheme;
-			m_audioSource.Play ();
+			MusicSource.clip = MainTheme;
+			MusicSource.Play ();
 		}
 
 		#endregion

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using USM = UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 namespace ZigZag
@@ -38,10 +38,10 @@ namespace ZigZag
 		{
 			m_rawImage = GetComponent<RawImage> ();
 			m_audioSource = GetComponent<AudioSource> ();
-			StartCoroutine(PlayVideo ());
+			StartCoroutine(playVideo ());
 		}
 
-		private IEnumerator PlayVideo ()
+		private IEnumerator playVideo ()
 		{
 			m_rawImage.texture = movie;
 			movie.Play ();
@@ -57,7 +57,7 @@ namespace ZigZag
 
 		private IEnumerator loadScene()
 		{
-			AsyncOperation asyncLoad = USM.SceneManager.LoadSceneAsync ("Main-Test");
+			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync ("Main-Test");
 
 			while (!asyncLoad.isDone)
 			{

@@ -66,6 +66,11 @@ namespace ZigZag
 		/// </summary>
 		private bool lockCamera;
 
+		/// <summary>
+		/// The default width of the camera view
+		/// </summary>
+		private float defaultWidth;
+
 		#endregion
 
 		#region Unity Methods
@@ -75,11 +80,14 @@ namespace ZigZag
 		{
 			currentVelocity = Vector3.zero;
 			lockCamera = false;
+			defaultWidth = Camera.main.orthographicSize * Camera.main.aspect;
 		}
 
 		// Update is called once per frame
 		private void Update ()
 		{
+			Camera.main.orthographicSize = defaultWidth / Camera.main.aspect;
+
 			Vector3 targetPosition = Target.position + Offset;
 			Vector3 desiredPosition = Vector3.SmoothDamp (transform.position, targetPosition, ref currentVelocity, SmoothTime);
 
@@ -88,11 +96,11 @@ namespace ZigZag
 			transform.position = new Vector3 (clampX, clampY, desiredPosition.z);
 
 			// Lock the camera in place when player fights the boss
-			if (!lockCamera && transform.position.x >= 872f)
+			if (!lockCamera && transform.position.x >= 870f)
 			{
 				Debug.Log ("Lock camera");
 				lockCamera = true;
-				MinX = 872f;
+				MinX = 870f;
 				MaxX = MinX;
 			}
 		}
