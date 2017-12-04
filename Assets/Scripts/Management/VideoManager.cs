@@ -31,15 +31,26 @@ namespace ZigZag
 		/// </summary>
 		private AudioSource m_audioSource;
 
+		/// <summary>
+		/// The singleton instance of the VideoManager class.
+		/// </summary>
+		private static VideoManager m_videoManager = null;
+
 		#endregion
 
-		// Use this for initialization
-		private void Start ()
+		#region Properties
+
+		/// <summary>
+		/// Get the VideoManager singleton.
+		/// </summary>
+		public static VideoManager Instance
 		{
-			m_rawImage = GetComponent<RawImage> ();
-			m_audioSource = GetComponent<AudioSource> ();
-			StartCoroutine(playVideo ());
+			get { return m_videoManager; }
 		}
+
+		#endregion
+
+		#region Private/Protected Methods
 
 		private IEnumerator playVideo ()
 		{
@@ -52,7 +63,7 @@ namespace ZigZag
 			yield return new WaitForSeconds (m_audioSource.clip.length);
 
 			// TODO: switch to the game scene
-			StartCoroutine(loadScene());
+			yield return StartCoroutine(loadScene());
 		}
 
 		private IEnumerator loadScene()
@@ -64,5 +75,36 @@ namespace ZigZag
 				yield return null;
 			}
 		}
+
+		#endregion
+
+		#region Unity Methods
+
+		/// <summary>
+		/// Initialize the singleton instance.
+		/// </summary>
+		private void Awake ()
+		{
+			if (m_videoManager != null && m_videoManager != this)
+			{
+				Destroy (this.gameObject);
+			}
+			else
+			{
+				m_videoManager = this;
+			}
+		}
+
+		/// <summary>
+		/// Initialize member variables.
+		/// </summary>
+		private void Start ()
+		{
+			m_rawImage = GetComponent<RawImage> ();
+			m_audioSource = GetComponent<AudioSource> ();
+			StartCoroutine (playVideo ());
+		}
+
+		#endregion
 	}
 }

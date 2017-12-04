@@ -44,12 +44,7 @@ namespace ZigZag
 		/// The sound effect source.
 		/// </summary>
 		public AudioSource SoundEffectSource;
-
-		/// <summary>
-		/// The player manager.
-		/// </summary>
-		public PlayerManager playerManager;
-
+	
 		/// <summary>
 		/// The boss trigger when player is about to fight the boss.
 		/// </summary>
@@ -59,6 +54,32 @@ namespace ZigZag
 		/// The finish point script.
 		/// </summary>
 		public FinishPoint finishPoint;
+
+		#endregion
+
+		#region Private Variables
+
+		/// <summary>
+		/// The singleton instance of the AudioManager class.
+		/// </summary>
+		private static AudioManager m_audioManager = null;
+
+		/// <summary>
+		/// The player manager.
+		/// </summary>
+		private PlayerManager m_playerManager;
+
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Get the AudioManager singleton.
+		/// </summary>
+		public static AudioManager Instance
+		{
+			get { return m_audioManager; }
+		}
 
 		#endregion
 
@@ -133,7 +154,7 @@ namespace ZigZag
 		/// </summary>
 		private void playerDeathHandler()
 		{
-			StartCoroutine(FadeOutAudio (0.02f));
+			StartCoroutine(FadeOutAudio (0.04f));
 
 			AudioClip gameOverAudio = SoundEffects.First (sound => sound.name.Contains ("Game Over"));
 			PlaySoundEffect (gameOverAudio);
@@ -195,11 +216,31 @@ namespace ZigZag
 
 		#region Unity Methods
 
-		// Use this for initialization
+		/// <summary>
+		/// Initialize the singleton instance.
+		/// </summary>
 		private void Awake ()
 		{
-			playerManager.PlayerDeath += playerDeathHandler;
-			playerManager.RespawnPlayer += respawnPlayerHandler;
+			if (m_audioManager != null && m_audioManager != this)
+			{
+				Destroy (this.gameObject);
+			}
+			else
+			{
+				m_audioManager = this;
+			}
+		}
+
+		/// <summary>
+		/// Initialize member variables.
+		/// </summary>
+		private void Start()
+		{
+			m_playerManager = PlayerManager.Instance;
+
+			// Register handlers to events
+			m_playerManager.PlayerDeath += playerDeathHandler;
+			m_playerManager.RespawnPlayer += respawnPlayerHandler;
 			bossTrigger.BeforeBoss += beforeBossHandler;
 			finishPoint.Finish += finishHandler;
 

@@ -10,39 +10,74 @@ namespace ZigZag
 	/// </summary>
 	public class InputManager : MonoBehaviour
 	{
-	 	#region Public Variables
+		#region Private/Protected Variables
+
+		/// <summary>
+		/// The singleton instance of the InputManager class.
+		/// </summary>
+		private static InputManager m_inputManager = null;
 
 		/// <summary>
 		/// The player manager.
 		/// </summary>
-		public PlayerManager PlayerManager;
+		private PlayerManager m_playerManager;
 
 		#endregion
 
-		#region Private/Protected Variables
+		#region Properties
+
+		/// <summary>
+		/// Get the InputManager singleton.
+		/// </summary>
+		public static InputManager Instance
+		{
+			get { return m_inputManager; }
+		}
 
 		#endregion
 
 		#region Unity Methods
 			
+		/// <summary>
+		/// Initialize the singleton instance.
+		/// </summary>
+		private void Awake ()
+		{
+			if (m_inputManager != null && m_inputManager != this)
+			{
+				Destroy (this.gameObject);
+			}
+			else
+			{
+				m_inputManager = this;
+			}
+		}
 
+		/// <summary>
+		/// Initialize member variables.
+		/// </summary>
+		private void Start()
+		{
+			m_playerManager = PlayerManager.Instance;
+		}
+			
 		/// <remarks>
 		/// Check for user inputs every frame.
 		/// </remarks>
 		private void Update ()
 		{
-			Skill activeSkill = PlayerManager.CurrentShape.ActiveSkill;
+			Skill activeSkill = m_playerManager.CurrentShape.ActiveSkill;
 			// UI/Universal input processing
 			if (Input.GetButtonDown ("Swap Character"))
 			{
 				if (activeSkill == null || (activeSkill.CanCancel && activeSkill.Cancel()))
 				{
-					PlayerManager.NextPlayer ();
+					m_playerManager.NextPlayer ();
 				}
 			}
 			
 			// Player skill checks
-			foreach (Skill skill in PlayerManager.CurrentShape.Skills) 
+			foreach (Skill skill in m_playerManager.CurrentShape.Skills) 
 			{
 				switch (skill.SkillType) 
 				{

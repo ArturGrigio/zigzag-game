@@ -12,16 +12,6 @@ namespace ZigZag
 		#region Public Variables
 
 		/// <summary>
-		/// The player manager.
-		/// </summary>
-		public PlayerManager playerManager;
-
-		/// <summary>
-		/// The audio manager.
-		/// </summary>
-		public AudioManager audioManager;
-
-		/// <summary>
 		/// The camera 2D follow.
 		/// </summary>
 		public Camera2DFollow camera2DFollow;
@@ -44,6 +34,11 @@ namespace ZigZag
 		/// The audio source component.
 		/// </summary>
 		private AudioSource m_audioSource;
+
+		/// <summary>
+		/// The audio manager.
+		/// </summary>
+		private AudioManager m_audioManager;
 
 		/// <summary>
 		/// The position of the latest save point.
@@ -113,9 +108,10 @@ namespace ZigZag
 		/// <summary>
 		/// Initialize member variables.
 		/// </summary>
-		private void Awake()
+		private void Start()
 		{
 			m_audioSource = GetComponent<AudioSource> ();
+			m_audioManager = AudioManager.Instance;
 		}
 
 		/// <summary>
@@ -148,9 +144,9 @@ namespace ZigZag
 			m_latestSavePoint = transform.position;
 
 			// Save music theme
-			if (m_savedMusicTheme != audioManager.MusicSource.clip)
+			if (m_savedMusicTheme != m_audioManager.MusicSource.clip)
 			{
-				m_savedMusicTheme = audioManager.MusicSource.clip;
+				m_savedMusicTheme = m_audioManager.MusicSource.clip;
 			}
 
 			// Save camera boundary

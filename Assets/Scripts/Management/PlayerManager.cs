@@ -48,6 +48,11 @@ namespace ZigZag
 		private int m_activeLayer;
 		private int m_inactiveLayer;
 
+		/// <summary>
+		/// The singleton instance of the PlayerManager class.
+		/// </summary>
+		private static PlayerManager m_playerManager = null;
+
 		#endregion
 
 		#region Properties
@@ -63,6 +68,14 @@ namespace ZigZag
 		public List<Player> Players
 		{
 			get { return m_players; }
+		}
+
+		/// <summary>
+		/// Get the PlayerManager singleton.
+		/// </summary>
+		public static PlayerManager Instance
+		{
+			get { return m_playerManager; }
 		}
 
 		#endregion
@@ -198,13 +211,29 @@ namespace ZigZag
 
 		#region Unity Methods
 
-		// Use this for initialization
-		// Update is called once per frame
+		/// <summary>
+		/// Initialize the singleton instance.
+		/// </summary>
 		private void Awake()
 		{
+			if (m_playerManager != null && m_playerManager != this)
+			{
+				Destroy (this.gameObject);
+			}
+			else
+			{
+				m_playerManager = this;
+			}
+		}
+
+		/// <summary>
+		/// Initialize member variables.
+		/// </summary>
+		private void Start()
+		{
 			//Disable collision between player objects and set active player
-			m_activeLayer = LayerMask.NameToLayer("Active Player");
-			m_inactiveLayer = LayerMask.NameToLayer("Inactive Player");
+			m_activeLayer = LayerMask.NameToLayer ("Active Player");
+			m_inactiveLayer = LayerMask.NameToLayer ("Inactive Player");
 			loadPlayers ();
 			changePlayer (m_activeIndex);
 		}

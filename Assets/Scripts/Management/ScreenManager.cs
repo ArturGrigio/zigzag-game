@@ -38,16 +38,6 @@ namespace ZigZag
 		public RawImage FadeInImage;
 
 		/// <summary>
-		/// The player manager component.
-		/// </summary>
-		public PlayerManager playerManager;
-
-		/// <summary>
-		/// The audio manager.
-		/// </summary>
-		public AudioManager audioManager;
-
-		/// <summary>
 		/// The finish point script.
 		/// </summary>
 		public FinishPoint finishPoint;
@@ -77,6 +67,33 @@ namespace ZigZag
 		/// </summary>
 		private Button[] m_startMenuButtons;
 
+		/// <summary>
+		/// The player manager component.
+		/// </summary>
+		private PlayerManager m_playerManager;
+
+		/// <summary>
+		/// The audio manager.
+		/// </summary>
+		private AudioManager m_audioManager;
+
+		/// <summary>
+		/// The singleton instance of the ScreenManager class.
+		/// </summary>
+		private static ScreenManager m_screenManager = null;
+
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Get the ScreenManager singleton.
+		/// </summary>
+		public static ScreenManager Instance
+		{
+			get { return m_screenManager; }
+		}
+
 		#endregion
 
 		#region Private/Protected Methods
@@ -87,7 +104,7 @@ namespace ZigZag
 		private void clickPlay()
 		{
 			Time.timeScale = 1f;
-			audioManager.PlaySoundEffect ("button");
+			m_audioManager.PlaySoundEffect ("button");
 			StartMenu.SetActive (false);
 		}
 
@@ -97,7 +114,7 @@ namespace ZigZag
 		private void clickRestart()
 		{
 			Debug.Log ("Restart game");
-			audioManager.PlaySoundEffect ("button");
+			m_audioManager.PlaySoundEffect ("button");
 			//SceneManager.LoadScene ("Main-Test");
 		}
 
@@ -109,10 +126,10 @@ namespace ZigZag
 			Debug.Log ("Continue game");
 
 			Time.timeScale = 1f;
-			audioManager.PlaySoundEffect ("button");
+			m_audioManager.PlaySoundEffect ("button");
 			GameOverMenu.SetActive (false);
 
-			playerManager.Respawn ();
+			m_playerManager.Respawn ();
 		}
 
 		/// <summary>
@@ -120,7 +137,7 @@ namespace ZigZag
 		/// </summary>
 		private void clickQuit()
 		{
-			audioManager.PlaySoundEffect ("button");
+			m_audioManager.PlaySoundEffect ("button");
 			Application.Quit ();
 		}
 
@@ -173,7 +190,7 @@ namespace ZigZag
 			}
 
 			animator.enabled = false;
-			yield return audioManager.FadeOutAudio (0.015f);
+			yield return m_audioManager.FadeOutAudio (0.015f);
 
 			// Restart the game by loading Opening scene once the game is finished
 			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync ("Opening");
@@ -195,18 +212,39 @@ namespace ZigZag
 
 		#region Unity Methods
 
-		// Use this for initialization
+		/// <summary>
+		/// Initialize the singleton instance.
+		/// </summary>
 		private void Awake ()
 		{
+			if (m_screenManager != null && m_screenManager != this)
+			{
+				Destroy (this.gameObject);
+			}
+			else
+			{
+				m_screenManager = this;
+			}
+		}
+
+		/// <summary>
+		/// Initialize member variables.
+		/// </summary>
+		private void Start()
+		{
+			m_playerManager = PlayerManager.Instance;
+			m_audioManager = AudioManager.Instance;
+
 			Time.timeScale = 0f;
 
-			playerManager.PlayerDeath += playerDeathHandler;
+			// Register event handlers
+			m_playerManager.PlayerDeath += playerDeathHandler;
 			finishPoint.Finish += finishHandler;
 
-			// Register event handlers
-			m_gameOverButtons = GameOverMenu.GetComponentsInChildren<Button>();
-			m_startMenuButtons = StartMenu.GetComponentsInChildren<Button>();
+			m_gameOverButtons = GameOverMenu.GetComponentsInChildren<Button> ();
+			m_startMenuButtons = StartMenu.GetComponentsInChildren<Button> ();
 
+			// Register handler for each button in the game over menu
 			foreach (Button button in m_gameOverButtons)
 			{
 				if (button.name.Contains ("Continue"))
@@ -223,6 +261,7 @@ namespace ZigZag
 				}
 			}
 
+			// Register handler for each button in the start menu
 			foreach (Button button in m_startMenuButtons)
 			{
 				if (button.name.Contains ("Play"))
