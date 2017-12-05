@@ -91,6 +91,11 @@ namespace ZigZag
 		private ParticleSystem m_particleSystem;
 
 		/// <summary>
+		/// The rotation of the particle system.
+		/// </summary>
+		private Quaternion m_particleSystemRotation;
+
+		/// <summary>
 		/// Rigidbody 2D component.
 		/// </summary>
 		private Rigidbody2D m_rigidbody2D;
@@ -166,6 +171,7 @@ namespace ZigZag
 			m_originalScale = transform.localScale;
 			m_errorCoroutineRunning = false;
 			m_originalMass = m_rigidbody2D.mass;
+			m_particleSystemRotation = m_particleSystem.transform.rotation;
 		}
 
 		/// <summary>
@@ -189,6 +195,14 @@ namespace ZigZag
 						break;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Prevent the particle system from rotating with the sphre.
+		/// </summary>
+		private void LateUpdate()
+		{
+			m_particleSystem.transform.rotation = m_particleSystemRotation;
 		}
 
 		#endregion

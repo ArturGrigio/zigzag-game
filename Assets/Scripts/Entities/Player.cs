@@ -23,6 +23,16 @@ namespace ZigZag
 		#region Private/Protected Methods
 		protected override void die ()
 		{
+			Skill[] skills = GetComponents<Skill> ();
+			foreach (Skill skill in skills)
+			{
+				// Cancel any active skill when the player dies
+				if (skill.IsActive)
+				{
+					skill.Cancel ();
+				}
+			}
+
 			OnDeath ();
 		}	
 		#endregion

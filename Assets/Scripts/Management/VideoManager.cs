@@ -62,18 +62,7 @@ namespace ZigZag
 
 			yield return new WaitForSeconds (m_audioSource.clip.length);
 
-			// TODO: switch to the game scene
-			yield return StartCoroutine(loadScene());
-		}
-
-		private IEnumerator loadScene()
-		{
-			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync ("Main-Test");
-
-			while (!asyncLoad.isDone)
-			{
-				yield return null;
-			}
+			yield return StartCoroutine(ScreenManager.LoadScene("Main"));
 		}
 
 		#endregion

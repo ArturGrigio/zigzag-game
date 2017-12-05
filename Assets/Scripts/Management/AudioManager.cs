@@ -107,7 +107,7 @@ namespace ZigZag
 		}
 
 		/// <summary>
-		/// Fade in the current music audio clip.
+		/// Fade in the current music audio clip. This method plays the theme automatically.
 		/// </summary>
 		/// <returns>Audio coroutine.</returns>
 		/// <param name="fadeTime">Fade in time.</param>
@@ -126,7 +126,7 @@ namespace ZigZag
 		}
 
 		/// <summary>
-		/// Fade out the current music audio clip.
+		/// Fade out the current music audio clip. This method stops the theme automatically.
 		/// </summary>
 		/// <returns>Audio coroutine.</returns>
 		/// <param name="fadeTime">Fade out time.</param>
@@ -154,7 +154,7 @@ namespace ZigZag
 		/// </summary>
 		private void playerDeathHandler()
 		{
-			StartCoroutine(FadeOutAudio (0.04f));
+			MusicSource.Stop ();
 
 			AudioClip gameOverAudio = SoundEffects.First (sound => sound.name.Contains ("Game Over"));
 			PlaySoundEffect (gameOverAudio);
@@ -245,7 +245,7 @@ namespace ZigZag
 			finishPoint.Finish += finishHandler;
 
 			MusicSource.clip = MainTheme;
-			MusicSource.Play ();
+			StartCoroutine(FadeInAudio (0.01f));
 		}
 
 		#endregion

@@ -96,6 +96,40 @@ namespace ZigZag
 
 		#endregion
 
+		#region Public Methods
+
+		/// <summary>
+		/// Loads the scene asynchronnously.
+		/// </summary>
+		/// <param name="sceneName">Name of the scene to be loaded.</param>
+		/// <returns>The scene coroutine.</returns>
+		public static IEnumerator LoadScene(string sceneName)
+		{
+			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync (sceneName);
+
+			while (!asyncLoad.isDone)
+			{
+				yield return null;
+			}
+		}
+
+		/// <summary>
+		/// Loads the scene asynchronnously.
+		/// </summary>
+		/// <param name="sceneIndex">Index of the scene to be loaded.</param>
+		/// <returns>The scene coroutine.</returns>
+		public static IEnumerator LoadScene(int sceneIndex)
+		{
+			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync (sceneIndex);
+
+			while (!asyncLoad.isDone)
+			{
+				yield return null;
+			}
+		}
+
+		#endregion
+
 		#region Private/Protected Methods
 
 		/// <summary>
@@ -114,8 +148,10 @@ namespace ZigZag
 		private void clickRestart()
 		{
 			Debug.Log ("Restart game");
+			Time.timeScale = 1f;
+
 			m_audioManager.PlaySoundEffect ("button");
-			//SceneManager.LoadScene ("Main-Test");
+			StartCoroutine(LoadScene ("Main"));
 		}
 
 		/// <summary>
@@ -149,7 +185,9 @@ namespace ZigZag
 			Time.timeScale = 0f;
 
 			Button continueButton = m_gameOverButtons.Single (button => button.name.Contains ("Continue"));
-			if (!continueButton.interactable)
+
+			// Only enable the Continue button if the player has reached to at least 1 save point
+			if (!continueButton.interactable && SavePoint.LatestSavePoint != Vector2.zero)
 			{
 				continueButton.interactable = true;
 				Text continueText = continueButton.GetComponentInChildren<Text> ();
@@ -235,7 +273,7 @@ namespace ZigZag
 			m_playerManager = PlayerManager.Instance;
 			m_audioManager = AudioManager.Instance;
 
-			Time.timeScale = 0f;
+			//Time.timeScale = 0f;
 
 			// Register event handlers
 			m_playerManager.PlayerDeath += playerDeathHandler;

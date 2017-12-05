@@ -16,16 +16,6 @@ namespace ZigZag
 		/// </summary>
 		public Camera2DFollow camera2DFollow;
 
-		/// <summary>
-		/// The camera range1.
-		/// </summary>
-		public CameraRange cameraRange1;
-
-		/// <summary>
-		/// The camera range2.
-		/// </summary>
-		public CameraRange cameraRange2;
-
 		#endregion
 
 		#region Private Variables
@@ -43,7 +33,7 @@ namespace ZigZag
 		/// <summary>
 		/// The position of the latest save point.
 		/// </summary>
-		private static Vector2 m_latestSavePoint;
+		private static Vector2 m_latestSavePoint = Vector2.zero;
 
 		/// <summary>
 		/// The saved theme. Play this saved music theme when player
@@ -55,10 +45,10 @@ namespace ZigZag
 
 		/// <summary>
 		/// The saved camera range.
-		/// 0 -> Min X
-		/// 1 -> Max X
-		/// 2 -> Min Y
-		/// 3 -> Max Y
+		/// Index 0 -> Min X
+		/// Index 1 -> Max X
+		/// Index 2 -> Min Y
+		/// Index 3 -> Max Y
 		/// </summary>
 		private static float[] m_savedCameraBoundary = new float[4];
 
@@ -156,8 +146,8 @@ namespace ZigZag
 			m_savedCameraBoundary[3] = camera2DFollow.MaxY;
 
 			// Save camera range values
-			m_savedCameraRangeValue1 = cameraRange1.CameraMinY;
-			m_savedCameraRangeValue2 = cameraRange2.CameraMinY;
+			m_savedCameraRangeValue1 = camera2DFollow.cameraRange1.CameraMinY;
+			m_savedCameraRangeValue2 = camera2DFollow.cameraRange2.CameraMinY;
 		}
 
 		#endregion

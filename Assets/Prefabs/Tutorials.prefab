@@ -718,7 +718,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1522124502505990}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.149, y: 0.017, z: 0}
+  m_LocalPosition: {x: -0.165, y: 0.214, z: 0}
   m_LocalScale: {x: 1.0000001, y: 2.2375011, z: 1}
   m_Children: []
   m_Father: {fileID: 4921824931577306}
@@ -814,7 +814,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1494608099062456}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.35, y: 0.479, z: 0}
+  m_LocalPosition: {x: -0.384, y: 0.479, z: 0}
   m_LocalScale: {x: 1, y: 2.2375002, z: 1}
   m_Children: []
   m_Father: {fileID: 4447612819375734}
@@ -880,7 +880,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1731574460574300}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -53.07, y: 9.25, z: 0.35687244}
+  m_LocalPosition: {x: -53.9, y: 9.038646, z: 0.35687244}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4921824931577306}
@@ -910,7 +910,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1340077825028690}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.334, y: 0.305, z: 0}
+  m_LocalPosition: {x: -0.365, y: 0.305, z: 0}
   m_LocalScale: {x: 1.0000001, y: 2.2375011, z: 1}
   m_Children: []
   m_Father: {fileID: 4447612819375734}
@@ -1002,7 +1002,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1051802092734628}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.428, y: 0.267, z: 0}
+  m_LocalPosition: {x: -0.428, y: 0.416, z: 0}
   m_LocalScale: {x: 1, y: 2.2375002, z: 1}
   m_Children: []
   m_Father: {fileID: 4921824931577306}
@@ -1693,7 +1693,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1494608099062456}
-  m_Text: 'Either press 1 or hold 2 '
+  m_Text: Either press Z or hold X
   m_OffsetZ: 0
   m_CharacterSize: 0.01
   m_LineSpacing: 1

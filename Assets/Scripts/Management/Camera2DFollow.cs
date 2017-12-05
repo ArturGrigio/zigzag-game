@@ -64,11 +64,6 @@ namespace ZigZag
 		[Tooltip("The second CamerRange object in the level")]
 		public CameraRange cameraRange2;
 
-		/// <summary>
-		/// The player manager.
-		/// </summary>
-		public PlayerManager playerManager;
-
 		#endregion
 
 		#region Private Variables
@@ -87,6 +82,11 @@ namespace ZigZag
 		/// The default width of the camera view.
 		/// </summary>
 		private float defaultWidth;
+
+		/// <summary>
+		/// The player manager.
+		/// </summary>
+		private PlayerManager m_playerManager;
 
 		#endregion
 
@@ -112,9 +112,10 @@ namespace ZigZag
 		#region Unity Methods
 
 		// Use this for initialization
-		private void Awake ()
+		private void Start ()
 		{
-			playerManager.RespawnPlayer += respawnPlayerHandler;
+			m_playerManager = PlayerManager.Instance;
+			m_playerManager.RespawnPlayer += respawnPlayerHandler;
 
 			currentVelocity = Vector3.zero;
 			lockCamera = false;

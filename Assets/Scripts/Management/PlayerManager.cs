@@ -53,6 +53,11 @@ namespace ZigZag
 		/// </summary>
 		private static PlayerManager m_playerManager = null;
 
+		/// <summary>
+		/// The original x scale of the health bar.
+		/// </summary>
+		private float m_originalHealthBarXScale;
+
 		#endregion
 
 		#region Properties
@@ -204,7 +209,8 @@ namespace ZigZag
 
 			float y = HealthBar.transform.localScale.y;
 			float z = HealthBar.transform.localScale.z;
-			HealthBar.transform.localScale = new Vector3 (scaledHealth, y, z);
+
+			HealthBar.transform.localScale = new Vector3 (scaledHealth * m_originalHealthBarXScale , y, z);
 		}
 
 		#endregion
@@ -234,6 +240,7 @@ namespace ZigZag
 			//Disable collision between player objects and set active player
 			m_activeLayer = LayerMask.NameToLayer ("Active Player");
 			m_inactiveLayer = LayerMask.NameToLayer ("Inactive Player");
+			m_originalHealthBarXScale = HealthBar.transform.localScale.x;
 			loadPlayers ();
 			changePlayer (m_activeIndex);
 		}
