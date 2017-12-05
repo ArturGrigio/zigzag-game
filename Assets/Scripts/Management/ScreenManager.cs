@@ -231,11 +231,7 @@ namespace ZigZag
 			yield return m_audioManager.FadeOutAudio (0.015f);
 
 			// Restart the game by loading Opening scene once the game is finished
-			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync ("Opening");
-			while (!asyncLoad.isDone)
-			{
-				yield return null;
-			}
+			yield return StartCoroutine(LoadScene("Opening"));
 		}
 
 		/// <summary>

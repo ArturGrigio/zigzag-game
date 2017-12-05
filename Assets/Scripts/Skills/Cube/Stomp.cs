@@ -63,6 +63,10 @@ namespace ZigZag
 					m_isActive = false;
 					AgentComponent.AttackerComponent.AttackDamage = AgentComponent.AttackerComponent.DefaultAttackDamage;
 
+					// Set velocity to 0 to reduce the chances of cube 
+					// falling through the ground or platforms
+					AgentComponent.SetVelocity(0f, 0f);
+
 					// Play the stomp audio
 					m_audioSource.clip = StompAudio;
 					m_audioSource.Play ();

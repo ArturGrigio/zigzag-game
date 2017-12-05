@@ -100,6 +100,12 @@ namespace ZigZag
 		/// </summary>
 		private void Start()
 		{
+			// Reset the latest save point when the scene is reloaded
+			if (m_latestSavePoint != Vector2.zero)
+			{
+				m_latestSavePoint = Vector2.zero;
+			}
+
 			m_audioSource = GetComponent<AudioSource> ();
 			m_audioManager = AudioManager.Instance;
 		}
