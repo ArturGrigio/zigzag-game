@@ -39,7 +39,7 @@
         components: { vlink },
         data: () => {
             return {
-                links
+                links: links.filter(link => link.nav)
             }
         },
 

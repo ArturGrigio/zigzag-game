@@ -17,22 +17,22 @@
         <div class="row">
 
             <div class="col l6 m12">
-                <img src="../../../../assets/cube.png" width="80"/>
+                <img src="../../../../assets/players/cube.png" height="90"/>
                 <p>
-                    The Cube is one of the few remaining Shapes existence, but one day it regained its Color back. Now it is attempting to restore balance to the world of Shapes and Color by finding its lost allies to support the cause.
+                    The Cube is one of the few remaining Shapes existence, but one day it regained its Color back, bringing part of the world back from the dark colorless shadows. However not all are saved; now it must restore balance to the world of Shapes and Color by finding its lost allies to support the cause.
                 </p>
             </div>
 
             <div class="col l6 m12">
-                <img src="../../../../assets/pyramid.png" width="80"/>
-                <img src="../../../../assets/sphere.png" width="80"/>
+                <img src="../../../../assets/players/pyramid.png" height="90"/>
+                <img src="../../../../assets/players/sphere.png" height="90"/>
                 <p>
                     The Pyramid and Sphere were leaders along the Cube before the Shapeless Era; these beings were pillars that maintained prosperity to the world of Shapes. They were consumed by Slimes and are thought to be lost forever along with the peaceful world they upheld.
                 </p>
             </div>
 
             <div class="col l12">
-                <img src="../../../../assets/pyramid.png" width="80"/>
+                <img src="../../../../assets/players/slime.png" height="75"/>
                 <p>
                     The Slimes are Shapeless and Colorless beings who consume Shapes and their Color in order to sustain themselves. However, their method of sustenance has lead to their existence being viewed as enemies of the world from all Shapes. As a result, the three leaders attempted purge to the Slimes in an act of justice, but instead they drove the Slimes to madness and collapsed the world into a Shapeless and Colorless Era.
                 </p>

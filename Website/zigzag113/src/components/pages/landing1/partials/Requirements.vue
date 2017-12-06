@@ -26,6 +26,5 @@
         </div>
         <div class="spacer-4"></div>
         <div class="spacer-4"></div>
-        <div class="spacer-4"></div>
     </span>
 </template>

@@ -6,6 +6,15 @@
                 <carousel></carousel>
             </div>
 
+            <div class="row center">
+                <div class="spacer-4"></div>
+                <div class="spacer-2"></div>
+                <div class="col l4 offset-l4 m6 offset-m3 s12">
+                    <iframe id="video" width="100%" src="https://www.youtube.com/embed/yGKe2dzf3jU?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+
+
             <div class="row center no-margin">
                 <div class="spacer-4"></div>
                 <div class="spacer-2"></div>
@@ -19,7 +28,7 @@
                 </div>
             </div>
             <div class="row center" id="countdown">
-                <countdown date="12-15-2017"></countdown>
+                <countdown date="12-11-2017"></countdown>
             </div>
 
             <div class="container" id="creators">
@@ -60,10 +69,21 @@ import bindings from './partials/Binding.vue'
 export default {
     components: { countdown, carousel, requirements, overview, lore, creators, bindings },
 
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+    data () {
+        return {
+           msg: 'Welcome to Your Vue.js App'
+        }
+    },
+
+    methods: {
+        init() {
+            $('#video').height($('#video').width() * 0.565)
+        }
+    },
+
+    mounted() {
+        this.init()
+        $(window).resize(this.init)
     }
-  }
 }
 </script>

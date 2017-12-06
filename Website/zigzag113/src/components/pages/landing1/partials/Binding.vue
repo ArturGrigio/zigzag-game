@@ -1,6 +1,5 @@
 <template>
     <span>
-        <div class="spacer-4"></div>
         <h2 class="thin orange-text">Controls</h2>
         <table class="striped bordered">
             <thead>
