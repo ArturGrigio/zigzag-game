@@ -4,18 +4,21 @@ export default [
         text: 'Overview',
         nav: true,
         footer: true,
+        self: true,
     },
     {
         url: '#requirements',
         text: 'Requirements',
         nav: true,
         footer: true,
+        self: true,
     },
     {
         url: '#creators',
         text: 'Creators',
         nav: true,
         footer: true,
+        self: true,
     },
     {
         url: '#download',
@@ -23,11 +26,13 @@ export default [
         html: '<button class="btn orange">Download</button>',
         nav: true,
         footer: true,
+        self: true,
     },
     {
         url: 'https://docs.google.com/document/d/1EANw3IcvvASdb0HsfQN2cKhXPJY-D-MnYfjkF5UTReM/edit#',
         text: 'Documentation',
-        nav: false,
+        nav: true,
         footer: true,
+        self: false,
     },
 ]

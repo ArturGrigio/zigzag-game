@@ -9,7 +9,7 @@
             <div class="carousel-item red white-text" href="#one!">
                 <h2 class="thin"><small>CREATED </small> BY ZIGZAG</h2>
                 <div class="row">
-                    <img id="slide-0" src="../../../../assets/logo.png" style="height: 300px; width: 300px"/>
+                    <img id="slide-0" src="../../../../assets/logo.png"s/>
                 </div>
             </div>
 

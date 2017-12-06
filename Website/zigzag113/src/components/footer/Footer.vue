@@ -44,7 +44,7 @@
     export default {
         data: () => {
             return {
-                links
+                links: links.filter(link => link.footer)
             }
         }
     }
