@@ -40,6 +40,10 @@
                 <requirements></requirements>
             </div>
 
+            <div class="container" id="binding">
+                <bindings></bindings>
+            </div>
+
         </div>
     </span>
 </template>
@@ -51,9 +55,10 @@ import requirements from './partials/Requirements.vue';
 import overview from './partials/Overview.vue';
 import lore from './partials/Lore.vue';
 import creators from './partials/Creators.vue';
+import bindings from './partials/Binding.vue'
 
 export default {
-    components: { countdown, carousel, requirements, overview, lore, creators },
+    components: { countdown, carousel, requirements, overview, lore, creators, bindings },
 
   data () {
     return {
