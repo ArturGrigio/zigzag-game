@@ -195,8 +195,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1562405686570846}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.9, y: -1.903, z: -0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -14.13, y: -1.81, z: -0.2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 4261197121601282}
   m_RootOrder: 0
@@ -224,8 +224,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1775947705014696}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.57, y: -1.79, z: 0.0017877296}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 268.32, y: 43.36, z: -0.2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 4261197121601282}
   m_RootOrder: 1
@@ -237,8 +237,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1827707595075390}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.09, y: -1.802, z: -0.1}
-  m_LocalScale: {x: 0.90062076, y: 0.90062106, z: 0.90062106}
+  m_LocalPosition: {x: 513.92, y: 61.42, z: -0.2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4679395643098036}
   m_Father: {fileID: 4261197121601282}
@@ -1040,7 +1040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_activator: Skill
-  GravityScale: 0.25
+  GravityScale: 0.6
   LinearDrag: 5
   GlideAudio: {fileID: 8300000, guid: f9c2582971e51a941b2a1af1dae90a59, type: 3}
 --- !u!114 &114478781799478850
@@ -1121,6 +1121,7 @@ MonoBehaviour:
   Ending: {fileID: 0}
   FadeInImage: {fileID: 0}
   finishPoint: {fileID: 0}
+  material: {fileID: 0}
 --- !u!114 &114690801308441408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1212,7 +1213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_activator: Attack
   AttackDamage: 1
-  JumpPower: 30
+  JumpPower: 25
   RocketDrillAudio: {fileID: 8300000, guid: fbe040145ee936546aa437c98f21fa14, type: 3}
 --- !u!198 &198825835407645162
 ParticleSystem:
