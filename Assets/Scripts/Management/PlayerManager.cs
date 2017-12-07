@@ -121,22 +121,24 @@ namespace ZigZag
 		/// <param name="index">Index of desired player object.</param>
 		private void changePlayer(int index) 
 		{
+			SpriteRenderer spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
 			Vector2 currentPosition = m_currentShape.transform.position;
 
 			// Set the old shape to inactive status
 			m_currentShape.gameObject.layer = m_inactiveLayer;
 			m_activeIndex = index;
 			m_currentShape.Death -= playerDeathHandler;
-			m_currentShape.gameObject.SetActive (false);
+			setSpriteAlpha (spriteRenderer, 0f);
 
 			// Set the new current shape active
 			m_currentShape = m_players [m_activeIndex];
 			m_currentShape.gameObject.layer = m_activeLayer;
 			m_currentShape.transform.position = currentPosition;
 			m_currentShape.Death += playerDeathHandler;
-			m_currentShape.gameObject.SetActive (true);
 			PlayerCamera.Target = m_currentShape.gameObject.transform;
 
+			spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
+			setSpriteAlpha (spriteRenderer, 1f);
 			displayCurrentHealth ();
 		}
 
@@ -156,14 +158,20 @@ namespace ZigZag
 					activeSet = true;
 				}
 
-				player.gameObject.SetActive (false);
+				// Make all shapes completely transparent
+				SpriteRenderer spriteRenderer = player.GetComponent<SpriteRenderer> ();
+				setSpriteAlpha (spriteRenderer, 0f);
+
 				m_players.Add (player);
 			}
 
 			if (activeSet == false)
 			{
 				m_currentShape = m_players [m_activeIndex];
-				m_currentShape.gameObject.SetActive (true);
+
+				// Make active shape opaque
+				SpriteRenderer spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
+				setSpriteAlpha (spriteRenderer, 1f);
 			}
 		}
 
@@ -209,6 +217,20 @@ namespace ZigZag
 			float z = HealthBar.transform.localScale.z;
 
 			HealthBar.transform.localScale = new Vector3 (scaledHealth * m_originalHealthBarXScale , y, z);
+		}
+
+		/// <summary>
+		/// Set the sprite alpha.
+		/// </summary>
+		/// <param name="spriteRenderer">Sprite renderer component.</param>
+		/// <param name="alpha">Alpha value.</param>
+		private static void setSpriteAlpha(SpriteRenderer spriteRenderer, float alpha)
+		{
+			float r = spriteRenderer.color.r;
+			float g = spriteRenderer.color.g;
+			float b = spriteRenderer.color.b;
+
+			spriteRenderer.color = new Color (r, g, b, alpha);
 		}
 
 		#endregion
