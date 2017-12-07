@@ -1121,7 +1121,6 @@ MonoBehaviour:
   Ending: {fileID: 0}
   FadeInImage: {fileID: 0}
   finishPoint: {fileID: 0}
-  material: {fileID: 0}
 --- !u!114 &114690801308441408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4709,7 +4708,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 18e5917b2e37c3944a1ded2aa4052623, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

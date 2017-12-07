@@ -121,26 +121,21 @@ namespace ZigZag
 		/// <param name="index">Index of desired player object.</param>
 		private void changePlayer(int index) 
 		{
-			SpriteRenderer spriteRenderer;
+			Vector2 currentPosition = m_currentShape.transform.position;
 
 			// Set the old shape to inactive status
 			m_currentShape.gameObject.layer = m_inactiveLayer;
 			m_activeIndex = index;
 			m_currentShape.Death -= playerDeathHandler;
-
-			// Set the old shape half-transparent
-			spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
-			spriteRenderer.color = new Color (1f, 1f, 1f, 0.5f);
+			m_currentShape.gameObject.SetActive (false);
 
 			// Set the new current shape active
 			m_currentShape = m_players [m_activeIndex];
 			m_currentShape.gameObject.layer = m_activeLayer;
-			PlayerCamera.Target = m_currentShape.gameObject.transform;
+			m_currentShape.transform.position = currentPosition;
 			m_currentShape.Death += playerDeathHandler;
-
-			// Set the new current shape opaque
-			spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
-			spriteRenderer.color = new Color (1f, 1f, 1f, 1f);
+			m_currentShape.gameObject.SetActive (true);
+			PlayerCamera.Target = m_currentShape.gameObject.transform;
 
 			displayCurrentHealth ();
 		}
@@ -160,12 +155,15 @@ namespace ZigZag
 					m_activeIndex = m_players.Count;
 					activeSet = true;
 				}
+
+				player.gameObject.SetActive (false);
 				m_players.Add (player);
 			}
 
 			if (activeSet == false)
 			{
 				m_currentShape = m_players [m_activeIndex];
+				m_currentShape.gameObject.SetActive (true);
 			}
 		}
 

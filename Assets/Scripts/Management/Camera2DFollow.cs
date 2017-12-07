@@ -74,11 +74,6 @@ namespace ZigZag
 		private Vector3 currentVelocity;
 
 		/// <summary>
-		/// Flag indicating if the camera is locked.
-		/// </summary>
-		private bool lockCamera;
-
-		/// <summary>
 		/// The default width of the camera view.
 		/// </summary>
 		private float defaultWidth;
@@ -118,7 +113,6 @@ namespace ZigZag
 			m_playerManager.RespawnPlayer += respawnPlayerHandler;
 
 			currentVelocity = Vector3.zero;
-			lockCamera = false;
 			defaultWidth = Camera.main.orthographicSize * Camera.main.aspect;
 		}
 
@@ -133,15 +127,6 @@ namespace ZigZag
 			float clampX = Mathf.Clamp (desiredPosition.x, MinX, MaxX);
 			float clampY = Mathf.Clamp (desiredPosition.y, MinY, MaxY);
 			transform.position = new Vector3 (clampX, clampY, desiredPosition.z);
-
-			// Lock the camera in place when player fights the boss
-			if (!lockCamera && transform.position.x >= 870f)
-			{
-				Debug.Log ("Lock camera");
-				lockCamera = true;
-				MinX = 870f;
-				MaxX = MinX;
-			}
 		}
 
 		#endregion

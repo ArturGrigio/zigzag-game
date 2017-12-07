@@ -11,6 +11,12 @@ namespace ZigZag
 		#region Public Variables
 
 		/// <summary>
+		/// The door in which will be used to lock the player inside the boss room.
+		/// </summary>
+		[Tooltip("The door in which will be used to lock the player inside the boss room")]
+		public GameObject BossDoor;
+
+		/// <summary>
 		/// Delegate handler for handling the boss event.
 		/// </summary>
 		public delegate void BossEventHandler ();
@@ -51,6 +57,7 @@ namespace ZigZag
 			{
 				// Fire the event
 				OnBoss ();
+				BossDoor.SetActive (true);
 				Debug.Log ("boss event fire");
 			}
 		}

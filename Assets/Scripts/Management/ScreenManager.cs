@@ -33,6 +33,12 @@ namespace ZigZag
 		public GameObject Ending;
 
 		/// <summary>
+		/// The tutorial gameobject.
+		/// </summary>
+		[Tooltip("The tutorial gameobject")]
+		public GameObject Tutorial;
+
+		/// <summary>
 		/// The fade in image.
 		/// </summary>
 		public RawImage FadeInImage;
@@ -140,6 +146,7 @@ namespace ZigZag
 			Time.timeScale = 1f;
 			m_audioManager.PlaySoundEffect ("button");
 			StartMenu.SetActive (false);
+			Tutorial.SetActive (true);
 		}
 
 		/// <summary>
@@ -269,7 +276,7 @@ namespace ZigZag
 			m_playerManager = PlayerManager.Instance;
 			m_audioManager = AudioManager.Instance;
 
-			//Time.timeScale = 0f;
+			Time.timeScale = 0f;
 
 			// Register event handlers
 			m_playerManager.PlayerDeath += playerDeathHandler;

@@ -17,6 +17,11 @@ namespace ZigZag
 		/// </summary>
 		public MovieTexture movie;
 
+		/// <summary>
+		/// The skip button.
+		/// </summary>
+		public Button skipButton;
+
 		#endregion
 
 		#region Private Variables
@@ -52,6 +57,10 @@ namespace ZigZag
 
 		#region Private/Protected Methods
 
+		/// <summary>
+		/// Play the video.
+		/// </summary>
+		/// <returns>The video.</returns>
 		private IEnumerator playVideo ()
 		{
 			m_rawImage.texture = movie;
@@ -63,6 +72,16 @@ namespace ZigZag
 			yield return new WaitForSeconds (m_audioSource.clip.length);
 
 			yield return StartCoroutine(ScreenManager.LoadScene("Main"));
+		}
+
+		/// <summary>
+		/// Skip the Main scene.
+		/// </summary>
+		private void skip()
+		{
+			movie.Pause ();
+			StartCoroutine (ScreenManager.LoadScene ("Main"));
+//			SceneManager.LoadScene("Main");
 		}
 
 		#endregion
@@ -89,6 +108,8 @@ namespace ZigZag
 		/// </summary>
 		private void Start ()
 		{
+			skipButton.onClick.AddListener (skip);
+
 			m_rawImage = GetComponent<RawImage> ();
 			m_audioSource = GetComponent<AudioSource> ();
 			StartCoroutine (playVideo ());

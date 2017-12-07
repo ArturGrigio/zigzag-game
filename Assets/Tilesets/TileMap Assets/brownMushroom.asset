@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: brownMushroom
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 4ca8d35d8a64a2a49a8797f7fddaf495, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2dbaff06de504cb479f8eac55b71aa6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
