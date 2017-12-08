@@ -21,7 +21,7 @@ export default [
         self: true,
     },
     {
-        url: '#download',
+        url: 'https://raw.githubusercontent.com/ArturGrigio/zigzag-game/master/shapeless.exe',
         text: 'Download',
         html: '<button class="btn orange">Download</button>',
         nav: true,
