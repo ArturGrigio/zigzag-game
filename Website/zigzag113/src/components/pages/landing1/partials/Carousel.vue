@@ -13,14 +13,14 @@
                 </div>
             </div>
 
-            <div class="carousel-item" href="#one!">
+            <div class="carousel-item blue white-text" href="#one!">
                 <h2 class="thin">Easy to Learn, Hard to Master</h2>
                 <div class="row">
                     <img id="slide-1" class="l4 offset-l4 m6 offset-m3 s12 slide" src="../../../../assets/misc/slide_1.png"/>
                 </div>
             </div>
 
-            <div class="carousel-item" href="#one!">
+            <div class="carousel-item yellow" href="#one!">
                 <h2 class="thin">Play as 3 Different Shapes</h2>
                 <div class="row">
                     <img id="slide-2" class="l4 offset-l4 m6 offset-m3 s12 slide" src="../../../../assets/misc/slide_2.png"/>
