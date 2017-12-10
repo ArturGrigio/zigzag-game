@@ -1,27 +1,27 @@
 export default [
     {
-        url: '#overview',
+        url: '/#overview',
         text: 'Overview',
         nav: true,
         footer: true,
         self: true,
     },
     {
-        url: '#requirements',
+        url: '/#requirements',
         text: 'Requirements',
-        nav: true,
+        nav: false,
         footer: true,
         self: true,
     },
     {
-        url: '#creators',
+        url: '/#creators',
         text: 'Creators',
         nav: true,
         footer: true,
         self: true,
     },
     {
-        url: 'https://raw.githubusercontent.com/ArturGrigio/zigzag-game/master/shapeless.exe',
+        url: '/download',
         text: 'Download',
         html: '<button class="btn orange">Download</button>',
         nav: true,

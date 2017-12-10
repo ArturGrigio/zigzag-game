@@ -3,7 +3,7 @@
         <div class="carousel carousel-slider center v-height" data-indicators="true">
 
             <div class="carousel-fixed-item center">
-                <a class="btn waves-effect orange thin">DOWNLOAD</a>
+                <a href="/download" class="btn waves-effect orange thin">DOWNLOAD</a>
             </div>
 
             <div class="carousel-item red white-text" href="#one!">
