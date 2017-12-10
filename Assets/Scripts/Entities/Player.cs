@@ -11,9 +11,11 @@ namespace ZigZag
 		#endregion
 
 		#region Private/Protected Variables
+
 		#endregion
 
 		#region Properties
+
 		#endregion
 
 		#region Public Methods
@@ -23,6 +25,8 @@ namespace ZigZag
 		#region Private/Protected Methods
 		protected override void die ()
 		{
+			base.die ();
+
 			Skill[] skills = GetComponents<Skill> ();
 			foreach (Skill skill in skills)
 			{
@@ -32,8 +36,6 @@ namespace ZigZag
 					skill.Cancel ();
 				}
 			}
-
-			OnDeath ();
 		}	
 		#endregion
 

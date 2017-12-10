@@ -49,16 +49,17 @@ namespace ZigZag
 
 		protected virtual void OnCollisionEnter2D(Collision2D collision)
 		{
-			dealDamage (collision);
+			//dealDamage (collision);
 		}
 
 		protected virtual void OnCollisionStay2D(Collision2D collision)
 		{
 			if (IsContinuous == true)
 			{
-				dealDamage (collision);
+				//dealDamage (collision);
 			}
 		}
+
 		#endregion
 	}
 }

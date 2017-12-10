@@ -39,6 +39,7 @@ public class MovingPlatform : MonoBehaviour
 			set_velocity.y = -set_velocity.y;
 		}
 		m_rigidBody2D.velocity = set_velocity;
+		Debug.Log (m_rigidBody2D.velocity);
 	}
 
 	#endregion
@@ -47,13 +48,14 @@ public class MovingPlatform : MonoBehaviour
 	// Use this for initialization
 	protected virtual void Awake () 
 	{
-		m_rigidBody2D = transform.GetComponent<Rigidbody2D> ();
+		m_rigidBody2D = GetComponent<Rigidbody2D> ();
 		m_min = (Vector2)transform.position - MinOffset;
 		m_max = (Vector2)transform.position + MaxOffset;
 		if (MinOffset != Vector2.zero || MaxOffset != Vector2.zero) 
 		{
 			m_rigidBody2D.velocity = Speed;
 		}
+
 	}
 	
 	// Update is called once per frame

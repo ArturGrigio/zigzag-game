@@ -4,39 +4,73 @@ using System.Collections;
 
 namespace ZigZag
 {
-	public class TouchAttack : MonoBehaviour
+	public class TouchAttack : Skill
 	{
+		public float attackDamage = 1f;
+		public Image redPanel;
+		private bool m_touchPlayer;
+		private static bool m_coroutineRunning;
+		private Player m_activeShape;
 
-		/*
-		private EnemyMovement m_enemyMovement;
-
-		// Use this for initialization
-		private void Awake ()
+		protected override void Awake ()
 		{
-			m_enemyMovement = GetComponent<EnemyMovement> ();
+			base.Awake ();
+			m_touchPlayer = false;
+			m_activeShape = null;
 		}
-		
-		// Update is called once per frame
-		private void Update ()
+
+		private void Update()
 		{
-			// Constantly deal damage to the player if enemy and player are touching each other
-			if (m_enemyMovement.TouchTarget)
+			if (m_touchPlayer && m_activeShape != null && 
+				m_activeShape.ActiveSkill == null && !m_activeShape.Invicible &&
+				m_activeShape.CurrentHealth > 0f)
 			{
-				Transform parentTransform = m_enemyMovement.TargetTransform.parent;
+				m_activeShape.ReceiveDamage (attackDamage);
 
-				if (parentTransform != null)
+				if (!m_coroutineRunning)
 				{
-					GameObject parentObject = parentTransform.gameObject;
-					PlayerManager playerManager = parentObject.GetComponent<PlayerManager> ();
-
-					if (playerManager != null)
-					{
-						playerManager.ReceiveDamage (0.01f);
-					}
+					StartCoroutine (flashScreenCoroutine ());
 				}
 			}
 		}
-		*/
+
+		/// <summary>
+		/// Flash the screen red when player is damaged
+		/// </summary>
+		/// 
+		/// <returns>The coroutine.</returns>
+		private IEnumerator flashScreenCoroutine()
+		{
+			m_coroutineRunning = true;
+			redPanel.enabled = true;
+
+			yield return new WaitForSeconds (0.099f);
+
+			redPanel.enabled = false;
+			m_coroutineRunning = false;
+		}
+
+		private void OnCollisionEnter2D(Collision2D collision)
+		{
+			int activePlayerLayer = LayerMask.NameToLayer ("Active Player");
+
+			if (collision.collider.gameObject.layer == activePlayerLayer)
+			{
+				m_touchPlayer = true;
+				m_activeShape = collision.collider.GetComponent<Player> ();
+			}
+		}
+
+		private void OnCollisionExit2D(Collision2D collision)
+		{
+			int activePlayerLayer = LayerMask.NameToLayer ("Active Player");
+
+			if (collision.collider.gameObject.layer == activePlayerLayer)
+			{
+				m_touchPlayer = false;
+				m_activeShape = null;
+			}
+		}
 
 	}
 }

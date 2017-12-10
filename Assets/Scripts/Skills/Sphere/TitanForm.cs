@@ -141,14 +141,16 @@ namespace ZigZag
 			// Prevent accidental shrinking beyond the original size
 			if (m_originalScale != transform.localScale)
 			{
+				AgentComponent.Invicible = false;
+
 				m_isActive = false;
 				AgentComponent.SetVelocity (0f, 0f);
 				AgentComponent.AttackerComponent.AttackDamage = AgentComponent.AttackerComponent.DefaultAttackDamage;
 				transform.localScale /= Size;
 				m_rigidbody2D.mass = m_originalMass;
 			}
-			AgentComponent.DeactivateAgentSkill (this);
-			return true;
+
+			return AgentComponent.DeactivateAgentSkill (this);
 		}
 
 		#endregion
@@ -172,6 +174,11 @@ namespace ZigZag
 			m_errorCoroutineRunning = false;
 			m_originalMass = m_rigidbody2D.mass;
 			m_particleSystemRotation = m_particleSystem.transform.rotation;
+		}
+
+		protected virtual void Start()
+		{
+			AgentComponent.SurfaceDetectorComponent.OnSurfaceEnter += OnSurfaceEnter;
 		}
 
 		/// <summary>
@@ -247,6 +254,7 @@ namespace ZigZag
 				}
 			}
 				
+			AgentComponent.Invicible = true;
 			m_isActive = true;
 			AgentComponent.AttackerComponent.AttackDamage = AttackDamage;
 			m_particleSystem.Emit (ParticleCount);
@@ -261,6 +269,16 @@ namespace ZigZag
 
 			yield return new WaitForSeconds (5.0f);
 			Cancel ();
+		}
+
+		protected virtual void OnSurfaceEnter (Collision2D collision, Surface surface)
+		{
+			if (surface == Surface.Enemy && m_isActive)
+			{
+				Debug.Log ("Sphere kills slime");
+				Health recipient = collision.collider.GetComponent<Health> ();
+				dealDamage (recipient, AttackDamage);
+			}
 		}
 
 		/// <summary>

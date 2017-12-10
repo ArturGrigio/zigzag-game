@@ -276,7 +276,7 @@ namespace ZigZag
 			m_playerManager = PlayerManager.Instance;
 			m_audioManager = AudioManager.Instance;
 
-			Time.timeScale = 0f;
+			//Time.timeScale = 0f;
 
 			// Register event handlers
 			m_playerManager.PlayerDeath += playerDeathHandler;

@@ -101,6 +101,8 @@ namespace ZigZag
 		/// </summary>
 		public void Respawn()
 		{
+			m_currentShape.Invicible = true;
+
 			foreach (Player player in m_players)
 			{
 				player.transform.position = SavePoint.LatestSavePoint;
@@ -109,6 +111,8 @@ namespace ZigZag
 
 			// Let subscribers know the player has been respawned
 			OnRespawnPlayer ();
+
+			m_currentShape.Invicible = true;
 		}
 
 		#endregion
@@ -128,6 +132,7 @@ namespace ZigZag
 			m_currentShape.gameObject.layer = m_inactiveLayer;
 			m_activeIndex = index;
 			m_currentShape.Death -= playerDeathHandler;
+			m_currentShape.HealthDisplay -= healthDisplayHandler;
 			setSpriteAlpha (spriteRenderer, 0f);
 
 			// Set the new current shape active
@@ -135,6 +140,7 @@ namespace ZigZag
 			m_currentShape.gameObject.layer = m_activeLayer;
 			m_currentShape.transform.position = currentPosition;
 			m_currentShape.Death += playerDeathHandler;
+			m_currentShape.HealthDisplay += healthDisplayHandler;
 			PlayerCamera.Target = m_currentShape.gameObject.transform;
 
 			spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
@@ -182,6 +188,11 @@ namespace ZigZag
 		private void playerDeathHandler()
 		{
 			OnPlayerDeath ();
+		}
+
+		private void healthDisplayHandler()
+		{
+			displayCurrentHealth ();
 		}
 
 		/// <summary>

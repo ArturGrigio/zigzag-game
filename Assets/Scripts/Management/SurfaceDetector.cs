@@ -4,12 +4,11 @@ using UnityEngine;
 
 namespace ZigZag
 {
-	public enum Surface {Ground, Ceiling, LeftWall, RightWall, Other}
+	public enum Surface {Ground, Ceiling, LeftWall, RightWall, Other, Enemy}
 
 	[RequireComponent(typeof(Collider2D))]
 	public class SurfaceDetector : MonoBehaviour
 	{
-
 		#region Public Variables
 
 		public delegate void SurfaceEnterHandler(Collision2D collision, Surface surface);
@@ -71,10 +70,19 @@ namespace ZigZag
 
 		public static Surface SurfaceFromCollision2D(Collision2D collision)
 		{
-			ContactPoint2D[] contact = new ContactPoint2D[2];
-			collision.GetContacts (contact);
+			int enemiesLayer = LayerMask.NameToLayer ("Enemies");
+			if (collision.collider.gameObject.layer == enemiesLayer)
+			{
+				Debug.Log ("Touch enemy");
+				return Surface.Enemy;
+			}
+			else
+			{
+				ContactPoint2D[] contact = new ContactPoint2D[2];
+				collision.GetContacts (contact);
 
-			return SurfaceDetector.SurfaceFromNormal (contact[0].normal);
+				return SurfaceDetector.SurfaceFromNormal (contact [0].normal);
+			}
 		}
 
 		public bool IsOnSurface(Surface surface)
@@ -105,7 +113,7 @@ namespace ZigZag
 				bool isNewSurface = m_surfaceCount [(int)surface] == 0 ? true : false;
 				++m_surfaceCount [(int)surface];
 				m_collisions [collision.collider] = surface;
-				//Debug.Log ("Surface Enter (" + collision.gameObject.name + "): surface=" + surface.ToString () + ", count=" + m_surfaceCount [(int)surface]);
+
 				if (OnSurfaceEnter != null && (isNewSurface || TriggerDuplicateSurfaces == false))
 				{
 					OnSurfaceEnter.Invoke (collision, surface);
@@ -121,7 +129,7 @@ namespace ZigZag
 				m_collisions.Remove (collision.collider);
 				--m_surfaceCount [(int)surface];
 				bool isLastSurface = m_surfaceCount [(int)surface] == 0 ? true : false;
-				//Debug.Log ("Surface Exit: surface=" + surface.ToString () + ", count=" + m_surfaceCount [(int)surface]);
+
 				if (OnSurfaceExit != null && (TriggerDuplicateSurfaces || isLastSurface))
 				{
 					OnSurfaceExit.Invoke (collision, surface);

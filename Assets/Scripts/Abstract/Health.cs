@@ -15,6 +15,9 @@ namespace ZigZag
 		/// </summary>
 		public delegate void DeathHandler ();
 
+		public delegate void HealthDisplayHandler();
+		public event HealthDisplayHandler HealthDisplay;
+
 		/// <summary>
 		/// Occurs when an agent dies.
 		/// </summary>
@@ -44,10 +47,13 @@ namespace ZigZag
 		public virtual void ReceiveDamage(float damage)
 		{
 			m_currentHealth -= damage;
-			if (m_currentHealth < 0)
+			if (m_currentHealth <= 0)
 			{
+				m_currentHealth = 0f;
 				die ();
 			}
+
+			OnHealthDisplay ();
 		}
 
 		/// <summary>
@@ -57,20 +63,24 @@ namespace ZigZag
 		public virtual void ReceiveHeal(float heal)
 		{
 			m_currentHealth += heal;
-			if (m_currentHealth > FullHealth)
+			if (m_currentHealth >= FullHealth)
 			{
 				m_currentHealth = FullHealth;
 			}
+
+			OnHealthDisplay ();
 		}
 		#endregion
 
 		#region Private/Protected Methods
+
 		/// <summary>
 		/// Performs required actions when the agent dies.
 		/// </summary>
 		protected virtual void die() 
 		{
-			Destroy (gameObject);
+			//Destroy (gameObject);
+			OnDeath();
 		}
 
 		/// <summary>
@@ -81,6 +91,17 @@ namespace ZigZag
 			if (Death != null)
 			{
 				Death.Invoke ();
+			}
+		}
+
+		/// <summary>
+		/// Raises the health display event.
+		/// </summary>
+		protected virtual void OnHealthDisplay()
+		{
+			if (HealthDisplay != null)
+			{
+				HealthDisplay.Invoke ();
 			}
 		}
 

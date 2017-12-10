@@ -3,21 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ZigZag {
-
+namespace ZigZag
+{
+	/// <summary>
+	/// Activator types: Axis receives axis input. The remaining three are button activation.
+	/// Instant performs an action immediately and sets the skill inactive.
+	/// Toggle will activate an inactive skill or cancel an active skill when the activator is triggered.
+	/// Hold will activate a skill when the activator is triggered and cancel when the activator is absent.
+	/// </summary>
 	public enum SkillTypes {Axis, Instant, Toggle, Hold, Passive};
 
 	[RequireComponent (typeof (Agent))]
 	public abstract class Skill : MonoBehaviour 
 	{
 		#region Public Variables
-
-		/// <summary>
-		/// Activator types: Axis receives axis input. The remaining three are button activation.
-		/// Instant performs an action immediately and sets the skill inactive.
-		/// Toggle will activate an inactive skill or cancel an active skill when the activator is triggered.
-		/// Hold will activate a skill when the activator is triggered and cancel when the activator is absent.
-		/// </summary>
 
 
 		#endregion
@@ -37,7 +36,6 @@ namespace ZigZag {
 		protected bool m_allowMovement = false;
 
 		#endregion
-
 
 		#region Properties
 
@@ -126,6 +124,15 @@ namespace ZigZag {
 		#endregion
 
 		#region Private/Protected Methods
+
+		protected void dealDamage(Health recipient, float damage)
+		{
+			if (recipient != null)
+			{
+				recipient.ReceiveDamage (damage);
+			}
+		}
+
 		#endregion
 
 		#region Unity Methods

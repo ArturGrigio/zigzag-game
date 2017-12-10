@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ZigZag 
 {
-	public enum Direction { Left = -1, Center = 0, Right = 1};
+	public enum Direction { Left = -1, Center = 0, Right = 1, Up = 2, Down = -2};
 
 	[RequireComponent (typeof(Rigidbody2D))]
 	[RequireComponent (typeof(SpriteRenderer))]
@@ -26,6 +26,7 @@ namespace ZigZag
 		private List<Skill> m_skills;
 		private Vector2 m_newVelocity = Vector2.zero;
 		private bool m_updateVelocity = false;
+		private bool m_invicible = false;
 
 		#endregion
 
@@ -37,7 +38,8 @@ namespace ZigZag
 		/// <value><c>true</c> if this instance is grounded; otherwise, <c>false</c>.</value>
 		public bool IsGrounded
 		{
-			get { return m_surfaceDetector.IsOnSurface (Surface.Ground); }
+			get { return m_surfaceDetector.IsOnSurface (Surface.Ground) || 
+				m_surfaceDetector.IsOnSurface (Surface.Enemy); }
 		}
 
 		/// <summary>
@@ -76,6 +78,12 @@ namespace ZigZag
 		public Attacker AttackerComponent
 		{
 			get { return m_attacker; }
+		}
+
+		public bool Invicible
+		{
+			get { return m_invicible; }
+			set { m_invicible = value; }
 		}
 
 		#endregion

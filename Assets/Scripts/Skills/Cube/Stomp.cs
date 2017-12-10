@@ -80,13 +80,24 @@ namespace ZigZag
 		#endregion
 
 		#region Private/Protected Methods
+
 		private void OnSurfaceEnter (Collision2D collision, Surface surface)
 		{
 			if (surface == Surface.Ground)
 			{
 				Cancel ();
 			}
+			else if (surface == Surface.Enemy)
+			{
+				if (m_isActive)
+				{
+					Health recipient = collision.collider.GetComponent<Health> ();
+					dealDamage (recipient, AttackDamage);
+					Cancel ();
+				}
+			}
 		}
+
 		#endregion
 
 		#region Unity Methods
