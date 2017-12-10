@@ -132,8 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_activator: 
-  attackDamage: 0.3
-  redPanel: {fileID: 0}
+  attackDamage: 0.2
 --- !u!114 &114421813881245840
 MonoBehaviour:
   m_ObjectHideFlags: 1
