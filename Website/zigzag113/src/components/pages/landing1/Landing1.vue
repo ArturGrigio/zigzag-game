@@ -53,6 +53,12 @@
                 <bindings></bindings>
             </div>
 
+            <div class="container" id="download">
+                <download></download>
+            </div>
+
+            <div class="spacer-4"></div>
+
         </div>
     </span>
 </template>
@@ -66,9 +72,10 @@ import lore from './partials/Lore.vue';
 import creators from './partials/Creators.vue';
 import bindings from './partials/Binding.vue'
 import moment from 'moment';
+import download from './partials/Download.vue';
 
 export default {
-    components: { countdown, carousel, requirements, overview, lore, creators, bindings },
+    components: { countdown, carousel, requirements, overview, lore, creators, bindings, download },
 
     data () {
         return {

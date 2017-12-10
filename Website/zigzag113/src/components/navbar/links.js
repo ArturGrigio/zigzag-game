@@ -21,7 +21,7 @@ export default [
         self: true,
     },
     {
-        url: '/download',
+        url: '/#download',
         text: 'Download',
         html: '<button class="btn orange">Download</button>',
         nav: true,
