@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ZigZag 
 {		
@@ -35,6 +37,11 @@ namespace ZigZag
 		/// </summary>
 		public GameObject HealthBar;
 
+		/// <summary>
+		/// The red panel.
+		/// </summary>
+		public Image redPanel;
+
 		#endregion
 
 		#region Private/Protected Variables
@@ -47,6 +54,8 @@ namespace ZigZag
 		private List<Player> m_players = new List<Player>();
 		private int m_activeLayer;
 		private int m_inactiveLayer;
+
+		private bool m_coroutineRunning;
 
 		/// <summary>
 		/// The singleton instance of the PlayerManager class.
@@ -101,7 +110,12 @@ namespace ZigZag
 		/// </summary>
 		public void Respawn()
 		{
-			m_currentShape.Invicible = true;
+			StartCoroutine(renderInvicible(2f));
+			removedUnsavedShapes ();
+
+			// Retrieve the saved list of shapes
+			m_players.Clear ();
+			m_players.AddRange (SavePoint.AcquiredShapes);
 
 			foreach (Player player in m_players)
 			{
@@ -111,8 +125,23 @@ namespace ZigZag
 
 			// Let subscribers know the player has been respawned
 			OnRespawnPlayer ();
+		}
 
-			m_currentShape.Invicible = true;
+		/// <summary>
+		/// Acquire a new shape.
+		/// </summary>
+		/// <param name="shape">Shape.</param>
+		public void AcquireShape(Player shape)
+		{
+			m_players.Add (shape);
+			shape.gameObject.layer = m_inactiveLayer;
+			shape.GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Dynamic;
+			shape.GetComponent<Collider2D> ().isTrigger = false;
+
+			SpriteRenderer spriteRenderer = shape.GetComponent<SpriteRenderer> ();
+			setSpriteAlpha (spriteRenderer, 0f);
+
+			shape.transform.parent = transform;
 		}
 
 		#endregion
@@ -190,9 +219,49 @@ namespace ZigZag
 			OnPlayerDeath ();
 		}
 
-		private void healthDisplayHandler()
+		/// <summary>
+		/// Flash the screen red when player is damaged
+		/// </summary>
+		/// 
+		/// <returns>The coroutine.</returns>
+		private IEnumerator flashScreenCoroutine()
 		{
-			displayCurrentHealth ();
+			m_coroutineRunning = true;
+			redPanel.enabled = true;
+
+			AudioManager.Instance.PlaySoundEffect ("Hit");
+			yield return new WaitForSeconds (0.099f);
+
+			redPanel.enabled = false;
+			m_coroutineRunning = false;
+		}
+
+		/// <summary>
+		/// Display the current health bar when player receives damage or heal.
+		/// </summary>
+		/// <param name="healthStatus">Health status.</param>
+		private void healthDisplayHandler(HealthStatus healthStatus)
+		{
+			switch (healthStatus)
+			{
+				case HealthStatus.Heal:
+					displayCurrentHealth ();
+					break;
+
+				case HealthStatus.Damage:
+				{
+					if (!m_coroutineRunning)
+					{
+						StartCoroutine (flashScreenCoroutine ());
+					}
+					displayCurrentHealth ();
+					break;
+				}
+
+				default:
+					break;
+			}
+
 		}
 
 		/// <summary>
@@ -244,6 +313,46 @@ namespace ZigZag
 			spriteRenderer.color = new Color (r, g, b, alpha);
 		}
 
+		/// <summary>
+		/// Renders the player invicible.
+		/// </summary>
+		/// <param name="seconds">Amount of time to be invicible in seconds</param>
+		/// <returns>The invicible coroutine.</returns>
+		private IEnumerator renderInvicible(float seconds)
+		{
+			m_currentShape.Invicible = true;
+			yield return new WaitForSeconds (seconds);
+			m_currentShape.Invicible = false;
+		}
+
+		/// <summary>
+		/// Remove any unsaved shapes from this manager.
+		/// </summary>
+		private void removedUnsavedShapes()
+		{
+			List<Player> unsavedShapes = m_players.Except (SavePoint.AcquiredShapes).ToList();
+			if (unsavedShapes.Contains (m_currentShape))
+			{
+				m_currentShape = SavePoint.SavedCurrentShape;
+				PlayerCamera.Target = m_currentShape.transform;
+
+				SpriteRenderer spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
+				setSpriteAlpha (spriteRenderer, 1f);
+			}
+
+			foreach (Player unsavedShape in unsavedShapes)
+			{
+				unsavedShape.gameObject.layer = LayerMask.NameToLayer ("Inactive Player");
+				unsavedShape.transform.parent = null;
+				unsavedShape.transform.position = unsavedShape.InitialPosition;
+
+				unsavedShape.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
+
+				SpriteRenderer spriteRenderer = unsavedShape.GetComponent<SpriteRenderer> ();
+				setSpriteAlpha (spriteRenderer, 1f);
+			}
+		}
+
 		#endregion
 
 		#region Unity Methods
@@ -272,6 +381,7 @@ namespace ZigZag
 			m_activeLayer = LayerMask.NameToLayer ("Active Player");
 			m_inactiveLayer = LayerMask.NameToLayer ("Inactive Player");
 			m_originalHealthBarXScale = HealthBar.transform.localScale.x;
+
 			loadPlayers ();
 			changePlayer (m_activeIndex);
 		}

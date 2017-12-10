@@ -7,9 +7,8 @@ namespace ZigZag
 	public class TouchAttack : Skill
 	{
 		public float attackDamage = 1f;
-		public Image redPanel;
+
 		private bool m_touchPlayer;
-		private static bool m_coroutineRunning;
 		private Player m_activeShape;
 
 		protected override void Awake ()
@@ -21,33 +20,11 @@ namespace ZigZag
 
 		private void Update()
 		{
-			if (m_touchPlayer && m_activeShape != null && 
-				m_activeShape.ActiveSkill == null && !m_activeShape.Invicible &&
-				m_activeShape.CurrentHealth > 0f)
+			// Only deal damage if enemy is touching player and if player does not have any active skill
+			if (m_touchPlayer && m_activeShape != null && m_activeShape.ActiveSkill == null)
 			{
 				m_activeShape.ReceiveDamage (attackDamage);
-
-				if (!m_coroutineRunning)
-				{
-					StartCoroutine (flashScreenCoroutine ());
-				}
 			}
-		}
-
-		/// <summary>
-		/// Flash the screen red when player is damaged
-		/// </summary>
-		/// 
-		/// <returns>The coroutine.</returns>
-		private IEnumerator flashScreenCoroutine()
-		{
-			m_coroutineRunning = true;
-			redPanel.enabled = true;
-
-			yield return new WaitForSeconds (0.099f);
-
-			redPanel.enabled = false;
-			m_coroutineRunning = false;
 		}
 
 		private void OnCollisionEnter2D(Collision2D collision)

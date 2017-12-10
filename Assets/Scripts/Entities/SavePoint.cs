@@ -36,6 +36,16 @@ namespace ZigZag
 		private static Vector2 m_latestSavePoint = Vector2.zero;
 
 		/// <summary>
+		/// List of acquired shapes.
+		/// </summary>
+		private static List<Player> m_acquiredShapes = new List<Player>();
+
+		/// <summary>
+		/// The saved current shape.
+		/// </summary>
+		private static Player m_savedCurrentShape;
+
+		/// <summary>
 		/// The saved theme. Play this saved music theme when player
 		/// is respawned. 
 		/// Ex: die during boss fight, respawn right before boss fight but the music
@@ -69,6 +79,16 @@ namespace ZigZag
 		public static Vector2 LatestSavePoint
 		{
 			get { return m_latestSavePoint; }
+		}
+
+		public static List<Player> AcquiredShapes
+		{
+			get { return m_acquiredShapes; }
+		}
+
+		public static Player SavedCurrentShape
+		{
+			get { return m_savedCurrentShape; }
 		}
 
 		public static AudioClip SavedMusicTheme
@@ -138,6 +158,11 @@ namespace ZigZag
 		{
 			// Save location
 			m_latestSavePoint = transform.position;
+
+			// Save acquired shape list
+			m_savedCurrentShape = PlayerManager.Instance.CurrentShape;
+			m_acquiredShapes.Clear();
+			m_acquiredShapes.AddRange (PlayerManager.Instance.Players);
 
 			// Save music theme
 			if (m_savedMusicTheme != m_audioManager.MusicSource.clip)

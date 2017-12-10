@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace ZigZag
 {
+	public enum HealthStatus {Heal, Damage}
+
 	public abstract class Health : MonoBehaviour
 	{
 		#region Public Variables
@@ -15,7 +17,7 @@ namespace ZigZag
 		/// </summary>
 		public delegate void DeathHandler ();
 
-		public delegate void HealthDisplayHandler();
+		public delegate void HealthDisplayHandler(HealthStatus healthStatus);
 		public event HealthDisplayHandler HealthDisplay;
 
 		/// <summary>
@@ -53,7 +55,7 @@ namespace ZigZag
 				die ();
 			}
 
-			OnHealthDisplay ();
+			OnHealthDisplay (HealthStatus.Damage);
 		}
 
 		/// <summary>
@@ -68,7 +70,7 @@ namespace ZigZag
 				m_currentHealth = FullHealth;
 			}
 
-			OnHealthDisplay ();
+			OnHealthDisplay (HealthStatus.Heal);
 		}
 		#endregion
 
@@ -97,11 +99,11 @@ namespace ZigZag
 		/// <summary>
 		/// Raises the health display event.
 		/// </summary>
-		protected virtual void OnHealthDisplay()
+		protected virtual void OnHealthDisplay(HealthStatus healthStatus)
 		{
 			if (HealthDisplay != null)
 			{
-				HealthDisplay.Invoke ();
+				HealthDisplay.Invoke (healthStatus);
 			}
 		}
 

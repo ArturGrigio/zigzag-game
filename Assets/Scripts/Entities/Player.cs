@@ -12,13 +12,28 @@ namespace ZigZag
 
 		#region Private/Protected Variables
 
+		private Vector2 m_initialPosition;
+
 		#endregion
 
 		#region Properties
 
+		public Vector2 InitialPosition
+		{
+			get { return m_initialPosition; }
+		}
+
 		#endregion
 
 		#region Public Methods
+
+		public override void ReceiveDamage (float damage)
+		{
+			if (!m_invicible && m_currentHealth > 0f)
+			{
+				base.ReceiveDamage (damage);
+			}
+		}
 
 		#endregion
 
@@ -41,6 +56,12 @@ namespace ZigZag
 
 		#region Unity Methods
 
+		protected override void Awake ()
+		{
+			base.Awake ();
+			m_initialPosition = transform.position;
+		}
+
 		/// <summary>
 		/// Raises the trigger enter 2D event.
 		/// </summary>
@@ -48,13 +69,25 @@ namespace ZigZag
 		private void OnTriggerEnter2D(Collider2D collider)
 		{
 			int activePlayerLayer = LayerMask.NameToLayer ("Active Player");
+			int inactivePlayerLayer = LayerMask.NameToLayer ("Inactive Player");
+			AcquireShapeTrigger shapeTrigger = collider.GetComponent<AcquireShapeTrigger> ();
 
 			// The active player dies when he falls into a pitfall
 			if (gameObject.layer == activePlayerLayer && collider.CompareTag ("PitFall"))
 			{
 				this.die ();
 			}
+			else if (gameObject.layer == activePlayerLayer && shapeTrigger != null)
+			{
+				Player otherShape = shapeTrigger.Shape;
+				if (!PlayerManager.Instance.Players.Contains (otherShape))
+				{
+					PlayerManager.Instance.AcquireShape (otherShape);
+				}
+			}
 		}
+
+
 
 		#endregion
 	}

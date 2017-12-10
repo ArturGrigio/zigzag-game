@@ -22,11 +22,11 @@ namespace ZigZag
 		protected Skill m_activeSkill = null;
 		protected SpriteRenderer m_spriteRenderer;
 		protected Attacker m_attacker = null;
+		protected bool m_invicible = false;
 
 		private List<Skill> m_skills;
 		private Vector2 m_newVelocity = Vector2.zero;
 		private bool m_updateVelocity = false;
-		private bool m_invicible = false;
 
 		#endregion
 
