@@ -57,7 +57,7 @@ namespace ZigZag
 		/// </summary>
 		private static readonly List<string> EndTexts = new List<string> () 
 		{
-			"And so Cube released the Colors of The World from the Slime's imprisonment.",
+			"And so Cube released the Colors of The Shapes from the Slime's imprisonment.",
 			"Thus, the world of shapes had its color restored. Peace had returned...",
 			"But, who was it that gave Cube its color...?",
 			"The story continues..."
@@ -276,7 +276,7 @@ namespace ZigZag
 			m_playerManager = PlayerManager.Instance;
 			m_audioManager = AudioManager.Instance;
 
-			//Time.timeScale = 0f;
+			Time.timeScale = 0f;
 
 			// Register event handlers
 			m_playerManager.PlayerDeath += playerDeathHandler;

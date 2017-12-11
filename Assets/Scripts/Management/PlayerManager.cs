@@ -139,9 +139,23 @@ namespace ZigZag
 			shape.GetComponent<Collider2D> ().isTrigger = false;
 
 			SpriteRenderer spriteRenderer = shape.GetComponent<SpriteRenderer> ();
-			setSpriteAlpha (spriteRenderer, 0f);
+			SetSpriteAlpha (spriteRenderer, 0f);
 
 			shape.transform.parent = transform;
+		}
+
+		/// <summary>
+		/// Set the sprite alpha.
+		/// </summary>
+		/// <param name="spriteRenderer">Sprite renderer component.</param>
+		/// <param name="alpha">Alpha value.</param>
+		public static void SetSpriteAlpha(SpriteRenderer spriteRenderer, float alpha)
+		{
+			float r = spriteRenderer.color.r;
+			float g = spriteRenderer.color.g;
+			float b = spriteRenderer.color.b;
+
+			spriteRenderer.color = new Color (r, g, b, alpha);
 		}
 
 		#endregion
@@ -162,7 +176,7 @@ namespace ZigZag
 			m_activeIndex = index;
 			m_currentShape.Death -= playerDeathHandler;
 			m_currentShape.HealthDisplay -= healthDisplayHandler;
-			setSpriteAlpha (spriteRenderer, 0f);
+			SetSpriteAlpha (spriteRenderer, 0f);
 
 			// Set the new current shape active
 			m_currentShape = m_players [m_activeIndex];
@@ -173,7 +187,7 @@ namespace ZigZag
 			PlayerCamera.Target = m_currentShape.gameObject.transform;
 
 			spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
-			setSpriteAlpha (spriteRenderer, 1f);
+			SetSpriteAlpha (spriteRenderer, 1f);
 			displayCurrentHealth ();
 		}
 
@@ -195,7 +209,7 @@ namespace ZigZag
 
 				// Make all shapes completely transparent
 				SpriteRenderer spriteRenderer = player.GetComponent<SpriteRenderer> ();
-				setSpriteAlpha (spriteRenderer, 0f);
+				SetSpriteAlpha (spriteRenderer, 0f);
 
 				m_players.Add (player);
 			}
@@ -206,7 +220,7 @@ namespace ZigZag
 
 				// Make active shape opaque
 				SpriteRenderer spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
-				setSpriteAlpha (spriteRenderer, 1f);
+				SetSpriteAlpha (spriteRenderer, 1f);
 			}
 		}
 
@@ -300,20 +314,6 @@ namespace ZigZag
 		}
 
 		/// <summary>
-		/// Set the sprite alpha.
-		/// </summary>
-		/// <param name="spriteRenderer">Sprite renderer component.</param>
-		/// <param name="alpha">Alpha value.</param>
-		private static void setSpriteAlpha(SpriteRenderer spriteRenderer, float alpha)
-		{
-			float r = spriteRenderer.color.r;
-			float g = spriteRenderer.color.g;
-			float b = spriteRenderer.color.b;
-
-			spriteRenderer.color = new Color (r, g, b, alpha);
-		}
-
-		/// <summary>
 		/// Renders the player invicible.
 		/// </summary>
 		/// <param name="seconds">Amount of time to be invicible in seconds</param>
@@ -337,7 +337,7 @@ namespace ZigZag
 				PlayerCamera.Target = m_currentShape.transform;
 
 				SpriteRenderer spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
-				setSpriteAlpha (spriteRenderer, 1f);
+				SetSpriteAlpha (spriteRenderer, 1f);
 			}
 
 			foreach (Player unsavedShape in unsavedShapes)
@@ -349,7 +349,7 @@ namespace ZigZag
 				unsavedShape.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 
 				SpriteRenderer spriteRenderer = unsavedShape.GetComponent<SpriteRenderer> ();
-				setSpriteAlpha (spriteRenderer, 1f);
+				SetSpriteAlpha (spriteRenderer, 1f);
 			}
 		}
 

@@ -69,6 +69,11 @@ namespace ZigZag
 		/// </summary>
 		private PlayerManager m_playerManager;
 
+		/// <summary>
+		/// The boss manager.
+		/// </summary>
+		private BossManager m_bossManager;
+
 		#endregion
 
 		#region Properties
@@ -167,12 +172,17 @@ namespace ZigZag
 		{
 			if (MusicSource.clip != SavePoint.SavedMusicTheme)
 			{
-				StartCoroutine (switchAudio (SavePoint.SavedMusicTheme, 0.01f, 0.02f));
+				MusicSource.Stop ();
+				MusicSource.clip = SavePoint.SavedMusicTheme;
+				MusicSource.Play ();
 			}
 			else
 			{
 				StartCoroutine(FadeInAudio (0.02f));
 			}
+
+			// Reregisters this event
+			bossTrigger.BeforeBoss += beforeBossHandler;
 		}
 
 		/// <summary>
@@ -180,7 +190,8 @@ namespace ZigZag
 		/// </summary>
 		private void beforeBossHandler()
 		{
-			StartCoroutine(switchAudio (BossTheme, 0.01f, 0.03f));
+			switchAudio (BossTheme);
+
 			bossTrigger.BeforeBoss -= beforeBossHandler;
 		}
 
@@ -189,8 +200,27 @@ namespace ZigZag
 		/// </summary>
 		private void finishHandler ()
 		{
-			StartCoroutine(switchAudio(EndingTheme, 0.01f, 0.04f));
+			switchAudio (EndingTheme);
 		}
+
+		/// <summary>
+		/// Handle the death of the boss event.
+		/// </summary>
+		private void bossDeathHandler()
+		{
+			switchAudio (MainTheme);
+		}
+
+		private void switchAudio(AudioClip nextAudioClip)
+		{
+			if (!MusicSource.isPlaying || MusicSource.clip != nextAudioClip)
+			{
+				MusicSource.Stop ();
+				MusicSource.clip = nextAudioClip;
+				MusicSource.Play ();
+			}
+		}
+			
 
 		/// <summary>
 		/// Switch the audio.
@@ -237,12 +267,14 @@ namespace ZigZag
 		private void Start()
 		{
 			m_playerManager = PlayerManager.Instance;
+			m_bossManager = BossManager.Instance;
 
 			// Register handlers to events
 			m_playerManager.PlayerDeath += playerDeathHandler;
 			m_playerManager.RespawnPlayer += respawnPlayerHandler;
 			bossTrigger.BeforeBoss += beforeBossHandler;
 			finishPoint.Finish += finishHandler;
+			m_bossManager.BossDeath += bossDeathHandler;
 
 			MusicSource.clip = MainTheme;
 			StartCoroutine(FadeInAudio (0.01f));

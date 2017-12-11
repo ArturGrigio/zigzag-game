@@ -57,6 +57,7 @@ namespace ZigZag
 			{
 				// Fire the event
 				OnBoss ();
+
 				BossDoor.SetActive (true);
 				Debug.Log ("boss event fire");
 			}

@@ -3,28 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace ZigZag
 {
-	public class Bomb : Skill 
+	public class Bomb : MonoBehaviour 
 	{
-		#region Public Variables
+		public float AttackDamage = 1f;
 
-		#endregion
+		private void OnCollisionEnter2D(Collision2D collision)
+		{
+			int activePlayerLayer = LayerMask.NameToLayer ("Active Player");
 
-		#region Private/Protected Variables
-		#endregion
+			if (collision.collider.gameObject.layer == activePlayerLayer)
+			{
+				Player currentShape = collision.collider.GetComponent<Player> ();
+				currentShape.ReceiveDamage (AttackDamage);
+			}
 
-		#region Properties
-		#endregion
-
-		#region Public Methods
-
-		#endregion
-
-		#region Private/Protected Methods
-			
-		#endregion
-
-		#region Unity Methods
-
-		#endregion
+			Destroy (gameObject, 5f);
+		}
 	}
 }
