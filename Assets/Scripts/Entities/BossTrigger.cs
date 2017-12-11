@@ -26,6 +26,8 @@ namespace ZigZag
 		/// </summary>
 		public event BossEventHandler BeforeBoss;
 
+		public bool IsBossDeath = false;
+
 		#endregion
 
 		#region Private/Protected Methods
@@ -53,7 +55,7 @@ namespace ZigZag
 		{
 			int activePlayerLayer = LayerMask.NameToLayer ("Active Player");
 
-			if (collider.gameObject.layer == activePlayerLayer)
+			if (collider.gameObject.layer == activePlayerLayer && !IsBossDeath)
 			{
 				// Fire the event
 				OnBoss ();

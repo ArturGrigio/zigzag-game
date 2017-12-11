@@ -333,11 +333,12 @@ namespace ZigZag
 			List<Player> unsavedShapes = m_players.Except (SavePoint.AcquiredShapes).ToList();
 			if (unsavedShapes.Contains (m_currentShape))
 			{
-				m_currentShape = SavePoint.SavedCurrentShape;
-				PlayerCamera.Target = m_currentShape.transform;
-
-				SpriteRenderer spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
-				SetSpriteAlpha (spriteRenderer, 1f);
+				changePlayer (0);
+//				m_currentShape = SavePoint.SavedCurrentShape;
+//				PlayerCamera.Target = m_currentShape.transform;
+//
+//				SpriteRenderer spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
+//				SetSpriteAlpha (spriteRenderer, 1f);
 			}
 
 			foreach (Player unsavedShape in unsavedShapes)

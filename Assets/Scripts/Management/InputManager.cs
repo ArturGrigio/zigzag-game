@@ -70,7 +70,8 @@ namespace ZigZag
 			// UI/Universal input processing
 			if (Input.GetButtonDown ("Swap Character"))
 			{
-				if (activeSkill == null || (activeSkill.CanCancel && activeSkill.Cancel()))
+				if ( (activeSkill == null  && m_playerManager.CurrentShape.IsGrounded ) || 
+					 (activeSkill != null  && activeSkill.CanCancel && activeSkill.Cancel()) )
 				{
 					m_playerManager.NextPlayer ();
 				}

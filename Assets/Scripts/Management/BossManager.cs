@@ -39,6 +39,7 @@ namespace ZigZag
 			m_playerManager = PlayerManager.Instance;
 
 			m_playerManager.PlayerDeath += playerDeathHandler;
+			m_playerManager.RespawnPlayer += respawnHandler;
 			bossTrigger.BeforeBoss += beforeBossHandler;
 		}
 
@@ -48,6 +49,11 @@ namespace ZigZag
 			{
 				BossDeath.Invoke ();
 			}
+		}
+
+		private void respawnHandler()
+		{
+			bossTrigger.BeforeBoss += beforeBossHandler;
 		}
 
 		private void playerDeathHandler ()
@@ -63,14 +69,19 @@ namespace ZigZag
 		{
 			currentBoss = Instantiate (BossPrefab).GetComponent<Boss> ();
 			currentBoss.Death += bossDeathHandler;
+			bossTrigger.BeforeBoss -= beforeBossHandler;
 		}
 
 		private void bossDeathHandler()
 		{
 			bossTrigger.BossDoor.SetActive (false);
+			bossTrigger.IsBossDeath = true;
 			OnBossDeath ();
 
-			Destroy (currentBoss.gameObject);
+			if (currentBoss.gameObject != null)
+			{
+				Destroy (currentBoss.gameObject);
+			}
 		}
 	}
 }

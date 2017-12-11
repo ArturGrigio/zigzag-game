@@ -267,7 +267,7 @@ namespace ZigZag
 			m_audioSource.clip = TitanAudioClip;
 			m_audioSource.Play ();
 
-			yield return new WaitForSeconds (5.0f);
+			yield return new WaitForSeconds (2.0f);
 			Cancel ();
 		}
 
