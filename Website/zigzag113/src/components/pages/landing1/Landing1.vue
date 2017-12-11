@@ -27,8 +27,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row center" id="countdown">
-                <countdown date="12-11-2017"></countdown>
+            <div v-if="beforeLaunch()" class="row center" id="countdown">
+                <countdown v-bind:date="countdownEnd"></countdown>
             </div>
 
             <div class="container" id="creators">
@@ -53,6 +53,12 @@
                 <bindings></bindings>
             </div>
 
+            <div class="container" id="download">
+                <download></download>
+            </div>
+
+            <div class="spacer-4"></div>
+
         </div>
     </span>
 </template>
@@ -65,19 +71,26 @@ import overview from './partials/Overview.vue';
 import lore from './partials/Lore.vue';
 import creators from './partials/Creators.vue';
 import bindings from './partials/Binding.vue'
+import moment from 'moment';
+import download from './partials/Download.vue';
 
 export default {
-    components: { countdown, carousel, requirements, overview, lore, creators, bindings },
+    components: { countdown, carousel, requirements, overview, lore, creators, bindings, download },
 
     data () {
         return {
-           msg: 'Welcome to Your Vue.js App'
+            countdownEnd: '12-12-2017'
         }
     },
 
     methods: {
         init() {
             $('#video').height($('#video').width() * 0.565)
+        },
+        beforeLaunch() {
+            if(moment(this.countdownEnd, 'MM-DD-YYYY').diff(moment(), 'hours'))
+                return true
+            return false
         }
     },
 

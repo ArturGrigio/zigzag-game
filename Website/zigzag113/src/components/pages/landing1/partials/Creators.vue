@@ -40,6 +40,10 @@
                                 text: "GitHub",
                                 url: "https://github.com/keiki83"
                             },
+                            {
+                                text: "E-Mail",
+                                url: "mcallan@uci.edu"
+                            }
                         ]
                     },
                     {
@@ -50,6 +54,10 @@
                                 text: "GitHub",
                                 url: "https://github.com/pandabytes"
                             },
+                            {
+                                text: "E-Mail",
+                                url: "hbngo@uci.edu"
+                            }
                         ]
                     },
                     {
@@ -60,6 +68,10 @@
                                 text: "GitHub",
                                 url: "https://github.com/Zakkusu41"
                             },
+                            {
+                                text: "E-Mail",
+                                url: "mklegasp@uci.edu"
+                            }
                         ]
                     },
                     {
@@ -70,6 +82,10 @@
                                 text: "GitHub",
                                 url: "https://github.com/tomhalstead"
                             },
+                            {
+                                text: "E-Mail",
+                                url: "halsteat@uci.edu"
+                            }
                         ]
                     },
                     {
@@ -80,6 +96,10 @@
                                 text: "GitHub",
                                 url: "https://github.com/ackd151"
                             },
+                            {
+                                text: "E-Mail",
+                                url: "drackerm@uci.edu"
+                            }
                         ]
                     },
                 ]

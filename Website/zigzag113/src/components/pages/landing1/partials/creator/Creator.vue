@@ -17,7 +17,7 @@
                 <i class="mdi mdi-close right"></i>
             </span>
             <br />
-            <a class="col s12" v-for="link in creator.links" v-bind:href="link.url" v-html="link.text"></a>
+            <a class="col s12" v-for="link in creator.links" v-bind:href="getUrl(link)" v-html="link.text"></a>
         </div>
     </div>
 
@@ -35,6 +35,12 @@
         methods: {
             loadImg(img) {
                 return require("@/assets/creators/"+ img);
+            },
+            getUrl(link) {
+                if(link.url.indexOf('@') > -1) {
+                    return "mailto:" + link.url
+                }
+                return link.url
             }
         },
     }

@@ -12,6 +12,5 @@ export default new Router({
             name: 'landing1',
             component: landing1
         }
-
     ]
 })

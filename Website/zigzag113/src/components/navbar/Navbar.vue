@@ -1,7 +1,7 @@
 <template>
     <nav class="light-blue lighten-1" role="navigation">
         <div class="nav-wrapper container">
-            <a id="logo-container" href="#" class="brand-logo">
+            <a id="logo-container" href="/" class="brand-logo">
                 <img src="../../assets/logo.png" width="64" height="64">
                 <span class="thin hide-on-med-and-down" style="position: relative;bottom: 22px; font-size: 28px;">SHAPELESS</span>
             </a>
@@ -13,7 +13,7 @@
 
             <ul id="nav-mobile" class="side-nav">
                 <div class="row no-margin">
-                    <a href="#" class="col s12 center">
+                    <a href="/" class="col s12 center">
                         <img src="../../assets/logo.png" width="64" height="64">
                     </a>
                 </div>

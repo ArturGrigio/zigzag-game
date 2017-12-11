@@ -3,7 +3,7 @@
         <div class="carousel carousel-slider center v-height" data-indicators="true">
 
             <div class="carousel-fixed-item center">
-                <a class="btn waves-effect orange thin">DOWNLOAD</a>
+                <a v-bind:href="link.url" class="btn waves-effect orange thin" v-html="link.text"></a>
             </div>
 
             <div class="carousel-item red white-text" href="#one!">
@@ -13,14 +13,14 @@
                 </div>
             </div>
 
-            <div class="carousel-item blue white-text" href="#one!">
+            <div class="carousel-item blue white-text" href="#two!">
                 <h2 class="thin">Easy to Learn, Hard to Master</h2>
                 <div class="row">
                     <img id="slide-1" class="l4 offset-l4 m6 offset-m3 s12 slide" src="../../../../assets/misc/slide_1.png"/>
                 </div>
             </div>
 
-            <div class="carousel-item yellow" href="#one!">
+            <div class="carousel-item yellow" href="#three!">
                 <h2 class="thin">Play as 3 Different Shapes</h2>
                 <div class="row">
                     <img id="slide-2" class="l4 offset-l4 m6 offset-m3 s12 slide" src="../../../../assets/misc/slide_2.png"/>
@@ -32,7 +32,15 @@
 </template>
 
 <script>
+import links from '../../../navbar/links.js';
+
     export default {
+        data: () => {
+            return {
+                link: links.filter(l => l.text === "Download")[0]
+            }
+        },
+
         methods: {
             resize() {
                 // let wrappers = $('.slide-wrapper')
