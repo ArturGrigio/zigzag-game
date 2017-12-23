@@ -5,29 +5,17 @@ using System.Linq;
 namespace ZigZag
 {
 	/// <summary>
-	/// This class manages the overall audio of the game.
+	/// This class manages the overall audio and sound effect of the game.
 	/// </summary>
 	public class AudioManager : MonoBehaviour
 	{
 		#region Public Variables
 
 		/// <summary>
-		/// The main theme audio clip.
+		/// Array of music themes.
 		/// </summary>
-		[Tooltip("The main theme audio clip")]
-		public AudioClip MainTheme;
-
-		/// <summary>
-		/// The boss theme audio clip.
-		/// </summary>
-		[Tooltip("The boss theme audio clip")]
-		public AudioClip BossTheme;
-
-		/// <summary>
-		/// The ending theme audio clip.
-		/// </summary>
-		[Tooltip("The ending theme audio clip")]
-		public AudioClip EndingTheme;
+		[Tooltip("Array of music themes")]
+		public AudioClip[] MusicThemes;
 
 		/// <summary>
 		/// Array of sound effects.
@@ -44,11 +32,6 @@ namespace ZigZag
 		/// The sound effect source.
 		/// </summary>
 		public AudioSource SoundEffectSource;
-	
-		/// <summary>
-		/// The boss trigger when player is about to fight the boss.
-		/// </summary>
-		public BossTrigger bossTrigger;
 
 		/// <summary>
 		/// The finish point script.
@@ -68,11 +51,6 @@ namespace ZigZag
 		/// The player manager.
 		/// </summary>
 		private PlayerManager m_playerManager;
-
-		/// <summary>
-		/// The boss manager.
-		/// </summary>
-		private BossManager m_bossManager;
 
 		#endregion
 
@@ -109,6 +87,26 @@ namespace ZigZag
 			AudioClip soundEffect = SoundEffects.First (audio => audio.name.Contains (soundEffectName));
 			SoundEffectSource.clip = soundEffect;
 			SoundEffectSource.Play ();
+		}
+
+		/// <summary>
+		/// Play the music theme.
+		/// </summary>
+		/// <param name="musicName">Music name.</param>
+		public void PlayMusic(string musicName)
+		{
+			AudioClip music = MusicThemes.First (audio => audio.name.Contains (musicName));
+			MusicSource.clip = music;
+			MusicSource.Play ();
+		}
+
+		/// <summary>
+		/// Stop the music and all sound effects.
+		/// </summary>
+		public void Stop()
+		{
+			MusicSource.Stop ();
+			SoundEffectSource.Stop ();
 		}
 
 		/// <summary>
@@ -155,17 +153,6 @@ namespace ZigZag
 		#region Private/Protected Methods
 
 		/// <summary>
-		/// Handle the player death event.
-		/// </summary>
-		private void playerDeathHandler()
-		{
-			MusicSource.Stop ();
-
-			AudioClip gameOverAudio = SoundEffects.First (sound => sound.name.Contains ("Game Over"));
-			PlaySoundEffect (gameOverAudio);
-		}
-
-		/// <summary>
 		/// Handle the respawn player event.
 		/// </summary>
 		private void respawnPlayerHandler()
@@ -180,19 +167,6 @@ namespace ZigZag
 			{
 				StartCoroutine(FadeInAudio (0.02f));
 			}
-
-			// Reregisters this event
-			bossTrigger.BeforeBoss += beforeBossHandler;
-		}
-
-		/// <summary>
-		/// Handle the boss event. Play the boss theme.
-		/// </summary>
-		private void beforeBossHandler()
-		{
-			switchAudio (BossTheme);
-
-			bossTrigger.BeforeBoss -= beforeBossHandler;
 		}
 
 		/// <summary>
@@ -200,17 +174,14 @@ namespace ZigZag
 		/// </summary>
 		private void finishHandler ()
 		{
-			switchAudio (EndingTheme);
+			AudioClip endingTheme = MusicThemes.First (audio => audio.name.Contains ("Ending"));
+			switchAudio (endingTheme);
 		}
 
 		/// <summary>
-		/// Handle the death of the boss event.
+		/// Switch audio without any fade in or fade out.
 		/// </summary>
-		private void bossDeathHandler()
-		{
-			switchAudio (MainTheme);
-		}
-
+		/// <param name="nextAudioClip">Next audio clip.</param>
 		private void switchAudio(AudioClip nextAudioClip)
 		{
 			if (!MusicSource.isPlaying || MusicSource.clip != nextAudioClip)
@@ -220,7 +191,6 @@ namespace ZigZag
 				MusicSource.Play ();
 			}
 		}
-			
 
 		/// <summary>
 		/// Switch the audio.
@@ -267,16 +237,14 @@ namespace ZigZag
 		private void Start()
 		{
 			m_playerManager = PlayerManager.Instance;
-			m_bossManager = BossManager.Instance;
 
 			// Register handlers to events
-			m_playerManager.PlayerDeath += playerDeathHandler;
 			m_playerManager.RespawnPlayer += respawnPlayerHandler;
-			bossTrigger.BeforeBoss += beforeBossHandler;
-			finishPoint.Finish += finishHandler;
-			m_bossManager.BossDeath += bossDeathHandler;
 
-			MusicSource.clip = MainTheme;
+			finishPoint.Finish += finishHandler;
+
+			AudioClip mainTheme = MusicThemes.First (audio => audio.name.Contains ("Main"));
+			MusicSource.clip = mainTheme;
 			StartCoroutine(FadeInAudio (0.01f));
 		}
 

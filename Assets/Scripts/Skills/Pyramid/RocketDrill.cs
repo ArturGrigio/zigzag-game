@@ -79,6 +79,9 @@ namespace ZigZag
 			{
 				m_isActive = false;
 				AgentComponent.AttackerComponent.AttackDamage = AgentComponent.AttackerComponent.DefaultAttackDamage;
+
+				// Return to the idle animation
+				m_animator.SetInteger ("RocketDrill", 0);
 			}
 
 			return result;
@@ -91,7 +94,6 @@ namespace ZigZag
 		{
 			if (surface == Surface.Ceiling || surface == Surface.Ground)
 			{
-				m_animator.SetInteger ("RocketDrill", 0);
 				Cancel ();
 			}
 			else if (surface == Surface.Enemy)

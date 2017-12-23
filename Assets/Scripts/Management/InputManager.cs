@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -67,6 +68,7 @@ namespace ZigZag
 		private void Update ()
 		{
 			Skill activeSkill = m_playerManager.CurrentShape.ActiveSkill;
+
 			// UI/Universal input processing
 			if (Input.GetButtonDown ("Swap Character"))
 			{

@@ -41,6 +41,7 @@ namespace ZigZag
 		protected override void die ()
 		{
 			base.die ();
+			m_rigidBody2D.velocity = Vector2.zero;
 
 			Skill[] skills = GetComponents<Skill> ();
 			foreach (Skill skill in skills)
@@ -69,7 +70,6 @@ namespace ZigZag
 		private void OnTriggerEnter2D(Collider2D collider)
 		{
 			int activePlayerLayer = LayerMask.NameToLayer ("Active Player");
-			int inactivePlayerLayer = LayerMask.NameToLayer ("Inactive Player");
 			AcquireShapeTrigger shapeTrigger = collider.GetComponent<AcquireShapeTrigger> ();
 
 			// The active player dies when he falls into a pitfall

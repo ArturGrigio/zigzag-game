@@ -230,6 +230,9 @@ namespace ZigZag
 		/// </summary>
 		private void playerDeathHandler()
 		{
+			AudioManager.Instance.Stop ();
+			AudioManager.Instance.PlaySoundEffect ("Game Over");
+
 			OnPlayerDeath ();
 		}
 
@@ -334,16 +337,11 @@ namespace ZigZag
 			if (unsavedShapes.Contains (m_currentShape))
 			{
 				changePlayer (0);
-//				m_currentShape = SavePoint.SavedCurrentShape;
-//				PlayerCamera.Target = m_currentShape.transform;
-//
-//				SpriteRenderer spriteRenderer = m_currentShape.GetComponent<SpriteRenderer> ();
-//				SetSpriteAlpha (spriteRenderer, 1f);
 			}
 
 			foreach (Player unsavedShape in unsavedShapes)
 			{
-				unsavedShape.gameObject.layer = LayerMask.NameToLayer ("Inactive Player");
+				unsavedShape.gameObject.layer = m_inactiveLayer;
 				unsavedShape.transform.parent = null;
 				unsavedShape.transform.position = unsavedShape.InitialPosition;
 

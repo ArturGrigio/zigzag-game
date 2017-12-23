@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212586759655353848}
   - component: {fileID: 60228988007750376}
   - component: {fileID: 50384991726059810}
-  - component: {fileID: 114912293132922254}
+  - component: {fileID: 114329201125983766}
   - component: {fileID: 199306429733678342}
   - component: {fileID: 198927334421325940}
   m_Layer: 14
@@ -92,7 +92,7 @@ PolygonCollider2D:
     - - {x: 0.09579551, y: -0.3996689}
       - {x: 0.6965405, y: 0.0024409203}
       - {x: 0.10604374, y: 0.38807604}
---- !u!114 &114912293132922254
+--- !u!114 &114329201125983766
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -100,12 +100,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1727137623807218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3558ccbc0bb64a04b9f01fdbe4b10638, type: 3}
+  m_Script: {fileID: 11500000, guid: 389deb51fb1e5ad43b49fcbab59d5a19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackDamage: 3
+  AttackDamage: 2
   Speed: 10
   RotatingSpeed: 200
+  DestroyTime: 5
 --- !u!198 &198927334421325940
 ParticleSystem:
   m_ObjectHideFlags: 1

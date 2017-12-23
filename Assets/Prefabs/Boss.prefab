@@ -117,9 +117,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2324e8e88bd7c6446bf13ebfe2529f4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FullHealth: 25
+  FullHealth: 20
   ArrowPrefab: {fileID: 1727137623807218, guid: 63adced3482f8d044a20b5e9ca90d56c,
     type: 2}
+  ArrowSpawnRate: 2
 --- !u!212 &212700478554767462
 SpriteRenderer:
   m_ObjectHideFlags: 1

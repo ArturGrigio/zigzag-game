@@ -76,11 +76,6 @@ namespace ZigZag
 		private float m_originalMass;
 
 		/// <summary>
-		/// The circle collider 2D component.
-		/// </summary>
-		private CircleCollider2D m_circleCollider2D;
-
-		/// <summary>
 		/// Flag indicating whether the display error courtine is running.
 		/// </summary>
 		private bool m_errorCoroutineRunning;
@@ -164,7 +159,6 @@ namespace ZigZag
 		{
 			base.Awake();
 
-			m_circleCollider2D = GetComponent<CircleCollider2D> ();
 			m_particleSystem = GetComponentInChildren<ParticleSystem> ();
 			m_rigidbody2D = GetComponent<Rigidbody2D> ();
 			m_audioSource = GetComponent<AudioSource> ();

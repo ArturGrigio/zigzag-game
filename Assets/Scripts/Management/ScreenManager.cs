@@ -210,7 +210,7 @@ namespace ZigZag
 		/// <returns>The ending coroutine.</returns>
 		private IEnumerator playEnding()
 		{
-			yield return new WaitForSeconds (4f);
+			yield return new WaitForSeconds (1.5f);
 
 			Time.timeScale = 0f;
 			Ending.SetActive (true);

@@ -1,55 +1,96 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ZigZag
 {
+	/// <summary>
+	/// Class representing the Boss enemy.
+	/// </summary>
 	public class Boss : Agent
 	{
-		public GameObject ArrowPrefab;
-		private bool m_coroutineRunning;
+		#region Public Variables
 
+		/// <summary>
+		/// The arrow prefab.
+		/// </summary>
+		[Tooltip("The arrow prefab")]
+		public GameObject ArrowPrefab;
+
+		/// <summary>
+		/// The rate to spawn arrows in seconds.
+		/// </summary>
+		[Tooltip("The rate to spawn arrows in seconds")]
+		public float ArrowSpawnRate = 5f;
+
+		#endregion
+
+		#region Private/Protected Variables
+
+		/// <summary>
+		/// List of arrows.
+		/// </summary>
+		private List<HomingArrow> m_arrows;
+
+		#endregion
+
+		#region Public Methods
+
+		/// <summary>
+		/// Remove the arrow objects.
+		/// </summary>
+		public void RemoveArrowObjects()
+		{
+			foreach (HomingArrow arrow in m_arrows)
+			{
+				Destroy (arrow.gameObject);
+			}
+
+			m_arrows.Clear ();
+		}
+			
+		#endregion
+
+		#region Private/Protected Methods
+
+		/// <summary>
+		/// Create and fire homing arrows.
+		/// </summary>
 		private void fireArrows()
 		{
-			GameObject arrow = Instantiate (ArrowPrefab);
+			HomingArrow arrow = Instantiate (ArrowPrefab).GetComponent<HomingArrow> ();
 			arrow.transform.position = transform.position;
+			//arrow.ArrowDestroyed += arrowDestroyedHandler;
+
+			m_arrows.Add (arrow);
 		}
 
-		public override void ReceiveDamage (float damage)
-		{
-			base.ReceiveDamage (damage);
-
-			if (!m_coroutineRunning)
-			{
-				StartCoroutine (flashDamage ());
-			}
-		}
-
-		private IEnumerator flashDamage()
-		{
-			m_coroutineRunning = true;
-
-			PlayerManager.SetSpriteAlpha (m_spriteRenderer, 0.1f);
-			yield return new WaitForSeconds (0.099f);
-			PlayerManager.SetSpriteAlpha (m_spriteRenderer, 1f);
-
-			m_coroutineRunning = false;
-		}
-
+		/// <summary>
+		/// Performs required actions when the agent dies.
+		/// </summary>
 		protected override void die ()
 		{
-			OnDeath ();
-			//Destroy (gameObject);
+			base.die ();
+			Destroy (gameObject);
+			RemoveArrowObjects ();
 		}
 
+		#endregion
+			
+		#region Unity Methods
 
-		private void Start()
+		/// <summary>
+		/// Initialize member variables.
+		/// </summary>
+		protected override void Awake()
 		{
-			m_coroutineRunning = false;
-			m_spriteRenderer = GetComponent<SpriteRenderer> ();
-			InvokeRepeating ("fireArrows", 3f, 4f);
+			base.Awake ();
+			m_arrows = new List<HomingArrow> ();
+
+			InvokeRepeating ("fireArrows", 3f, ArrowSpawnRate);
 		}
 
-
+		#endregion
 	}
 }

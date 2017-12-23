@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4395243125771314}
   - component: {fileID: 198878682446004282}
   - component: {fileID: 199732942067892984}
-  - component: {fileID: 114151973394746558}
   m_Layer: 9
   m_Name: Particle System
   m_TagString: Untagged
@@ -208,17 +207,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FullHealth: 100
---- !u!114 &114151973394746558
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1795495934863192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0804403165123c4cb9b37fc44d4512d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114511561012276120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -232,6 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_activator: Jump
   JumpPower: 15
+  SlidingMultiplier: 10
 --- !u!114 &114535163593051156
 MonoBehaviour:
   m_ObjectHideFlags: 1
